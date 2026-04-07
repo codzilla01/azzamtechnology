@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azzam Technology</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .admin-header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .admin-header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .admin-tab {
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .admin-tab:hover {
+            background: #f0f0f0;
+        }
+        
+        .admin-tab.active {
+            background: #e63946;
+            color: white;
+            border-color: #e63946;
+        }
+        
+        .admin-content {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-content.active {
+            display: block;
+        }
+        
+        .back-to-store {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #e63946;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .back-to-store:hover {
+            text-decoration: underline;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #e63946;
+            outline: none;
+        }
+        
+        .btn-admin {
+            background: #e63946;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-admin:hover {
+            background: #d32f3c;
+        }
+        
+        .btn-admin-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-admin-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .products-grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .product-card-admin {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            background: white;
+            transition: transform 0.3s;
+        }
+        
+        .product-card-admin:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-actions-admin {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+        
+        .specs-group {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .spec-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .spec-item input {
+            flex: 1;
+        }
+        
+        .btn-remove-spec {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            width: 35px;
+            cursor: pointer;
+        }
+        
+        .btn-add-spec {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card h3 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+        
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #e63946;
+        }
+        
+        /* أنماط رفع الصور الجديدة */
+        .image-upload-container {
+            margin-top: 10px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        
+        .image-upload-container:hover {
+            border-color: #e63946;
+            background: #f0f0f0;
+        }
+        
+        .upload-area {
+            cursor: pointer;
+            padding: 15px;
+        }
+        
+        .upload-area i {
+            font-size: 48px;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        
+        .upload-options {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .upload-btn {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .upload-btn:hover {
+            background: #e63946;
+            color: white;
+            border-color: #e63946;
+        }
+        
+        .image-preview-container {
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        
+        .image-preview-container .btn-admin {
+            margin-top: 10px;
+        }
+        
+        .uploaded-images-list {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .uploaded-image-item {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        
+        .uploaded-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-image-btn {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(220, 53, 69, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .url-input-group {
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .url-input-group.active {
+            display: block;
+        }
+        
+        .upload-method-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .upload-method-tab {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.3s;
+        }
+        
+        .upload-method-tab:hover {
+            background: #f0f0f0;
+        }
+        
+        .upload-method-tab.active {
+            background: #e63946;
+            color: white;
+            border-color: #e63946;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <a href="index.html" class="back-to-store">
+            <i class="fas fa-arrow-right"></i> العودة إلى المتجر
+        </a>
+        
+        <div class="admin-header">
+            <h1><i class="fas fa-cogs"></i> Azzam Technology</h1>
+            <p>إدارة المنتجات والإعدادات - التعديلات تنعكس مباشرة على المتجر</p>
+        </div>
+        
+        <!-- إشعارات -->
+        <div id="alert-success" class="alert alert-success"></div>
+        <div id="alert-error" class="alert alert-error"></div>
+        
+        <!-- الإحصائيات -->
+        <div class="stats-cards">
+            <div class="stat-card">
+                <h3>عدد المنتجات</h3>
+                <div id="total-products" class="number">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>الفئات النشطة</h3>
+                <div id="total-categories" class="number">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>آخر تحديث</h3>
+                <div id="last-update" class="number">-</div>
+            </div>
+        </div>
+        
+        <!-- التبويبات -->
+        <div class="admin-tabs">
+            <div class="admin-tab active" data-tab="products">إدارة المنتجات</div>
+            <div class="admin-tab" data-tab="add-product">إضافة منتج جديد</div>
+            <div class="admin-tab" data-tab="settings">الإعدادات</div>
+        </div>
+        
+        <!-- قسم إدارة المنتجات -->
+        <div id="products-tab" class="admin-content active">
+            <h2><i class="fas fa-boxes"></i> إدارة المنتجات الحالية</h2>
+            <p>قم بتعديل أو حذف المنتجات الموجودة. التغييرات تنعكس مباشرة على المتجر الرئيسي.</p>
+            
+            <div id="products-grid-admin" class="products-grid-admin">
+                <!-- سيتم تعبئة المنتجات هنا -->
+            </div>
+            
+            <div id="no-products-admin" class="text-center muted" style="padding: 40px; display: none;">
+                <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <h3>لا توجد منتجات حتى الآن</h3>
+                <p>قم بإضافة أول منتج من خلال تبويب "إضافة منتج جديد"</p>
+            </div>
+        </div>
+        
+        <!-- قسم إضافة منتج جديد -->
+        <div id="add-product-tab" class="admin-content">
+            <h2><i class="fas fa-plus-circle"></i> إضافة منتج جديد</h2>
+            <p>املأ النموذج لإضافة منتج جديد إلى المتجر.</p>
+            
+            <form id="add-product-form">
+                <div class="form-group">
+                    <label for="product-name">اسم المنتج *</label>
+                    <input type="text" id="product-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-description">وصف المنتج</label>
+                    <textarea id="product-description" class="form-control" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-price">السعر (ج.م) *</label>
+                    <input type="number" id="product-price" class="form-control" required min="0" step="0.01">
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-category">الفئة *</label>
+                    <select id="product-category" class="form-control" required>
+                        <option value="">اختر الفئة</option>
+                        <option value="dell">Dell</option>
+                        <option value="apple">Apple</option>
+                        <option value="hp">HP</option>
+                        <option value="lenovo">Lenovo</option>
+                        <option value="asus">Asus</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                </div>
+                
+                <!-- قسم رفع الصور المتعدد -->
+                <div class="form-group">
+                    <label>صور المنتج</label>
+                    
+                    <div class="upload-method-tabs">
+                        <div class="upload-method-tab active" data-method="upload">رفع من الجهاز</div>
+                        <div class="upload-method-tab" data-method="url">رابط خارجي</div>
+                        <div class="upload-method-tab" data-method="camera">الكاميرا</div>
+                    </div>
+                    
+                    <!-- طريقة الرفع من الجهاز -->
+                    <div id="upload-method-upload" class="image-upload-container active">
+                        <div class="upload-area" id="upload-area">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>اسحب وأفلت الصور هنا أو انقر للاختيار</p>
+                            <p style="font-size: 14px; color: #666;">يمكنك اختيار أكثر من صورة (JPEG, PNG, GIF)</p>
+                            <input type="file" id="product-image-upload" accept="image/*" multiple style="display: none;">
+                        </div>
+                        
+                        <div class="upload-options">
+                            <div class="upload-btn" id="choose-file-btn">
+                                <i class="fas fa-folder-open"></i> اختيار ملفات
+                            </div>
+                            <div class="upload-btn" id="drag-drop-btn">
+                                <i class="fas fa-hand-pointer"></i> سحب وإفلات
+                            </div>
+                        </div>
+                        
+                        <div class="uploaded-images-list" id="uploaded-images-list">
+                            <!-- سيتم عرض الصور المرفوعة هنا -->
+                        </div>
+                    </div>
+                    
+                    <!-- طريقة رابط الصورة -->
+                    <div id="upload-method-url" class="image-upload-container" style="display: none;">
+                        <div class="url-input-group active">
+                            <input type="text" id="product-image-url" class="form-control" placeholder="https://example.com/image.jpg">
+                            <button type="button" class="btn-admin btn-sm" id="add-url-image" style="margin-top: 10px;">
+                                <i class="fas fa-plus"></i> إضافة الرابط
+                            </button>
+                        </div>
+                        
+                        <div class="uploaded-images-list" id="url-images-list">
+                            <!-- سيتم عرض صور الروابط هنا -->
+                        </div>
+                    </div>
+                    
+                    <!-- طريقة الكاميرا -->
+                    <div id="upload-method-camera" class="image-upload-container" style="display: none;">
+                        <div class="upload-area" id="camera-area">
+                            <i class="fas fa-camera"></i>
+                            <p>انقر لاستخدام الكاميرا</p>
+                            <p style="font-size: 14px; color: #666;">يجب أن يكون لديك كاميرا ويب متصلة</p>
+                        </div>
+                        
+                        <div id="camera-preview" style="display: none; text-align: center;">
+                            <video id="camera-video" autoplay style="max-width: 100%; border-radius: 8px; border: 1px solid #ddd;"></video>
+                            <div style="margin-top: 10px;">
+                                <button type="button" class="btn-admin btn-sm" id="capture-btn">
+                                    <i class="fas fa-camera"></i> التقاط صورة
+                                </button>
+                                <button type="button" class="btn-admin btn-sm btn-admin-secondary" id="retake-btn">
+                                    <i class="fas fa-redo"></i> إعادة
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="uploaded-images-list" id="camera-images-list">
+                            <!-- سيتم عرض صور الكاميرا هنا -->
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" id="product-images-data">
+                </div>
+                
+                <!-- المواصفات -->
+                <div class="specs-group">
+                    <h4>مواصفات المنتج (اختياري)</h4>
+                    <div id="specs-container">
+                        <!-- سيتم إضافة حقول المواصفات هنا -->
+                    </div>
+                    <button type="button" class="btn-add-spec" id="add-spec">
+                        <i class="fas fa-plus"></i> إضافة مواصفة
+                    </button>
+                </div>
+                
+                <button type="submit" class="btn-admin">
+                    <i class="fas fa-save"></i> حفظ المنتج
+                </button>
+                <button type="reset" class="btn-admin btn-admin-secondary" id="reset-form-btn">
+                    <i class="fas fa-redo"></i> مسح النموذج
+                </button>
+            </form>
+        </div>
+        
+        <!-- قسم الإعدادات -->
+        <div id="settings-tab" class="admin-content">
+            <h2><i class="fas fa-sliders-h"></i> إعدادات المتجر</h2>
+            <p>إدارة إعدادات المتجر والبيانات.</p>
+            
+            <div class="form-group">
+                <h3>بيانات المتجر</h3>
+                <label for="store-name">اسم المتجر</label>
+                <input type="text" id="store-name" class="form-control" value="متجر الجوكر للكمبيوتر">
+                
+                <label for="store-phone">رقم الهاتف</label>
+                <input type="text" id="store-phone" class="form-control" value="01010022271">
+                
+                <label for="store-address">العنوان</label>
+                <input type="text" id="store-address" class="form-control" value=" مول البستان - الطابق الأرضي">
+            </div>
+            
+            <div class="form-group">
+                <h3>إدارة البيانات</h3>
+                <p>يمكنك تصدير أو استيراد بيانات المنتجات.</p>
+                
+                <button type="button" class="btn-admin" id="export-data">
+                    <i class="fas fa-download"></i> تصدير بيانات المنتجات
+                </button>
+                
+                <button type="button" class="btn-admin btn-admin-secondary" id="import-data">
+                    <i class="fas fa-upload"></i> استيراد بيانات المنتجات
+                </button>
+                
+                <button type="button" class="btn-admin" id="reset-data" style="background: #dc3545;">
+                    <i class="fas fa-trash-alt"></i> إعادة تعيين البيانات
+                </button>
+            </div>
+            
+            <div class="form-group">
+                <h3>تحديث البيانات</h3>
+                <p>اضغط على الزر أدناه لتحديث بيانات المنتجات في المتجر الرئيسي فوراً.</p>
+                
+                <button type="button" class="btn-admin" id="force-update">
+                    <i class="fas fa-sync-alt"></i> تحديث المتجر الآن
+                </button>
+                <p id="update-status" style="margin-top: 10px; color: #666; font-size: 14px;"></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // تعريف المنتجات الافتراضية
+        const defaultProducts = [
+            {
+                id: 1,
+                name: "لابتوب Dell XPS 13",
+                description: "لابتوب رفيع وخفيف مع شاشة لامتناهية وأداء قوي",
+                price: 25000,
+                category: "dell",
+                images: ["images/dell-xps.jpg"],
+                specs: {
+                    "المعالج": "Intel Core i7",
+                    "الذاكرة": "16GB RAM",
+                    "التخزين": "512GB SSD",
+                    "الشاشة": "13.3 بوصة"
+                }
+            },
+            {
+                id: 2,
+                name: "ماك بوك برو 16 بوصة",
+                description: "أقوى لابتوب من Apple مع شاشة Retina",
+                price: 45000,
+                category: "apple",
+                images: ["images/macbook-pro.jpg"],
+                specs: {
+                    "المعالج": "Apple M1 Pro",
+                    "الذاكرة": "32GB RAM",
+                    "التخزين": "1TB SSD",
+                    "الشاشة": "16 بوصة"
+                }
+            },
+            {
+                id: 3,
+                name: "لابتوب HP Spectre x360",
+                description: "لابتوب قابل للتحويل بشاشة تعمل باللمس",
+                price: 22000,
+                category: "hp",
+                images: ["images/hp-spectre.jpg"],
+                specs: {
+                    "المعالج": "Intel Core i5",
+                    "الذاكرة": "8GB RAM",
+                    "التخزين": "256GB SSD",
+                    "الشاشة": "13.5 بوصة"
+                }
+            }
+        ];
+        
+        // متغيرات رفع الصور
+        let uploadedImages = [];
+        let urlImages = [];
+        let cameraImages = [];
+        let currentImages = [];
+        let editingProductId = null;
+        
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function() {
+            // تهيئة التبويبات
+            initTabs();
+            
+            // تحميل المنتجات
+            loadProducts();
+            
+            // تهيئة النموذج
+            initForm();
+            
+            // تهيئة نظام رفع الصور
+            initImageUpload();
+            
+            // تهيئة الأزرار
+            initButtons();
+            
+            // تحديث الإحصائيات
+            updateStats();
+        });
+        
+        // تهيئة التبويبات
+        function initTabs() {
+            const tabs = document.querySelectorAll('.admin-tab');
+            const contents = document.querySelectorAll('.admin-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    // تحديث التبويبات النشطة
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // تحديث المحتويات النشطة
+                    contents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === `${tabId}-tab`) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+        }
+        
+        // تحميل المنتجات من localStorage
+        function loadProducts() {
+            const productsGrid = document.getElementById('products-grid-admin');
+            const noProducts = document.getElementById('no-products-admin');
+            
+            // جلب المنتجات من localStorage
+            let products = getProductsFromStorage();
+            
+            if (products.length === 0) {
+                productsGrid.innerHTML = '';
+                noProducts.style.display = 'block';
+                return;
+            }
+            
+            noProducts.style.display = 'none';
+            productsGrid.innerHTML = '';
+            
+            // عرض المنتجات
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card-admin';
+                productCard.dataset.id = product.id;
+                
+                // تحضير قائمة المواصفات
+                let specsHtml = '';
+                if (product.specs && Object.keys(product.specs).length > 0) {
+                    specsHtml = '<ul style="padding-right: 15px; margin-top: 10px;">';
+                    for (const [key, value] of Object.entries(product.specs)) {
+                        specsHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+                    }
+                    specsHtml += '</ul>';
+                }
+                
+                // عرض أول صورة للمنتج
+                let imageHtml = '';
+                if (product.images && product.images.length > 0) {
+                    const firstImage = product.images[0];
+                    imageHtml = `
+                        <div style="margin-bottom: 10px;">
+                            <img src="${firstImage}" alt="${product.name}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;">
+                        </div>
+                    `;
+                }
+                
+                productCard.innerHTML = `
+                    ${imageHtml}
+                    <h3>${product.name}</h3>
+                    <p>${product.description || 'لا يوجد وصف'}</p>
+                    <div style="color: #e63946; font-weight: bold; font-size: 18px; margin: 10px 0;">
+                        ${product.price.toLocaleString()} ج.م
+                    </div>
+                    <div style="background: #f0f0f0; padding: 5px 10px; border-radius: 3px; display: inline-block;">
+                        ${product.category || 'غير مصنف'}
+                    </div>
+                    ${specsHtml}
+                    <div class="product-actions-admin">
+                        <button class="btn-admin btn-sm edit-product" data-id="${product.id}">
+                            <i class="fas fa-edit"></i> تعديل
+                        </button>
+                        <button class="btn-admin btn-sm delete-product" data-id="${product.id}" style="background: #dc3545;">
+                            <i class="fas fa-trash-alt"></i> حذف
+                        </button>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(productCard);
+            });
+            
+            // إضافة مستمعي الأحداث للأزرار
+            document.querySelectorAll('.edit-product').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.dataset.id;
+                    editProduct(productId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-product').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.dataset.id;
+                    deleteProduct(productId);
+                });
+            });
+        }
+        
+        // جلب المنتجات من localStorage
+        function getProductsFromStorage() {
+            const storedProducts = localStorage.getItem('jokerProducts');
+            
+            if (storedProducts) {
+                try {
+                    return JSON.parse(storedProducts);
+                } catch (error) {
+                    console.error('خطأ في تحليل بيانات المنتجات:', error);
+                    return [];
+                }
+            } else {
+                // إذا لم تكن هناك منتجات، نقوم بحفظ المنتجات الافتراضية
+                saveProductsToStorage(defaultProducts);
+                return defaultProducts;
+            }
+        }
+        
+        // حفظ المنتجات إلى localStorage
+        function saveProductsToStorage(products) {
+            localStorage.setItem('jokerProducts', JSON.stringify(products));
+            
+            // حفظ وقت التحديث الأخير
+            const now = new Date().toISOString();
+            localStorage.setItem('jokerProductsLastUpdate', now);
+            
+            // إرسال حدث لتحديث الصفحات الأخرى
+            window.dispatchEvent(new Event('storage'));
+            
+            // تحديث الإحصائيات
+            updateStats();
+            
+            return products;
+        }
+        
+        // تهيئة نظام رفع الصور
+        function initImageUpload() {
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('product-image-upload');
+            const chooseFileBtn = document.getElementById('choose-file-btn');
+            const uploadMethodTabs = document.querySelectorAll('.upload-method-tab');
+            const uploadedImagesList = document.getElementById('uploaded-images-list');
+            const urlImagesList = document.getElementById('url-images-list');
+            const cameraImagesList = document.getElementById('camera-images-list');
+            const addUrlImageBtn = document.getElementById('add-url-image');
+            const cameraArea = document.getElementById('camera-area');
+            const captureBtn = document.getElementById('capture-btn');
+            const retakeBtn = document.getElementById('retake-btn');
+            const cameraVideo = document.getElementById('camera-video');
+            const cameraPreview = document.getElementById('camera-preview');
+            
+            // تفعيل اختيار طريقة الرفع
+            uploadMethodTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const method = this.dataset.method;
+                    
+                    // تحديث التبويبات النشطة
+                    uploadMethodTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // إظهار الطريقة المحددة وإخفاء الأخرى
+                    document.querySelectorAll('.image-upload-container').forEach(container => {
+                        container.style.display = 'none';
+                    });
+                    document.getElementById(`upload-method-${method}`).style.display = 'block';
+                    
+                    // إذا كانت طريقة الكاميرا، نحتاج لتهيئتها
+                    if (method === 'camera') {
+                        initCamera();
+                    }
+                });
+            });
+            
+            // اختيار ملفات من الجهاز
+            chooseFileBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            uploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // معالجة اختيار الملفات
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // سحب وإفلات الملفات
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#e63946';
+                uploadArea.style.backgroundColor = '#f0f0f0';
+            });
+            
+            uploadArea.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#ddd';
+                uploadArea.style.backgroundColor = '#f8f9fa';
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#ddd';
+                uploadArea.style.backgroundColor = '#f8f9fa';
+                
+                const files = e.dataTransfer.files;
+                handleFiles(files);
+            });
+            
+            // إضافة صورة عبر الرابط
+            addUrlImageBtn.addEventListener('click', () => {
+                const urlInput = document.getElementById('product-image-url');
+                const url = urlInput.value.trim();
+                
+                if (url) {
+                    addUrlImage(url);
+                    urlInput.value = '';
+                } else {
+                    showAlert('الرجاء إدخال رابط صورة صالح', 'error');
+                }
+            });
+            
+            // استخدام الكاميرا
+            cameraArea.addEventListener('click', initCamera);
+            
+            // التقاط صورة من الكاميرا
+            captureBtn.addEventListener('click', captureFromCamera);
+            
+            // إعادة التقاط الصورة
+            retakeBtn.addEventListener('click', () => {
+                cameraPreview.style.display = 'none';
+                cameraArea.style.display = 'block';
+                startCamera();
+            });
+            
+            // معالجة اختيار الملفات
+            function handleFileSelect(e) {
+                const files = e.target.files;
+                handleFiles(files);
+            }
+            
+            // معالجة الملفات المرفوعة
+            function handleFiles(files) {
+                const validFiles = Array.from(files).filter(file => {
+                    return file.type.startsWith('image/') && file.size <= 5 * 1024 * 1024; // 5MB حد أقصى
+                });
+                
+                if (validFiles.length === 0) {
+                    showAlert('لم يتم العثور على صور صالحة أو حجم الصورة كبير جداً (الحد الأقصى 5MB)', 'error');
+                    return;
+                }
+                
+                validFiles.forEach(file => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        const imageData = e.target.result;
+                        uploadedImages.push(imageData);
+                        updateImageLists();
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
+                
+                showAlert(`تم رفع ${validFiles.length} صورة بنجاح`, 'success');
+            }
+            
+            // إضافة صورة عبر الرابط
+            function addUrlImage(url) {
+                // التحقق من صحة الرابط
+                if (!url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+                    showAlert('الرجاء إدخال رابط صورة صالح (JPEG, JPG, PNG, GIF, WebP)', 'error');
+                    return;
+                }
+                
+                urlImages.push(url);
+                updateImageLists();
+                showAlert('تم إضافة الصورة عبر الرابط بنجاح', 'success');
+            }
+            
+            // تهيئة الكاميرا
+            function initCamera() {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    cameraArea.style.display = 'none';
+                    cameraPreview.style.display = 'block';
+                    startCamera();
+                } else {
+                    showAlert('عذراً، الكاميرا غير مدعومة في متصفحك', 'error');
+                }
+            }
+            
+            // تشغيل الكاميرا
+            function startCamera() {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        cameraVideo.srcObject = stream;
+                    })
+                    .catch(function(error) {
+                        console.error('خطأ في الوصول إلى الكاميرا:', error);
+                        showAlert('تعذر الوصول إلى الكاميرا. تأكد من السماح باستخدام الكاميرا', 'error');
+                        cameraPreview.style.display = 'none';
+                        cameraArea.style.display = 'block';
+                    });
+            }
+            
+            // التقاط صورة من الكاميرا
+            function captureFromCamera() {
+                const canvas = document.createElement('canvas');
+                canvas.width = cameraVideo.videoWidth;
+                canvas.height = cameraVideo.videoHeight;
+                canvas.getContext('2d').drawImage(cameraVideo, 0, 0);
+                
+                const imageData = canvas.toDataURL('image/jpeg');
+                cameraImages.push(imageData);
+                
+                // إيقاف الكاميرا
+                const stream = cameraVideo.srcObject;
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+                
+                cameraPreview.style.display = 'none';
+                cameraArea.style.display = 'block';
+                
+                updateImageLists();
+                showAlert('تم التقاط الصورة بنجاح', 'success');
+            }
+            
+            // تحديث قوائم الصور
+            function updateImageLists() {
+                // تحديث الصور المرفوعة من الجهاز
+                updateImageList(uploadedImagesList, uploadedImages, 'uploaded');
+                
+                // تحديث صور الروابط
+                updateImageList(urlImagesList, urlImages, 'url');
+                
+                // تحديث صور الكاميرا
+                updateImageList(cameraImagesList, cameraImages, 'camera');
+                
+                // تحديث الصور الحالية
+                currentImages = [...uploadedImages, ...urlImages, ...cameraImages];
+                
+                // حفظ الصور في الحقل المخفي
+                document.getElementById('product-images-data').value = JSON.stringify(currentImages);
+            }
+            
+            // تحديث قائمة صور محددة
+            function updateImageList(container, images, type) {
+                container.innerHTML = '';
+                
+                if (images.length === 0) {
+                    container.innerHTML = '<p style="color: #666; text-align: center;">لم تتم إضافة أي صور بعد</p>';
+                    return;
+                }
+                
+                images.forEach((image, index) => {
+                    const imageItem = document.createElement('div');
+                    imageItem.className = 'uploaded-image-item';
+                    
+                    const img = document.createElement('img');
+                    img.src = image;
+                    img.alt = `صورة ${type}`;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-image-btn';
+                    removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    removeBtn.addEventListener('click', () => {
+                        if (type === 'uploaded') {
+                            uploadedImages.splice(index, 1);
+                        } else if (type === 'url') {
+                            urlImages.splice(index, 1);
+                        } else if (type === 'camera') {
+                            cameraImages.splice(index, 1);
+                        }
+                        updateImageLists();
+                    });
+                    
+                    imageItem.appendChild(img);
+                    imageItem.appendChild(removeBtn);
+                    container.appendChild(imageItem);
+                });
+            }
+        }
+        
+        // تهيئة النموذج
+        function initForm() {
+            const form = document.getElementById('add-product-form');
+            const addSpecButton = document.getElementById('add-spec');
+            const specsContainer = document.getElementById('specs-container');
+            const resetFormBtn = document.getElementById('reset-form-btn');
+            
+            // إضافة أول حقل للمواصفات
+            addSpecField();
+            
+            // إضافة حقل مواصفات جديد
+            addSpecButton.addEventListener('click', addSpecField);
+            
+            // إعادة تعيين النموذج
+            resetFormBtn.addEventListener('click', function() {
+                uploadedImages = [];
+                urlImages = [];
+                cameraImages = [];
+                currentImages = [];
+                editingProductId = null;
+                
+                // إعادة تعيين قوائم الصور
+                document.getElementById('uploaded-images-list').innerHTML = '';
+                document.getElementById('url-images-list').innerHTML = '';
+                document.getElementById('camera-images-list').innerHTML = '';
+                
+                // إعادة تعيين حقل الصور
+                document.getElementById('product-images-data').value = '';
+                
+                // إعادة تعيين حقول المواصفات
+                specsContainer.innerHTML = '';
+                addSpecField();
+                
+                // إعادة تعيين العنوان
+                document.querySelector('[data-tab="add-product"]').textContent = 'إضافة منتج جديد';
+            });
+            
+            // معالجة إرسال النموذج
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // جمع بيانات النموذج
+                const product = {
+                    id: editingProductId || Date.now(), // استخدام الطابع الزمني كمعرف فريد
+                    name: document.getElementById('product-name').value,
+                    description: document.getElementById('product-description').value,
+                    price: parseFloat(document.getElementById('product-price').value),
+                    category: document.getElementById('product-category').value
+                };
+                
+                // جمع الصور
+                const imagesData = document.getElementById('product-images-data').value;
+                if (imagesData) {
+                    product.images = JSON.parse(imagesData);
+                } else {
+                    product.images = ['images/default-product.png'];
+                }
+                
+                // جمع المواصفات
+                const specs = {};
+                const specInputs = specsContainer.querySelectorAll('.spec-item');
+                
+                specInputs.forEach(specItem => {
+                    const key = specItem.querySelector('.spec-key').value;
+                    const value = specItem.querySelector('.spec-value').value;
+                    
+                    if (key && value) {
+                        specs[key] = value;
+                    }
+                });
+                
+                if (Object.keys(specs).length > 0) {
+                    product.specs = specs;
+                }
+                
+                // جلب المنتجات الحالية
+                let products = getProductsFromStorage();
+                
+                if (editingProductId) {
+                    // تحديث منتج موجود
+                    const index = products.findIndex(p => p.id == editingProductId);
+                    if (index !== -1) {
+                        products[index] = product;
+                    }
+                    showAlert('تم تحديث المنتج بنجاح!', 'success');
+                } else {
+                    // إضافة منتج جديد
+                    products.push(product);
+                    showAlert('تم إضافة المنتج بنجاح!', 'success');
+                }
+                
+                // حفظ المنتجات المحدثة
+                saveProductsToStorage(products);
+                
+                // تحديث قائمة المنتجات
+                loadProducts();
+                
+                // إعادة تعيين النموذج
+                form.reset();
+                specsContainer.innerHTML = '';
+                addSpecField();
+                
+                uploadedImages = [];
+                urlImages = [];
+                cameraImages = [];
+                currentImages = [];
+                editingProductId = null;
+                
+                // إعادة تعيين قوائم الصور
+                document.getElementById('uploaded-images-list').innerHTML = '';
+                document.getElementById('url-images-list').innerHTML = '';
+                document.getElementById('camera-images-list').innerHTML = '';
+                document.getElementById('product-images-data').value = '';
+                
+                // إعادة تعيين العنوان
+                document.querySelector('[data-tab="add-product"]').textContent = 'إضافة منتج جديد';
+                
+                // الانتقال إلى تبويب إدارة المنتجات
+                document.querySelector('[data-tab="products"]').click();
+            });
+        }
+        
+        // إضافة حقل مواصفات جديد
+        function addSpecField() {
+            const specsContainer = document.getElementById('specs-container');
+            const specIndex = specsContainer.children.length;
+            
+            const specDiv = document.createElement('div');
+            specDiv.className = 'spec-item';
+            
+            specDiv.innerHTML = `
+                <input type="text" class="form-control spec-key" placeholder="اسم المواصفة (مثال: المعالج)">
+                <input type="text" class="form-control spec-value" placeholder="قيمة المواصفة (مثال: Intel i7)">
+                <button type="button" class="btn-remove-spec">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            specsContainer.appendChild(specDiv);
+            
+            // إضافة مستمع حدث لحذف المواصفة
+            specDiv.querySelector('.btn-remove-spec').addEventListener('click', function() {
+                if (specsContainer.children.length > 1) {
+                    specDiv.remove();
+                }
+            });
+        }
+        
+        // تعديل منتج موجود
+        function editProduct(productId) {
+            const products = getProductsFromStorage();
+            const product = products.find(p => p.id == productId);
+            
+            if (!product) {
+                showAlert('المنتج غير موجود!', 'error');
+                return;
+            }
+            
+            editingProductId = productId;
+            
+            // ملء النموذج ببيانات المنتج
+            document.getElementById('product-name').value = product.name;
+            document.getElementById('product-description').value = product.description || '';
+            document.getElementById('product-price').value = product.price;
+            document.getElementById('product-category').value = product.category || '';
+            
+            // مسح وإعادة تعيين حقول المواصفات
+            const specsContainer = document.getElementById('specs-container');
+            specsContainer.innerHTML = '';
+            
+            if (product.specs) {
+                for (const [key, value] of Object.entries(product.specs)) {
+                    const specDiv = document.createElement('div');
+                    specDiv.className = 'spec-item';
+                    
+                    specDiv.innerHTML = `
+                        <input type="text" class="form-control spec-key" placeholder="اسم المواصفة" value="${key}">
+                        <input type="text" class="form-control spec-value" placeholder="قيمة المواصفة" value="${value}">
+                        <button type="button" class="btn-remove-spec">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    
+                    specsContainer.appendChild(specDiv);
+                    
+                    // إضافة مستمع حدث لحذف المواصفة
+                    specDiv.querySelector('.btn-remove-spec').addEventListener('click', function() {
+                        if (specsContainer.children.length > 1) {
+                            specDiv.remove();
+                        }
+                    });
+                }
+            } else {
+                addSpecField();
+            }
+            
+            // تحميل صور المنتج
+            if (product.images && product.images.length > 0) {
+                uploadedImages = [];
+                urlImages = [];
+                cameraImages = [];
+                currentImages = [...product.images];
+                
+                // تصنيف الصور بناءً على نوعها
+                product.images.forEach(image => {
+                    if (image.startsWith('data:image')) {
+                        if (image.includes(';base64,')) {
+                            uploadedImages.push(image);
+                        } else {
+                            cameraImages.push(image);
+                        }
+                    } else if (image.startsWith('http')) {
+                        urlImages.push(image);
+                    } else {
+                        uploadedImages.push(image);
+                    }
+                });
+                
+                // تحديث قوائم الصور
+                updateImageLists();
+            }
+            
+            // تغيير عنوان التبويب
+            document.querySelector('[data-tab="add-product"]').textContent = 'تعديل المنتج';
+            
+            // الانتقال إلى تبويب إضافة المنتج
+            document.querySelector('[data-tab="add-product"]').click();
+        }
+        
+        // حذف منتج
+        function deleteProduct(productId) {
+            if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+                let products = getProductsFromStorage();
+                products = products.filter(p => p.id != productId);
+                
+                saveProductsToStorage(products);
+                showAlert('تم حذف المنتج بنجاح!', 'success');
+                loadProducts();
+            }
+        }
+        
+        // تهيئة الأزرار
+        function initButtons() {
+            // زر تصدير البيانات
+            document.getElementById('export-data').addEventListener('click', function() {
+                const products = getProductsFromStorage();
+                const dataStr = JSON.stringify(products, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                
+                const exportFileDefaultName = 'joker-products-backup.json';
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+                
+                showAlert('تم تصدير بيانات المنتجات بنجاح!', 'success');
+            });
+            
+            // زر استيراد البيانات
+            document.getElementById('import-data').addEventListener('click', function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                
+                input.onchange = function(e) {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        try {
+                            const importedProducts = JSON.parse(e.target.result);
+                            
+                            if (Array.isArray(importedProducts)) {
+                                // دمج المنتجات المستوردة مع المنتجات الحالية
+                                const currentProducts = getProductsFromStorage();
+                                const newProducts = [...currentProducts, ...importedProducts];
+                                
+                                // إعادة تعيين المعرفات لتجنب التكرار
+                                const uniqueProducts = [];
+                                const usedIds = new Set();
+                                
+                                newProducts.forEach(product => {
+                                    if (!usedIds.has(product.id)) {
+                                        uniqueProducts.push(product);
+                                        usedIds.add(product.id);
+                                    } else {
+                                        // إنشاء معرف جديد للمنتج المكرر
+                                        product.id = Date.now() + Math.floor(Math.random() * 1000);
+                                        uniqueProducts.push(product);
+                                    }
+                                });
+                                
+                                saveProductsToStorage(uniqueProducts);
+                                showAlert('تم استيراد بيانات المنتجات بنجاح!', 'success');
+                                loadProducts();
+                            } else {
+                                showAlert('ملف غير صالح. يجب أن يحتوي على مصفوفة من المنتجات.', 'error');
+                            }
+                        } catch (error) {
+                            showAlert('خطأ في قراءة الملف. تأكد من أن الملف بصيغة JSON صحيحة.', 'error');
+                        }
+                    };
+                    
+                    reader.readAsText(file);
+                };
+                
+                input.click();
+            });
+            
+            // زر إعادة تعيين البيانات
+            document.getElementById('reset-data').addEventListener('click', function() {
+                if (confirm('هل أنت متأكد من إعادة تعيين جميع بيانات المنتجات؟ سيتم استعادة المنتجات الافتراضية.')) {
+                    saveProductsToStorage(defaultProducts);
+                    showAlert('تم إعادة تعيين بيانات المنتجات بنجاح!', 'success');
+                    loadProducts();
+                }
+            });
+            
+            // زر التحديث الفوري
+            document.getElementById('force-update').addEventListener('click', function() {
+                // إرسال حدث لتحديث الصفحات الأخرى
+                const now = new Date().toLocaleString('ar-EG');
+                localStorage.setItem('jokerProductsUpdated', Date.now().toString());
+                window.dispatchEvent(new Event('storage'));
+                
+                document.getElementById('update-status').textContent = `تم التحديث في: ${now}`;
+                showAlert('تم إرسال طلب تحديث البيانات إلى المتجر الرئيسي!', 'success');
+            });
+        }
+        
+        // تحديث الإحصائيات
+        function updateStats() {
+            const products = getProductsFromStorage();
+            
+            // عدد المنتجات
+            document.getElementById('total-products').textContent = products.length;
+            
+            // عدد الفئات الفريدة
+            const categories = new Set(products.map(p => p.category));
+            document.getElementById('total-categories').textContent = categories.size;
+            
+            // وقت التحديث الأخير
+            const lastUpdate = localStorage.getItem('jokerProductsLastUpdate');
+            if (lastUpdate) {
+                const date = new Date(lastUpdate);
+                document.getElementById('last-update').textContent = date.toLocaleTimeString('ar-EG');
+            } else {
+                document.getElementById('last-update').textContent = '-';
+            }
+        }
+        
+        // عرض الإشعارات
+        function showAlert(message, type) {
+            const alertEl = document.getElementById(`alert-${type}`);
+            alertEl.textContent = message;
+            alertEl.style.display = 'block';
+            
+            // إخفاء الإشعار بعد 5 ثواني
+            setTimeout(() => {
+                alertEl.style.display = 'none';
+            }, 5000);
+        }
+        
+        // تحديث قوائم الصور (إعادة تعريف لأننا نحتاجها خارج initImageUpload)
+        function updateImageLists() {
+            const uploadedImagesList = document.getElementById('uploaded-images-list');
+            const urlImagesList = document.getElementById('url-images-list');
+            const cameraImagesList = document.getElementById('camera-images-list');
+            
+            // تحديث الصور المرفوعة من الجهاز
+            updateImageList(uploadedImagesList, uploadedImages, 'uploaded');
+            
+            // تحديث صور الروابط
+            updateImageList(urlImagesList, urlImages, 'url');
+            
+            // تحديث صور الكاميرا
+            updateImageList(cameraImagesList, cameraImages, 'camera');
+            
+            // تحديث الصور الحالية
+            currentImages = [...uploadedImages, ...urlImages, ...cameraImages];
+            
+            // حفظ الصور في الحقل المخفي
+            document.getElementById('product-images-data').value = JSON.stringify(currentImages);
+        }
+        
+        function updateImageList(container, images, type) {
+            container.innerHTML = '';
+            
+            if (images.length === 0) {
+                container.innerHTML = '<p style="color: #666; text-align: center;">لم تتم إضافة أي صور بعد</p>';
+                return;
+            }
+            
+            images.forEach((image, index) => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'uploaded-image-item';
+                
+                const img = document.createElement('img');
+                img.src = image;
+                img.alt = `صورة ${type}`;
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-image-btn';
+                removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                removeBtn.addEventListener('click', () => {
+                    if (type === 'uploaded') {
+                        uploadedImages.splice(index, 1);
+                    } else if (type === 'url') {
+                        urlImages.splice(index, 1);
+                    } else if (type === 'camera') {
+                        cameraImages.splice(index, 1);
+                    }
+                    updateImageLists();
+                });
+                
+                imageItem.appendChild(img);
+                imageItem.appendChild(removeBtn);
+                container.appendChild(imageItem);
+            });
+        }
+    </script>
+</body>
+</html>

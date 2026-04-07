@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azzam Technology</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="images/whatsapp_logo.png" alt="شعار شركة عزام تكنولوجي" class="logo-img">
+                <span>Azzam Technology</span>
+            </div>
+            <nav id="main-nav" class="main-nav">
+                <a href="#home">الرئيسية</a>
+                <a href="#products">المنتجات</a>
+                <a href="#about">من نحن</a>
+                <a href="#contact">اتصل بنا</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="text" id="top-search" placeholder="ابحث عن منتج...">
+                </div>
+                <div class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="قائمة الهاتف">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>اكتشف أحدث الشاشات بأسعار تنافسية وجودة عالية</h1>
+            <p></p>
+            <a href="#products" class="btn btn-primary">استعرض المنتجات</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h2 class="section-title">منتجاتنا</h2>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="dell">Dell</button>
+                <button class="filter-btn" data-filter="apple">Apple</button>
+                <button class="filter-btn" data-filter="hp">HP</button>
+                <button class="filter-btn" data-filter="lenovo">Lenovo</button>
+                <button class="filter-btn" data-filter="asus">Asus</button>
+            </div>
+
+            <div id="products-grid" class="products-grid">
+                <!-- سيتم تعبئة المنتجات هنا عبر JavaScript -->
+            </div>
+
+            <div id="no-products" class="hidden text-center muted" style="padding: 40px;">
+                <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <h3>لا توجد منتجات تطابق بحثك</h3>
+                <p>حاول استخدام مصطلحات بحث أخرى أو استعرض جميع المنتجات</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container" id="about">
+            <div class="footer-content">
+                <div class="footer-column">
+                    </p><h3>عن الشركة</h3>
+                    <p>شركة الجوكر للكمبيوتر تقدم أفضل الخدمات وأحدث أجهزة الكمبيوتر</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/share/1RUTtYUDSt/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/megoa_elgokar?igsh=cmJ3dXB2Y2lja2ln&utm_source=qr"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/+201055512244"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#products">المنتجات</a></li>
+                        <li><a href="#about">من نحن</a></li>
+                        <li><a href="#contact">اتصل بنا</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>معلومات الاتصال</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> مول البستان - الطابق الأرضي - القاهرة - مصر </li>
+                        <li><i class="fas fa-phone"></i> 01025555207 </li>
+                        <li><i class="fas fa-envelope"></i> technologyazzam@gmail.com </li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>الخدمات</h3>
+                    <ul>
+                        <li><a href="https://wa.me/+201025555207">الدعم الفني</a></li>
+                        <li><a href="#">خدمة التوصيل</a></li>
+                        <li><a href="policy.html">الضمان والاستبدال</a></li>
+                        <!--<li><a href="#">الدفع عند الاستلام</a></li>-->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                
+                <div class="footer-secret"></div>
+                <div class="container footer-bottom clearfix">
+                &copy; <strong><span>Copyright</span> <strong class="px-1 sitename">Azzam Technology</strong> <span>All Rights Reserved 2025</span>
+            </div>
+
+            <div class="credits">
+                <span data-ar="تصميم و تطوير" data-en="Designed by">Designed & Developed by</span> 
+                <a href="https://me-one-blue.vercel.app/about.html" style="color: #ffffff;"> 
+                    <strong>Dev.Mohamed Elnil</strong> 
+                </a>
+            </div>
+            <div class="footer-secret" aria-hidden="true"> </div>
+            
+            
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div class="cart-header">
+                <h3>سلة التسوق</h3>
+                <button class="close-modal" id="close-cart">&times;</button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- سيتم تعبئة عناصر السلة هنا -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>المجموع:</span>
+                    <span id="cart-total">0 ج.م</span>
+                </div>
+                <div class="cart-actions">
+                    <button class="btn btn-primary" id="checkout-whatsapp">
+                        <i class="fab fa-whatsapp"></i> إتمام الطلب عبر واتساب
+                    </button>
+                    <button class="btn btn-secondary" id="continue-shopping">مواصلة التسوق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Modal -->
+    <div id="mobile-menu-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-mobile-menu">&times;</button>
+            <div id="mobile-menu-content"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        
+    </script>
+
+    <!-- زر الأدمن المخفي -->
+<div class="admin-secret-btn" id="admin-secret-btn" herff="admin.html">
+    <a href="admin.html"> </i>
+</div>
+
+<!-- مؤقت الضغط -->
+<div class="press-timer" id="press-timer">1.0s</div>
+
+</body>
+</html>
