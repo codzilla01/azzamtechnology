@@ -1,196 +1,1515 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azzam Technology</title>
+    <title>Azzam Technology | أقسام الحاسوب واللابتوب والشاشات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-    
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <img src="images/whatsapp_logo.png" alt="شعار شركة عزام تكنولوجي" class="logo-img">
-                <span>Azzam Technology</span>
-            </div>
-            <nav id="main-nav" class="main-nav">
-                <a href="#home">الرئيسية</a>
-                <a href="#products">المنتجات</a>
-                <a href="#about">من نحن</a>
-                <a href="#contact">اتصل بنا</a>
-            </nav>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-ar: 'Tajawal', 'Segoe UI', sans-serif;
+            --font-en: 'Poppins', 'Segoe UI', sans-serif;
+            --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.18);
+            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.25);
+            --shadow-glow: 0 0 30px rgba(230, 57, 70, 0.35);
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 22px;
+            --radius-xl: 28px;
+            --radius-full: 9999px;
+        }
 
-            <div class="header-actions">
-                <div class="search-box">
-                    <input type="text" id="top-search" placeholder="ابحث عن منتج...">
-                </div>
-                <div class="cart-icon" id="cart-icon">
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.75);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --border-light: #f1f5f9;
+            --accent: #e63946;
+            --accent-hover: #c92a37;
+            --accent-glow: rgba(230, 57, 70, 0.2);
+            --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e3a5f 40%, #1a1a2e 100%);
+            --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            --gradient-accent: linear-gradient(135deg, #e63946 0%, #ff6b6b 100%);
+            --gradient-section: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --nav-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            --overlay-light: rgba(255, 255, 255, 0.6);
+            --overlay-dark: rgba(0, 0, 0, 0.5);
+            --badge-bg: #fef2f2;
+            --badge-text: #e63946;
+            --input-bg: #ffffff;
+            --footer-bg: #0f172a;
+            --footer-text: #cbd5e1;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #1a2332;
+            --bg-card: #1e293b;
+            --bg-glass: rgba(30, 41, 59, 0.8);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: #334155;
+            --border-light: #1e293b;
+            --accent: #e63946;
+            --accent-hover: #ff4757;
+            --accent-glow: rgba(230, 57, 70, 0.35);
+            --gradient-hero: linear-gradient(135deg, #0a0f1a 0%, #111827 40%, #0d1117 100%);
+            --gradient-card: linear-gradient(145deg, #1e293b 0%, #1a2332 100%);
+            --gradient-accent: linear-gradient(135deg, #e63946 0%, #ff6b6b 100%);
+            --gradient-section: linear-gradient(180deg, #0f172a 0%, #1a2332 100%);
+            --nav-bg: rgba(15, 23, 42, 0.92);
+            --nav-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            --overlay-light: rgba(15, 23, 42, 0.6);
+            --overlay-dark: rgba(0, 0, 0, 0.7);
+            --badge-bg: #3b1a1d;
+            --badge-text: #ff6b6b;
+            --input-bg: #1e293b;
+            --footer-bg: #0a0f1a;
+            --footer-text: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            font-family: var(--font-ar);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            transition: background-color var(--transition-smooth), color var(--transition-smooth);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            min-height: 100vh;
+        }
+        body.en { font-family: var(--font-en); direction: ltr; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; transition: 0.3s; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-hover); }
+        .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); }
+
+        /* ========== NAVBAR ========== */
+        .navbar { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: var(--nav-shadow); transition: all var(--transition-smooth); padding: 0; height: 68px; display: flex; align-items: center; }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); font-weight: 800; font-size: 1.25rem; white-space: nowrap; cursor: pointer; user-select: none; }
+        .nav-logo .logo-icon { width: 42px; height: 42px; background: var(--gradient-accent); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem; box-shadow: var(--shadow-glow); }
+        .nav-links { display: flex; align-items: center; gap: 6px; list-style: none; flex-wrap: wrap; }
+        .nav-links a { text-decoration: none; color: var(--text-secondary); padding: 8px 14px; border-radius: var(--radius-full); transition: var(--transition-smooth); font-weight: 500; font-size: 0.9rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); background: var(--accent-glow); }
+        .nav-actions { display: flex; align-items: center; gap: 8px; }
+        .nav-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: var(--transition-smooth); position: relative; }
+        .nav-btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: var(--shadow-sm); }
+        .cart-badge { position: absolute; top: -6px; right: -6px; background: var(--accent); color: #fff; font-size: 0.7rem; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; animation: popIn 0.3s ease; }
+        @keyframes popIn { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .hamburger { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: 6px; }
+
+        /* ========== Mobile Menu ========== */
+        .mobile-menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 1099; opacity: 0; transition: opacity 0.3s; }
+        .mobile-menu-overlay.open { display: block; opacity: 1; }
+        .mobile-menu { position: fixed; top: 0; right: 0; width: 300px; max-width: 85vw; height: 100%; background: var(--bg-primary); z-index: 1100; padding: 24px; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); overflow-y: auto; box-shadow: var(--shadow-xl); display: flex; flex-direction: column; gap: 16px; }
+        body.en .mobile-menu { right: auto; left: 0; transform: translateX(-100%); }
+        .mobile-menu.open { transform: translateX(0); }
+        .mobile-menu a { display: block; padding: 12px 16px; text-decoration: none; color: var(--text-primary); border-radius: var(--radius-sm); font-weight: 500; font-size: 1rem; transition: var(--transition-smooth); }
+        .mobile-menu a:hover { background: var(--accent-glow); color: var(--accent); }
+        .mobile-menu-close { align-self: flex-end; background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; }
+
+        /* ========== HERO ========== */
+        .hero { background: var(--gradient-hero); color: #fff; padding: clamp(40px, 8vw, 80px) 0; text-align: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(230, 57, 70, 0.15) 0%, transparent 70%); top: -100px; right: -100px; border-radius: 50%; pointer-events: none; }
+        .hero::after { content: ''; position: absolute; width: 350px; height: 350px; background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%); bottom: -80px; left: -80px; border-radius: 50%; pointer-events: none; }
+        .hero .container { position: relative; z-index: 1; }
+        .hero h1 { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 900; margin-bottom: 16px; line-height: 1.3; }
+        .hero h1 span { background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: clamp(1rem, 2.5vw, 1.2rem); opacity: 0.85; max-width: 650px; margin: 0 auto 28px; }
+        .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: var(--radius-full); font-weight: 700; text-decoration: none; cursor: pointer; border: none; font-family: inherit; font-size: 0.95rem; transition: var(--transition-smooth); white-space: nowrap; }
+        .btn-primary { background: var(--gradient-accent); color: #fff; box-shadow: var(--shadow-glow); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(230, 57, 70, 0.5); }
+        .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255, 255, 255, 0.4); }
+        .btn-outline:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
+        .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+
+        /* ========== Section Titles ========== */
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 900; margin-bottom: 8px; }
+        .section-title p { color: var(--text-muted); font-size: 0.95rem; }
+        .section-title .accent-line { width: 60px; height: 4px; background: var(--gradient-accent); border-radius: 4px; margin: 12px auto 0; }
+
+        /* ========== Category Tabs ========== */
+        .category-tabs { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px; }
+        .category-tab { padding: 10px 20px; border-radius: var(--radius-full); border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: var(--transition-smooth); white-space: nowrap; font-family: inherit; display: inline-flex; align-items: center; gap: 6px; }
+        .category-tab:hover { border-color: var(--accent); color: var(--accent); }
+        .category-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: var(--shadow-glow); }
+
+        /* ========== Products Grid ========== */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .product-card { background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); transition: var(--transition-smooth); display: flex; flex-direction: column; position: relative; cursor: pointer; }
+        .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
+        .product-card-image { position: relative; height: 210px; overflow: hidden; background: var(--bg-tertiary); }
+        .product-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .product-card:hover .product-card-image img { transform: scale(1.06); }
+        .product-card-badge { position: absolute; top: 12px; right: 12px; background: var(--accent); color: #fff; padding: 4px 12px; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; z-index: 2; }
+        body.en .product-card-badge { right: auto; left: 12px; }
+        .product-card-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
+        .product-card-body h3 { font-size: 1rem; font-weight: 700; line-height: 1.4; }
+        .product-card-body .specs-pills { display: flex; flex-wrap: wrap; gap: 4px; }
+        .spec-pill { background: var(--bg-tertiary); padding: 3px 8px; border-radius: var(--radius-full); font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
+        .product-card-body .price { font-size: 1.3rem; font-weight: 900; color: var(--accent); margin-top: auto; }
+        .add-to-cart-btn { width: 100%; padding: 10px; border-radius: var(--radius-sm); background: var(--accent); color: #fff; border: none; cursor: pointer; font-weight: 700; font-family: inherit; font-size: 0.9rem; transition: var(--transition-smooth); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+        .add-to-cart-btn:hover { background: var(--accent-hover); box-shadow: var(--shadow-glow); }
+        .add-to-cart-btn.in-cart { background: #22c55e; }
+
+        /* ========== PC Builder ========== */
+        .pc-builder { background: var(--bg-secondary); padding: clamp(40px, 7vw, 70px) 0; border-radius: var(--radius-xl); margin: 30px 0; }
+        .pc-builder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+        .pc-builder-components { display: flex; flex-direction: column; gap: 12px; }
+        .pc-component-select { background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 16px; cursor: pointer; transition: var(--transition-smooth); display: flex; align-items: center; gap: 12px; position: relative; }
+        .pc-component-select:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
+        .pc-component-select.selected { border-color: #22c55e; background: rgba(34, 197, 94, 0.05); }
+        .pc-component-select .icon-circle { width: 44px; height: 44px; border-radius: 50%; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; transition: var(--transition-smooth); }
+        .pc-component-select.selected .icon-circle { background: #22c55e; color: #fff; }
+        .pc-component-select .comp-info { flex-grow: 1; min-width: 0; }
+        .pc-component-select .comp-name { font-weight: 700; font-size: 0.9rem; }
+        .pc-component-select .comp-choice { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pc-component-select .comp-price { font-weight: 700; color: var(--accent); font-size: 0.85rem; }
+        .component-options { display: none; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); margin-top: -4px; overflow: hidden; box-shadow: var(--shadow-md); max-height: 260px; overflow-y: auto; }
+        .component-options.open { display: block; }
+        .component-option { padding: 12px 16px; cursor: pointer; transition: var(--transition-smooth); border-bottom: 1px solid var(--border-light); font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+        .component-option:hover { background: var(--accent-glow); }
+        .component-option .opt-price { font-weight: 700; color: var(--accent); white-space: nowrap; }
+        .pc-summary { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; position: sticky; top: 90px; box-shadow: var(--shadow-md); }
+        .pc-summary h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 16px; text-align: center; }
+        .pc-summary-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+        .pc-summary-list li { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 6px 0; border-bottom: 1px solid var(--border-light); }
+        .pc-summary-total { font-size: 1.4rem; font-weight: 900; text-align: center; color: var(--accent); padding: 12px 0; border-top: 2px solid var(--border-color); }
+        .pc-summary .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+        /* ========== Cart Drawer ========== */
+        .cart-drawer-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .cart-drawer-overlay.open { opacity: 1; pointer-events: all; }
+        .cart-drawer { position: fixed; top: 0; right: 0; width: 400px; max-width: 92vw; height: 100%; background: var(--bg-primary); z-index: 2001; box-shadow: var(--shadow-xl); transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
+        body.en .cart-drawer { right: auto; left: 0; transform: translateX(-100%); }
+        .cart-drawer.open { transform: translateX(0); }
+        .cart-drawer-header { padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .cart-drawer-body { flex-grow: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .cart-drawer-footer { padding: 16px; border-top: 1px solid var(--border-color); }
+        .cart-item-mini { display: flex; gap: 12px; align-items: center; padding: 8px; background: var(--bg-card); border-radius: var(--radius-sm); border: 1px solid var(--border-light); }
+        .cart-item-mini img { width: 55px; height: 55px; object-fit: cover; border-radius: 8px; }
+        .cart-item-mini .details { flex-grow: 1; min-width: 0; }
+        .cart-item-mini .details h4 { font-size: 0.85rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .cart-item-mini .qty-control { display: flex; align-items: center; gap: 6px; }
+        .qty-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border-color); background: var(--bg-card); cursor: pointer; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-smooth); color: var(--text-primary); }
+        .qty-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+        /* ========== PRODUCT QUICK VIEW MODAL ========== */
+        .product-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); z-index: 4000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+        .product-modal-overlay.open { opacity: 1; pointer-events: all; }
+        .product-modal { background: var(--bg-card); border-radius: var(--radius-xl); width: 100%; max-width: 850px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-xl); position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 0; animation: modalSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid var(--border-color); }
+        @keyframes modalSlideIn { from { opacity: 0; transform: translateY(30px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .product-modal-close { position: absolute; top: 14px; left: 14px; width: 38px; height: 38px; border-radius: 50%; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); cursor: pointer; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; z-index: 10; transition: var(--transition-smooth); }
+        .product-modal-close:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .product-modal-image { position: relative; min-height: 350px; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; border-radius: 0 var(--radius-xl) var(--radius-xl) 0; overflow: hidden; }
+        .product-modal-image img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+        .product-modal-image .modal-badge { position: absolute; top: 16px; right: 16px; background: var(--accent); color: #fff; padding: 6px 16px; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 700; z-index: 2; }
+        .product-modal-details { padding: 28px 24px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+        .product-modal-details h2 { font-size: 1.5rem; font-weight: 800; line-height: 1.3; margin: 0; }
+        .product-modal-details .modal-brand { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+        .product-modal-details .modal-price { font-size: 2rem; font-weight: 900; color: var(--accent); margin: 4px 0; }
+        .product-modal-details .modal-specs { display: flex; flex-wrap: wrap; gap: 8px; }
+        .product-modal-details .modal-spec-item { background: var(--bg-tertiary); padding: 8px 14px; border-radius: var(--radius-sm); font-size: 0.85rem; display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-light); }
+        .product-modal-details .modal-spec-item .spec-label { color: var(--text-muted); font-size: 0.75rem; }
+        .product-modal-details .modal-spec-item .spec-value { font-weight: 700; color: var(--text-primary); }
+        .product-modal-actions { display: flex; gap: 10px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-light); }
+        .product-modal-actions .btn { flex: 1; justify-content: center; }
+
+        /* ========== ADMIN AUTH MODAL ========== */
+        .admin-auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 6000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .admin-auth-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .admin-auth-modal {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            width: 100%;
+            max-width: 440px;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            animation: modalSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-color);
+            padding: 32px 24px;
+        }
+        .admin-auth-modal h3 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .admin-auth-modal .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        .admin-auth-modal .otp-input-group {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+            direction: ltr;
+        }
+        .admin-auth-modal .otp-input {
+            width: 48px;
+            height: 56px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 800;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-family: var(--font-en);
+            transition: var(--transition-smooth);
+        }
+        .admin-auth-modal .otp-input:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .admin-auth-modal .whatsapp-btn {
+            width: 100%;
+            justify-content: center;
+            background: #25D366;
+            color: #fff;
+            font-size: 1rem;
+            padding: 14px;
+        }
+        .admin-auth-modal .whatsapp-btn:hover {
+            background: #1ebe57;
+            transform: translateY(-2px);
+        }
+        .admin-auth-modal .verify-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 14px;
+        }
+        .admin-auth-modal .error-msg {
+            text-align: center;
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+        }
+        .admin-auth-modal .success-msg {
+            text-align: center;
+            color: #22c55e;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+        }
+        .admin-auth-modal .close-auth {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+        .admin-auth-modal .close-auth:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .admin-auth-modal .timer-text {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+
+        /* ========== Toast ========== */
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #22c55e; color: #fff; padding: 12px 24px; border-radius: var(--radius-full); z-index: 5000; font-weight: 600; box-shadow: var(--shadow-lg); animation: slideUpFade 0.4s ease; white-space: nowrap; font-size: 0.9rem; }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+        /* ========== Empty State ========== */
+        .empty-state { text-align: center; padding: 48px 16px; color: var(--text-muted); }
+        .empty-state i { font-size: 3.5rem; margin-bottom: 12px; opacity: 0.5; }
+
+        /* ========== Footer ========== */
+        .footer { background: var(--footer-bg); color: var(--footer-text); padding: 48px 0 20px; margin-top: 40px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; margin-bottom: 28px; }
+        .footer-col h4 { color: #fff; margin-bottom: 14px; font-size: 1rem; }
+        .footer-col a, .footer-col p { color: var(--footer-text); text-decoration: none; font-size: 0.85rem; display: block; margin-bottom: 6px; transition: color 0.2s; }
+        .footer-col a:hover { color: #fff; }
+        .social-links { display: flex; gap: 10px; margin-top: 10px; }
+        .social-links a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; color: #fff; transition: var(--transition-smooth); }
+        .social-links a:hover { background: var(--accent); transform: translateY(-3px); }
+        .footer-bottom { text-align: center; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.8rem; color: var(--footer-text); }
+
+        /* ========== ADMIN SECRET: Long Press Indicator ========== */
+        .admin-press-bar {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+            width: 50px; height: 4px; background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px; z-index: 10000; display: none; overflow: hidden; pointer-events: none;
+        }
+        .admin-press-bar.show { display: block; }
+        .admin-press-fill { height: 100%; background: #e63946; width: 0%; transition: width 0.1s linear; border-radius: 4px; }
+        .admin-secret-hint {
+            position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+            background: rgba(0, 0, 0, 0.9); color: #fff; padding: 6px 14px; border-radius: 16px;
+            font-size: 11px; z-index: 10000; opacity: 0; pointer-events: none;
+            transition: all 0.3s ease; font-family: var(--font-ar); white-space: nowrap;
+        }
+        .admin-secret-hint.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 992px) { .pc-builder-grid { grid-template-columns: 1fr; } .pc-summary { position: static; } }
+        @media (max-width: 768px) {
+            .nav-links { display: none; } .hamburger { display: flex; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+            .hero h1 { font-size: 1.6rem; } .cart-drawer { width: 100%; max-width: 100vw; }
+            .category-tabs { gap: 4px; } .category-tab { padding: 8px 14px; font-size: 0.8rem; }
+            .product-modal { grid-template-columns: 1fr; max-height: 95vh; }
+            .product-modal-image { min-height: 220px; border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
+            .product-modal-details { padding: 20px 16px; }
+            .product-modal-details h2 { font-size: 1.2rem; } .product-modal-details .modal-price { font-size: 1.5rem; }
+            .admin-auth-modal .otp-input { width: 40px; height: 48px; font-size: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .product-card-image { height: 140px; } .product-card-body { padding: 10px; }
+            .product-card-body h3 { font-size: 0.82rem; } .product-card-body .price { font-size: 1rem; }
+            .add-to-cart-btn { font-size: 0.78rem; padding: 8px; } .btn { padding: 10px 16px; font-size: 0.85rem; }
+            .hero { padding: 30px 0; } .hero h1 { font-size: 1.35rem; }
+            .product-modal-overlay { padding: 10px; } .product-modal-image { min-height: 180px; }
+            .admin-auth-modal { padding: 24px 16px; }
+            .admin-auth-modal .otp-input { width: 36px; height: 44px; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body data-lang="ar">
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo" id="nav-logo">
+                <span class="logo-icon"><i class="fas fa-microchip"></i></span>
+                <span>Azzam Technology</span>
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home" class="active" data-i18n="nav_home">الرئيسية</a></li>
+                <li><a href="#monitors" data-i18n="nav_monitors">شاشات</a></li>
+                <li><a href="#laptops" data-i18n="nav_laptops">لابتوب</a></li>
+                <li><a href="#pc-section" data-i18n="nav_pc">PC</a></li>
+                <li><a href="#pc-builder-section" data-i18n="nav_builder">تجميع PC</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-btn" id="lang-toggle" title="English / العربية">🌐</button>
+                <button class="nav-btn" id="theme-toggle" title="تبديل النمط">🌙</button>
+                <button class="nav-btn" id="cart-nav-btn" title="سلة التسوق">
                     <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-count">0</span>
-                </div>
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="قائمة الهاتف">
+                    <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+                </button>
+                <button class="hamburger" id="hamburger-btn" aria-label="قائمة">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- Hero Section -->
+    <!-- ==================== MOBILE MENU ==================== -->
+    <div class="mobile-menu-overlay" id="mobile-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <button class="mobile-menu-close" id="mobile-close">&times;</button>
+        <a href="#home" data-i18n="nav_home">الرئيسية</a>
+        <a href="#monitors" data-i18n="nav_monitors">شاشات</a>
+        <a href="#laptops" data-i18n="nav_laptops">لابتوب</a>
+        <a href="#pc-section" data-i18n="nav_pc">PC</a>
+        <a href="#pc-builder-section" data-i18n="nav_builder">تجميع PC</a>
+    </div>
+
+    <!-- ==================== CART DRAWER ==================== -->
+    <div class="cart-drawer-overlay" id="cart-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-drawer-header">
+            <h3 id="cart-title">🛒 سلة التسوق</h3>
+            <button class="nav-btn" id="cart-close-btn">&times;</button>
+        </div>
+        <div class="cart-drawer-body" id="cart-drawer-body"></div>
+        <div class="cart-drawer-footer">
+            <div class="pc-summary-total" id="cart-total-display">المجموع: 0 ج.م</div>
+            <button class="btn btn-primary" id="checkout-btn" style="width:100%;justify-content:center;">
+                <i class="fab fa-whatsapp"></i> <span data-i18n="checkout">إتمام الطلب عبر واتساب</span>
+            </button>
+            <button class="btn btn-outline" id="clear-cart-btn" style="width:100%;justify-content:center;margin-top:8px;border-color:var(--accent);color:var(--accent);">
+                <span data-i18n="clear_cart">تفريغ السلة</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== PRODUCT QUICK VIEW MODAL ==================== -->
+    <div class="product-modal-overlay" id="product-modal-overlay">
+        <div class="product-modal" id="product-modal">
+            <button class="product-modal-close" id="product-modal-close">&times;</button>
+            <div class="product-modal-image" id="modal-product-image"></div>
+            <div class="product-modal-details" id="modal-product-details"></div>
+        </div>
+    </div>
+
+    <!-- ==================== ADMIN AUTH MODAL ==================== -->
+    <div class="admin-auth-overlay" id="admin-auth-overlay">
+        <div class="admin-auth-modal">
+            <button class="close-auth" id="close-auth-modal">&times;</button>
+            <h3>🔐 تسجيل دخول الأدمن</h3>
+            <p class="subtitle">تم إرسال كود التحقق إلى واتساب المالك</p>
+            <div class="otp-input-group" id="otp-inputs">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" data-index="0">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" data-index="1">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" data-index="2">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" data-index="3">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" data-index="4">
+                <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" data-index="5">
+            </div>
+            <button class="btn btn-primary verify-btn" id="verify-otp-btn">
+                <i class="fas fa-check-circle"></i> تحقق من الكود
+            </button>
+            <p class="error-msg" id="auth-error">❌ الكود غير صحيح</p>
+            <p class="success-msg" id="auth-success">✅ تم التحقق بنجاح!</p>
+            <p class="timer-text" id="timer-text">⏳ صلاحية الكود: 5 دقائق</p>
+            <button class="btn btn-outline whatsapp-btn" id="resend-whatsapp-btn" style="margin-top:12px;display:none;">
+                <i class="fab fa-whatsapp"></i> إعادة إرسال الكود
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== ADMIN SECRET ELEMENTS ==================== -->
+    <div class="admin-press-bar" id="admin-press-bar">
+        <div class="admin-press-fill" id="admin-press-fill"></div>
+    </div>
+    <div class="admin-secret-hint" id="admin-secret-hint"></div>
+
+    <!-- ==================== HERO ==================== -->
     <section class="hero" id="home">
         <div class="container">
-            <h1>اكتشف أحدث الشاشات بأسعار تنافسية وجودة عالية</h1>
-            <p></p>
-            <a href="#products" class="btn btn-primary">استعرض المنتجات</a>
+            <h1 data-i18n="hero_title">اكتشف <span>أفضل الأجهزة</span> بأسعار تنافسية</h1>
+            <p data-i18n="hero_sub">شاشات، لابتوبات، قطع PC، وإمكانية تجميع جهازك المثالي - كل ذلك في مكان واحد مع ضمان وجودة عالية</p>
+            <div class="hero-btns">
+                <a href="#monitors" class="btn btn-primary"><i class="fas fa-desktop"></i> <span data-i18n="browse_monitors">تصفح الشاشات</span></a>
+                <a href="#pc-builder-section" class="btn btn-outline"><i class="fas fa-tools"></i> <span data-i18n="build_pc">تجميع PC</span></a>
+            </div>
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section class="products-section" id="products">
+    <!-- ==================== MONITORS SECTION ==================== -->
+    <section id="monitors" style="padding:50px 0;">
         <div class="container">
-            <h2 class="section-title">منتجاتنا</h2>
-
-            <div class="filters">
-                <button class="filter-btn active" data-filter="all">الكل</button>
-                <button class="filter-btn" data-filter="dell">Dell</button>
-                <button class="filter-btn" data-filter="apple">Apple</button>
-                <button class="filter-btn" data-filter="hp">HP</button>
-                <button class="filter-btn" data-filter="lenovo">Lenovo</button>
-                <button class="filter-btn" data-filter="asus">Asus</button>
+            <div class="section-title">
+                <h2 data-i18n="monitors_title">🖥️ الشاشات</h2>
+                <p data-i18n="monitors_sub">شاشات مستوردة فرز أول عالية الدقة للألعاب والعمل والإبداع</p>
+                <div class="accent-line"></div>
             </div>
-
-            <div id="products-grid" class="products-grid">
-                <!-- سيتم تعبئة المنتجات هنا عبر JavaScript -->
+            <div class="category-tabs" id="monitor-filters">
+                <button class="category-tab active" data-filter="all">الكل</button>
+                <button class="category-tab" data-filter="samsung">Samsung</button>
+                <button class="category-tab" data-filter="lg">LG</button>
+                <button class="category-tab" data-filter="dell">Dell</button>
+                <button class="category-tab" data-filter="asus">Asus</button>
             </div>
+            <div class="products-grid" id="monitors-grid"></div>
+        </div>
+    </section>
 
-            <div id="no-products" class="hidden text-center muted" style="padding: 40px;">
-                <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                <h3>لا توجد منتجات تطابق بحثك</h3>
-                <p>حاول استخدام مصطلحات بحث أخرى أو استعرض جميع المنتجات</p>
+    <!-- ==================== LAPTOPS SECTION ==================== -->
+    <section id="laptops" style="padding:50px 0;background:var(--bg-secondary);">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="laptops_title">💻 أجهزة اللابتوب</h2>
+                <p data-i18n="laptops_sub">اللابتوبات مستوردة من امريكا واوروبا والشرق الأوسط</p>
+                <div class="accent-line"></div>
+            </div>
+            <div class="category-tabs" id="laptop-filters">
+                <button class="category-tab active" data-filter="all">الكل</button>
+                <button class="category-tab" data-filter="dell">Dell</button>
+                <button class="category-tab" data-filter="apple">Apple</button>
+                <button class="category-tab" data-filter="hp">HP</button>
+                <button class="category-tab" data-filter="lenovo">Lenovo</button>
+                <button class="category-tab" data-filter="asus">Asus</button>
+            </div>
+            <div class="products-grid" id="laptops-grid"></div>
+        </div>
+    </section>
+
+    <!-- ==================== PC PRE-BUILT SECTION ==================== -->
+    <section id="pc-section" style="padding:50px 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="pc_title">🖥️ أجهزة كمبيوتر مجمّعة مسبقاً</h2>
+                <p data-i18n="pc_sub">أجهزة كمبيوتر مكتبية جاهزة بأفضل المواصفات والأسعار</p>
+                <div class="accent-line"></div>
+            </div>
+            <div class="products-grid" id="pc-grid"></div>
+        </div>
+    </section>
+
+    <!-- ==================== PC BUILDER SECTION ==================== -->
+    <section id="pc-builder-section" style="padding:50px 0;background:var(--bg-secondary);">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="builder_title">🔧 تجميع جهاز PC الخاص بك</h2>
+                <p data-i18n="builder_sub">اختر كل قطعة بنفسك وقم بتجميع جهاز أحلامك - الأسعار تظهر تلقائياً</p>
+                <div class="accent-line"></div>
+            </div>
+            <div class="pc-builder-grid">
+                <div class="pc-builder-components" id="pc-builder-components"></div>
+                <div class="pc-summary" id="pc-summary">
+                    <h3 data-i18n="summary_title">📋 ملخص التجميع</h3>
+                    <ul class="pc-summary-list" id="pc-summary-list"></ul>
+                    <div class="pc-summary-total" id="pc-total-price">المجموع: 0 ج.م</div>
+                    <button class="btn btn-primary" id="add-pc-to-cart">
+                        <i class="fas fa-cart-plus"></i> <span data-i18n="add_build">إضافة التجميع إلى السلة</span>
+                    </button>
+                    <button class="btn btn-outline" id="reset-builder" style="width:100%;margin-top:8px;border-color:var(--accent);color:var(--accent);">
+                        <span data-i18n="reset_build">إعادة تعيين</span>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container" id="about">
-            <div class="footer-content">
-                <div class="footer-column">
-                    </p><h3>عن الشركة</h3>
-                    <p>شركة الجوكر للكمبيوتر تقدم أفضل الخدمات وأحدث أجهزة الكمبيوتر</p>
-                    <div class="social-links">
-                        <a href="https://www.facebook.com/share/1RUTtYUDSt/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.instagram.com/megoa_elgokar?igsh=cmJ3dXB2Y2lja2ln&utm_source=qr"><i class="fab fa-instagram"></i></a>
-                        <a href="https://wa.me/+201055512244"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-
-                <div class="footer-column">
-                    <h3>روابط سريعة</h3>
-                    <ul>
-                        <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#products">المنتجات</a></li>
-                        <li><a href="#about">من نحن</a></li>
-                        <li><a href="#contact">اتصل بنا</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-column">
-                    <h3>معلومات الاتصال</h3>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> مول البستان - الطابق الأرضي - القاهرة - مصر </li>
-                        <li><i class="fas fa-phone"></i> 01025555207 </li>
-                        <li><i class="fas fa-envelope"></i> technologyazzam@gmail.com </li>
-                    </ul>
-                </div>
-
-                <div class="footer-column">
-                    <h3>الخدمات</h3>
-                    <ul>
-                        <li><a href="https://wa.me/+201025555207">الدعم الفني</a></li>
-                        <li><a href="#">خدمة التوصيل</a></li>
-                        <li><a href="policy.html">الضمان والاستبدال</a></li>
-                        <!--<li><a href="#">الدفع عند الاستلام</a></li>-->
-                    </ul>
-                </div>
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col"><h4 data-i18n="footer_about">عن الشركة</h4><p data-i18n="footer_about_text">Azzam Technology تقدم أفضل الأجهزة وخدمات التجميع الاحترافية</p><div class="social-links"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a></div></div>
+                <div class="footer-col"><h4 data-i18n="footer_links">روابط سريعة</h4><a href="#home" data-i18n="nav_home">الرئيسية</a><a href="#monitors" data-i18n="nav_monitors">شاشات</a><a href="#laptops" data-i18n="nav_laptops">لابتوب</a><a href="#pc-builder-section" data-i18n="nav_builder">تجميع PC</a></div>
+                <div class="footer-col"><h4 data-i18n="footer_contact">معلومات الاتصال</h4><p>📍 مول البستان - القاهرة - مصر</p><p>📞 01025555207</p><p>☎️ 0223932070</p><p>📧 technologyazzam@gmail.com</p></div>
+                <div class="footer-col"><h4 data-i18n="footer_services">الخدمات</h4><a href="https://wa.me/+201025555207">الدعم الفني</a><a href="https://wa.me/+201025555207">خدمة التوصيل</a><a href="#policy.html">الضمان والاستبدال</a></div>
             </div>
-
-            <div class="copyright">
-                
-                <div class="footer-secret"></div>
-                <div class="container footer-bottom clearfix">
-                &copy; <strong><span>Copyright</span> <strong class="px-1 sitename">Azzam Technology</strong> <span>All Rights Reserved 2025</span>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Azzam Technology. All Rights Reserved.</p>
+                <div class="credits"><span>Designed & Developed by</span> <a href="https://me-one-blue.vercel.app/about.html" style="color: #ffffff;"><strong>Mr.Developer</strong></a></div>
             </div>
-
-            <div class="credits">
-                <span data-ar="تصميم و تطوير" data-en="Designed by">Designed & Developed by</span> 
-                <a href="https://me-one-blue.vercel.app/about.html" style="color: #ffffff;"> 
-                    <strong>Dev.Mohamed Elnil</strong> 
-                </a>
-            </div>
-            <div class="footer-secret" aria-hidden="true"> </div>
-            
-            
         </div>
     </footer>
 
-    <!-- Product Modal -->
-    <div id="product-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" id="close-modal">&times;</button>
-            <div id="modal-body"></div>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <div class="cart-header">
-                <h3>سلة التسوق</h3>
-                <button class="close-modal" id="close-cart">&times;</button>
-            </div>
-            <div class="cart-items" id="cart-items">
-                <!-- سيتم تعبئة عناصر السلة هنا -->
-            </div>
-            <div class="cart-footer">
-                <div class="cart-total">
-                    <span>المجموع:</span>
-                    <span id="cart-total">0 ج.م</span>
-                </div>
-                <div class="cart-actions">
-                    <button class="btn btn-primary" id="checkout-whatsapp">
-                        <i class="fab fa-whatsapp"></i> إتمام الطلب عبر واتساب
-                    </button>
-                    <button class="btn btn-secondary" id="continue-shopping">مواصلة التسوق</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mobile Menu Modal -->
-    <div id="mobile-menu-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-modal" id="close-mobile-menu">&times;</button>
-            <div id="mobile-menu-content"></div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+    <!-- ==================== TOAST ==================== -->
+    <div class="toast" id="toast" style="display:none;"></div>
 
     <script>
-        
+        (function() {
+            // ==================== ADMIN AUTH SYSTEM ====================
+            const ADMIN_URL = 'admin.html';
+            const OWNER_WHATSAPP = '201010184778'; // رقم واتساب المالك
+            const OTP_VALIDITY_MINUTES = 5;
+            const LONG_PRESS_DURATION = 3000;
+
+            let currentOTP = null;
+            let otpExpiryTime = null;
+            let otpTimerInterval = null;
+            let pressStartTime = 0;
+            let pressTimer = null;
+            let hintTimeout = null;
+
+            // DOM elements
+            const logoElement = document.getElementById('nav-logo');
+            const pressBar = document.getElementById('admin-press-bar');
+            const pressFill = document.getElementById('admin-press-fill');
+            const secretHint = document.getElementById('admin-secret-hint');
+            const authOverlay = document.getElementById('admin-auth-overlay');
+            const otpInputs = document.querySelectorAll('#otp-inputs .otp-input');
+            const verifyBtn = document.getElementById('verify-otp-btn');
+            const authError = document.getElementById('auth-error');
+            const authSuccess = document.getElementById('auth-success');
+            const timerText = document.getElementById('timer-text');
+            const resendBtn = document.getElementById('resend-whatsapp-btn');
+            const closeAuthBtn = document.getElementById('close-auth-modal');
+
+            /**
+             * توليد كود عشوائي مكون من 6 أرقام
+             */
+            function generateOTP() {
+                return Math.floor(100000 + Math.random() * 900000).toString();
+            }
+
+            /**
+             * فتح رابط واتساب مع الكود
+             */
+            function sendOTPToWhatsApp(otp) {
+                const message = encodeURIComponent(
+                    `🔐 *رمز التحقق للوحة التحكم*\n\n` +
+                    `الكود: *${otp}*\n\n` +
+                    `⏳ صالح لمدة ${OTP_VALIDITY_MINUTES} دقائق\n` +
+                    `🛡️ Azzam Technology Admin Panel`
+                );
+                const whatsappUrl = `https://wa.me/${OWNER_WHATSAPP}?text=${message}`;
+                window.open(whatsappUrl, '_blank');
+            }
+
+            /**
+             * بدء مؤقت انتهاء الصلاحية
+             */
+            function startOTPTimer() {
+                otpExpiryTime = Date.now() + OTP_VALIDITY_MINUTES * 60 * 1000;
+                updateTimerDisplay();
+                resendBtn.style.display = 'block';
+
+                clearInterval(otpTimerInterval);
+                otpTimerInterval = setInterval(() => {
+                    updateTimerDisplay();
+                    if (Date.now() >= otpExpiryTime) {
+                        clearInterval(otpTimerInterval);
+                        currentOTP = null;
+                        timerText.textContent = '⌛ انتهت صلاحية الكود';
+                        verifyBtn.disabled = true;
+                        verifyBtn.style.opacity = '0.5';
+                        resendBtn.style.display = 'block';
+                    }
+                }, 1000);
+            }
+
+            function updateTimerDisplay() {
+                if (!otpExpiryTime) return;
+                const remaining = Math.max(0, Math.floor((otpExpiryTime - Date.now()) / 1000));
+                const minutes = Math.floor(remaining / 60);
+                const seconds = remaining % 60;
+                timerText.textContent = `⏳ صلاحية الكود: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            /**
+             * فتح نافذة التحقق
+             */
+            function openAuthModal() {
+                // توليد كود جديد
+                currentOTP = generateOTP();
+                otpExpiryTime = Date.now() + OTP_VALIDITY_MINUTES * 60 * 1000;
+
+                // إرسال الكود إلى واتساب
+                sendOTPToWhatsApp(currentOTP);
+
+                // إعادة تعيين النافذة
+                otpInputs.forEach(inp => inp.value = '');
+                authError.style.display = 'none';
+                authSuccess.style.display = 'none';
+                verifyBtn.disabled = false;
+                verifyBtn.style.opacity = '1';
+                resendBtn.style.display = 'block';
+
+                // فتح النافذة
+                authOverlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+
+                // تركيز أول حقل
+                setTimeout(() => otpInputs[0].focus(), 300);
+
+                // بدء المؤقت
+                startOTPTimer();
+
+                // إظهار تنبيه
+                showToast('تم إرسال كود التحقق');
+            }
+
+            function closeAuthModal() {
+                authOverlay.classList.remove('open');
+                document.body.style.overflow = '';
+                clearInterval(otpTimerInterval);
+                otpInputs.forEach(inp => inp.value = '');
+            }
+
+            /**
+             * التحقق من الكود
+             */
+            function verifyOTP() {
+                const enteredOTP = Array.from(otpInputs).map(inp => inp.value).join('');
+
+                if (enteredOTP.length !== 6) {
+                    authError.textContent = '❌ الرجاء إدخال الكود كاملاً (6 أرقام)';
+                    authError.style.display = 'block';
+                    authSuccess.style.display = 'none';
+                    return;
+                }
+
+                if (Date.now() > otpExpiryTime) {
+                    authError.textContent = '⌛ انتهت صلاحية الكود، اطلب كوداً جديداً';
+                    authError.style.display = 'block';
+                    authSuccess.style.display = 'none';
+                    return;
+                }
+
+                if (enteredOTP === currentOTP) {
+                    // نجاح التحقق
+                    authError.style.display = 'none';
+                    authSuccess.style.display = 'block';
+                    verifyBtn.disabled = true;
+                    verifyBtn.style.opacity = '0.5';
+                    clearInterval(otpTimerInterval);
+
+                    // حفظ حالة المصادقة
+                    sessionStorage.setItem('admin_authenticated', 'true');
+                    sessionStorage.setItem('admin_auth_time', Date.now().toString());
+
+                    // الانتقال للوحة التحكم
+                    setTimeout(() => {
+                        closeAuthModal();
+                        window.location.href = ADMIN_URL;
+                    }, 800);
+                } else {
+                    authError.textContent = '❌ الكود غير صحيح، حاول مرة أخرى';
+                    authError.style.display = 'block';
+                    authSuccess.style.display = 'none';
+                    // رج الحقول
+                    otpInputs.forEach(inp => {
+                        inp.style.borderColor = '#ef4444';
+                        setTimeout(() => inp.style.borderColor = 'var(--border-color)', 500);
+                    });
+                }
+            }
+
+            /**
+             * إعادة إرسال الكود
+             */
+            function resendOTP() {
+                currentOTP = generateOTP();
+                otpExpiryTime = Date.now() + OTP_VALIDITY_MINUTES * 60 * 1000;
+                sendOTPToWhatsApp(currentOTP);
+                otpInputs.forEach(inp => inp.value = '');
+                authError.style.display = 'none';
+                authSuccess.style.display = 'none';
+                verifyBtn.disabled = false;
+                verifyBtn.style.opacity = '1';
+                startOTPTimer();
+                otpInputs[0].focus();
+                showToast('تم إرسال كود جديد');
+            }
+
+            // ==================== OTP INPUT HANDLING ====================
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    const value = e.target.value;
+                    if (value && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                    // التحقق التلقائي عند اكتمال 6 أرقام
+                    if (index === 5 && value) {
+                        setTimeout(verifyOTP, 200);
+                    }
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !input.value && index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                    if (e.key === 'Enter') {
+                        verifyOTP();
+                    }
+                });
+
+                // منع الحروف غير الرقمية
+                input.addEventListener('beforeinput', (e) => {
+                    if (e.data && !/^[0-9]$/.test(e.data)) {
+                        e.preventDefault();
+                    }
+                });
+
+                // لصق الكود كاملاً
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pasted = (e.clipboardData || window.clipboardData).getData('text').trim();
+                    if (/^\d{6}$/.test(pasted)) {
+                        pasted.split('').forEach((char, i) => {
+                            if (otpInputs[i]) otpInputs[i].value = char;
+                        });
+                        otpInputs[5].focus();
+                        setTimeout(verifyOTP, 200);
+                    }
+                });
+            });
+
+            // ==================== EVENT LISTENERS ====================
+            verifyBtn.addEventListener('click', verifyOTP);
+            resendBtn.addEventListener('click', resendOTP);
+            closeAuthBtn.addEventListener('click', closeAuthModal);
+            authOverlay.addEventListener('click', (e) => {
+                if (e.target === authOverlay) closeAuthModal();
+            });
+
+            // ==================== LONG PRESS ON LOGO ====================
+            function showHint(text, duration = 2000) {
+                if (!secretHint) return;
+                secretHint.textContent = text;
+                secretHint.classList.add('show');
+                clearTimeout(hintTimeout);
+                hintTimeout = setTimeout(() => secretHint.classList.remove('show'), duration);
+            }
+
+            function startLongPress(e) {
+                if (e.type === 'touchstart') e.preventDefault();
+                pressStartTime = Date.now();
+                if (pressBar) pressBar.classList.add('show');
+                if (pressFill) pressFill.style.width = '0%';
+                pressTimer = setInterval(() => {
+                    const elapsed = Date.now() - pressStartTime;
+                    const progress = Math.min((elapsed / LONG_PRESS_DURATION) * 100, 100);
+                    if (pressFill) pressFill.style.width = progress + '%';
+                    if (elapsed > 500 && elapsed < 1500 && !secretHint.classList.contains('show')) showHint('⏳...', 1500);
+                    else if (elapsed > 1500 && elapsed < 2500) showHint('🔓...', 1500);
+                    if (elapsed >= LONG_PRESS_DURATION) {
+                        stopLongPress();
+                        openAuthModal();
+                    }
+                }, 50);
+            }
+
+            function stopLongPress() {
+                clearInterval(pressTimer);
+                pressTimer = null;
+                if (pressBar) pressBar.classList.remove('show');
+                if (pressFill) pressFill.style.width = '0%';
+            }
+
+            if (logoElement) {
+                logoElement.addEventListener('mousedown', startLongPress);
+                logoElement.addEventListener('mouseup', stopLongPress);
+                logoElement.addEventListener('mouseleave', stopLongPress);
+                logoElement.addEventListener('touchstart', startLongPress, { passive: false });
+                logoElement.addEventListener('touchend', stopLongPress);
+                logoElement.addEventListener('touchcancel', stopLongPress);
+            }
+
+            document.addEventListener('visibilitychange', () => { if (document.hidden) stopLongPress(); });
+
+            // ==================== BACKUP METHODS ====================
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                    e.preventDefault();
+                    openAuthModal();
+                }
+            });
+
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('admin') || params.has('panel')) {
+                openAuthModal();
+            }
+
+            // التحقق من وجود جلسة مصادقة سابقة
+            if (params.has('auth') && sessionStorage.getItem('admin_authenticated') === 'true') {
+                const authTime = parseInt(sessionStorage.getItem('admin_auth_time') || '0');
+                if (Date.now() - authTime < 30 * 60 * 1000) { // 30 دقيقة صلاحية
+                    window.location.href = ADMIN_URL;
+                }
+            }
+
+            console.log('%c🛡️ Azzam Technology Security System', 'font-size:16px;font-weight:bold;color:#e63946;');
+            console.log('%c🔐 للوصول للوحة التحكم:', 'font-size:11px;color:#94a3b8;');
+            console.log('%c  1. اضغط على الشعار', 'font-size:10px;color:#64748b;');
+            console.log('%c  2. سيتم إرسال كود تحقق إلى المالك', 'font-size:10px;color:#64748b;');
+            console.log('%c  3. أدخل الكود المرسل إليك', 'font-size:10px;color:#64748b;');
+
+            // ==================== DATA ====================
+            const laptops = [
+                { id: 'l1', name: 'Dell XPS 13', brand: 'dell', price: 25000, image: 'https://picsum.photos/seed/dellxps/400/260', specs: { 'المعالج': 'i7-1360P', 'الذاكرة': '16GB', 'التخزين': '512GB SSD', 'الشاشة': '13.3"' }, category: 'laptop' },
+                { id: 'l2', name: 'MacBook Pro 16', brand: 'apple', price: 45000, image: 'https://picsum.photos/seed/macbook/400/260', specs: { 'المعالج': 'M3 Pro', 'الذاكرة': '32GB', 'التخزين': '1TB', 'الشاشة': '16"' }, category: 'laptop' },
+                { id: 'l3', name: 'HP Spectre x360', brand: 'hp', price: 22000, image: 'https://picsum.photos/seed/hpspectre/400/260', specs: { 'المعالج': 'i5-1335U', 'الذاكرة': '8GB', 'التخزين': '256GB', 'الشاشة': '13.5"' }, category: 'laptop' },
+                { id: 'l4', name: 'Lenovo ThinkPad X1', brand: 'lenovo', price: 28000, image: 'https://picsum.photos/seed/thinkpad/400/260', specs: { 'المعالج': 'i7-1370P', 'الذاكرة': '16GB', 'التخزين': '1TB', 'الشاشة': '14"' }, category: 'laptop' },
+                { id: 'l5', name: 'Asus ROG Zephyrus', brand: 'asus', price: 35000, image: 'https://picsum.photos/seed/rogzeph/400/260', specs: { 'المعالج': 'i9-13900H', 'الذاكرة': '32GB', 'التخزين': '1TB', 'الشاشة': '15.6"' }, category: 'laptop' },
+                { id: 'l6', name: 'Dell Inspiron 15', brand: 'dell', price: 12000, image: 'https://picsum.photos/seed/inspiron/400/260', specs: { 'المعالج': 'i3-1215U', 'الذاكرة': '8GB', 'التخزين': '256GB', 'الشاشة': '15.6"' }, category: 'laptop' },
+            ];
+
+            const monitors = [
+                { id: 'm1', name: 'Samsung 24" FHD', brand: 'samsung', price: 3200, image: 'https://picsum.photos/seed/sam24/400/260', specs: { 'الدقة': '1920x1080', 'التردد': '75Hz', 'النوع': 'IPS', 'الحجم': '24"' }, category: 'monitor' },
+                { id: 'm2', name: 'LG UltraGear 27"', brand: 'lg', price: 6500, image: 'https://picsum.photos/seed/lg27/400/260', specs: { 'الدقة': '2560x1440', 'التردد': '165Hz', 'النوع': 'IPS', 'الحجم': '27"' }, category: 'monitor' },
+                { id: 'm3', name: 'Dell 27" 4K', brand: 'dell', price: 8900, image: 'https://picsum.photos/seed/dell4k/400/260', specs: { 'الدقة': '3840x2160', 'التردد': '60Hz', 'النوع': 'IPS', 'الحجم': '27"' }, category: 'monitor' },
+                { id: 'm4', name: 'ASUS TUF 24" 144Hz', brand: 'asus', price: 4500, image: 'https://picsum.photos/seed/asus144/400/260', specs: { 'الدقة': '1920x1080', 'التردد': '144Hz', 'النوع': 'VA', 'الحجم': '24"' }, category: 'monitor' },
+            ];
+
+            const prebuiltPCs = [
+                { id: 'pc1', name: 'Gaming Beast RTX 4070', brand: 'custom', price: 42000, image: 'https://picsum.photos/seed/gamingpc/400/260', specs: { 'المعالج': 'i7-13700K', 'الذاكرة': '32GB', 'التخزين': '1TB NVMe', 'كرت الشاشة': 'RTX 4070' }, category: 'pc' },
+                { id: 'pc2', name: 'Workstation Pro i9', brand: 'custom', price: 55000, image: 'https://picsum.photos/seed/workstation/400/260', specs: { 'المعالج': 'i9-13900K', 'الذاكرة': '64GB', 'التخزين': '2TB NVMe', 'كرت الشاشة': 'RTX 4080' }, category: 'pc' },
+                { id: 'pc3', name: 'Budget Office PC', brand: 'custom', price: 9500, image: 'https://picsum.photos/seed/officepc/400/260', specs: { 'المعالج': 'i3-12100', 'الذاكرة': '8GB', 'التخزين': '256GB SSD', 'كرت الشاشة': 'Integrated' }, category: 'pc' },
+            ];
+
+            const pcComponents = {
+                cpu: { label: 'المعالج (CPU)', icon: 'fa-microchip', options: [{ name: 'Intel Core i9-14900K', price: 18500 }, { name: 'Intel Core i7-14700K', price: 12500 }, { name: 'Intel Core i5-14600K', price: 8500 }, { name: 'AMD Ryzen 9 7950X', price: 17000 }, { name: 'AMD Ryzen 7 7800X3D', price: 13000 }] },
+                motherboard: { label: 'اللوحة الأم (Motherboard)', icon: 'fa-server', options: [{ name: 'ASUS ROG Z790 Hero', price: 9500 }, { name: 'MSI MAG Z790 Tomahawk', price: 6500 }, { name: 'Gigabyte B760 Aorus Elite', price: 4200 }, { name: 'ASRock X670E Taichi', price: 8800 }] },
+                gpu: { label: 'كرت الشاشة (GPU)', icon: 'fa-tv', options: [{ name: 'NVIDIA RTX 4090 24GB', price: 42000 }, { name: 'NVIDIA RTX 4080 16GB', price: 28000 }, { name: 'NVIDIA RTX 4070 12GB', price: 16500 }, { name: 'AMD RX 7900 XTX 24GB', price: 25000 }, { name: 'NVIDIA RTX 4060 8GB', price: 9500 }] },
+                ram: { label: 'الذاكرة (RAM)', icon: 'fa-memory', options: [{ name: '64GB DDR5 6000MHz (2x32GB)', price: 7500 }, { name: '32GB DDR5 6000MHz (2x16GB)', price: 3800 }, { name: '16GB DDR5 5200MHz (2x8GB)', price: 1800 }, { name: '32GB DDR4 3600MHz (2x16GB)', price: 2200 }] },
+                storage: { label: 'التخزين (Storage)', icon: 'fa-hdd', options: [{ name: 'Samsung 990 Pro 2TB NVMe', price: 5500 }, { name: 'WD Black SN850X 1TB NVMe', price: 2800 }, { name: 'Samsung 870 EVO 1TB SATA SSD', price: 1400 }, { name: 'Seagate Barracuda 2TB HDD', price: 900 }] },
+                psu: { label: 'مزود الطاقة (PSU)', icon: 'fa-bolt', options: [{ name: 'Corsair RM1000x 1000W Gold', price: 4200 }, { name: 'EVGA SuperNOVA 850W Gold', price: 3200 }, { name: 'Cooler Master 750W Bronze', price: 1800 }] },
+                case: { label: 'الصندوق (Case)', icon: 'fa-desktop', options: [{ name: 'NZXT H9 Flow', price: 3500 }, { name: 'Corsair 5000D Airflow', price: 2800 }, { name: 'Lian Li O11 Dynamic', price: 3200 }, { name: 'Cooler Master MasterBox Q300L', price: 1200 }] },
+                monitor: { label: 'الشاشة (Monitor)', icon: 'fa-desktop', options: [{ name: 'LG 27" 4K 144Hz', price: 8900 }, { name: 'Samsung Odyssey G9 49"', price: 22000 }, { name: 'ASUS 24" 1080p 144Hz', price: 4200 }] },
+            };
+
+            // ==================== STATE ====================
+            let cart = JSON.parse(localStorage.getItem('azzam_cart_v2')) || [];
+            let currentLang = localStorage.getItem('azzam_lang') || 'ar';
+            let currentTheme = localStorage.getItem('azzam_theme') || 'dark';
+            let builderChoices = {};
+            let activeLaptopCategory = 'all';
+            let activeMonitorCategory = 'all';
+
+            const translations = {
+                ar: { nav_home: 'الرئيسية', nav_laptops: 'لابتوب', nav_monitors: 'شاشات', nav_pc: 'PC', nav_builder: 'تجميع PC', hero_title: 'اكتشف <span>أحدث الأجهزة</span> بأسعار تنافسية', hero_sub: 'شاشات، لابتوبات، قطع PC، وإمكانية تجميع جهازك المثالي - كل ذلك في مكان واحد مع ضمان وجودة عالية', build_pc: 'تجميع PC', browse_laptops: 'تصفح اللابتوبات', browse_monitors: 'تصفح الشاشات', laptops_title: '💻 أجهزة اللابتوب', laptops_sub: 'اللابتوبات مستوردة من امريكا واوروبا والشرق الأوسط', monitors_title: '🖥️ الشاشات', monitors_sub: 'شاشات مستوردة فرز أول عالية الدقة للألعاب والعمل والإبداع', pc_title: '🖥️ أجهزة كمبيوتر مجمّعة مسبقاً', pc_sub: 'أجهزة كمبيوتر مكتبية جاهزة بأفضل المواصفات والأسعار', builder_title: '🔧 تجميع جهاز PC الخاص بك', builder_sub: 'اختر كل قطعة بنفسك وقم بتجميع جهاز أحلامك - الأسعار تظهر تلقائياً', summary_title: '📋 ملخص التجميع', add_build: 'إضافة التجميع إلى السلة', reset_build: 'إعادة تعيين', checkout: 'إتمام الطلب عبر واتساب', clear_cart: 'تفريغ السلة', footer_about: 'عن الشركة', footer_about_text: 'Azzam Technology تقدم أفضل الأجهزة وخدمات التجميع الاحترافية', footer_links: 'روابط سريعة', footer_contact: 'معلومات الاتصال', footer_services: 'الخدمات', add_to_cart: 'إضافة للسلة', in_cart: 'في السلة ✓', price_egp: 'ج.م', total: 'المجموع', empty_cart: 'السلة فارغة', cart_title: '🛒 سلة التسوق', select_component: 'اختر', egp: 'ج.م', quick_view_details: 'تفاصيل المنتج', close_modal: 'إغلاق' },
+                en: { nav_home: 'Home', nav_laptops: 'Laptops', nav_monitors: 'Monitors', nav_pc: 'PC', nav_builder: 'PC Builder', hero_title: 'Discover <span>the Latest Devices</span> at Competitive Prices', hero_sub: 'Monitors, Laptops, PC Parts, and Build Your Dream PC — All in One Place with Quality & Warranty', build_pc: 'Build PC', browse_laptops: 'Browse Laptops', browse_monitors: 'Browse Monitors', laptops_title: '💻 Laptops', laptops_sub: 'Latest laptops from top global brands', monitors_title: '🖥️ Monitors', monitors_sub: 'High-resolution monitors for gaming, work, and creativity', pc_title: '🖥️ Pre-Built PCs', pc_sub: 'Ready-to-use desktop computers with the best specs and prices', builder_title: '🔧 Build Your Own PC', builder_sub: 'Pick each component and build your dream machine — prices update automatically', summary_title: '📋 Build Summary', add_build: 'Add Build to Cart', reset_build: 'Reset', checkout: 'Checkout via WhatsApp', clear_cart: 'Clear Cart', footer_about: 'About Us', footer_about_text: 'Azzam Technology offers the best devices and professional PC building services', footer_links: 'Quick Links', footer_contact: 'Contact Info', footer_services: 'Services', add_to_cart: 'Add to Cart', in_cart: 'In Cart ✓', price_egp: 'EGP', total: 'Total', empty_cart: 'Cart is empty', cart_title: '🛒 Shopping Cart', select_component: 'Select', egp: 'EGP', quick_view_details: 'Product Details', close_modal: 'Close' },
+            };
+
+            function t(key) { return (translations[currentLang] && translations[currentLang][key]) || key; }
+            function formatPrice(price) { return price.toLocaleString('en-US') + ' ' + t('egp'); }
+            const $ = (s) => document.querySelector(s);
+            const $$ = (s) => document.querySelectorAll(s);
+
+            // ==================== PRODUCT MODAL ====================
+            function initProductModal() {
+                const overlay = document.getElementById('product-modal-overlay');
+                const closeBtn = document.getElementById('product-modal-close');
+                closeBtn.addEventListener('click', closeProductModal);
+                overlay.addEventListener('click', function(e) { if (e.target === overlay) closeProductModal(); });
+                document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && !authOverlay.classList.contains('open')) closeProductModal(); });
+            }
+
+            function openProductModal(product) {
+                const overlay = document.getElementById('product-modal-overlay');
+                const imageContainer = document.getElementById('modal-product-image');
+                const detailsContainer = document.getElementById('modal-product-details');
+                const inCart = cart.find(item => item.id === product.id);
+                imageContainer.innerHTML = `<img src="${product.image || 'https://via.placeholder.com/400x260?text=Product'}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/400x260?text=Product'">${product.brand === 'custom' ? '<span class="modal-badge">🔥 ' + (currentLang === 'ar' ? 'تجميع' : 'Build') + '</span>' : ''}`;
+                let specsHTML = '';
+                if (product.specs && Object.keys(product.specs).length > 0) { specsHTML = Object.entries(product.specs).map(([key, value]) => `<div class="modal-spec-item"><span class="spec-label">${key}:</span><span class="spec-value">${value}</span></div>`).join(''); }
+                const typeLabels = { 'laptop': 'لابتوب', 'monitor': 'شاشة', 'pc': 'PC مجمع', 'component': 'قطعة' };
+                const typeLabel = typeLabels[product.type] || '';
+                detailsContainer.innerHTML = `<h2>${product.name}</h2><div class="modal-brand">${product.brand || ''} ${typeLabel ? '· ' + typeLabel : ''}</div><div class="modal-price">${formatPrice(product.price)}</div>${specsHTML ? `<div class="modal-specs">${specsHTML}</div>` : '<p style="color:var(--text-muted);">' + (currentLang === 'ar' ? 'لا توجد مواصفات إضافية' : 'No additional specifications') + '</p>'}<div class="product-modal-actions"><button class="btn btn-primary modal-add-to-cart ${inCart ? 'in-cart' : ''}" data-id="${product.id}"><i class="fas ${inCart ? 'fa-check' : 'fa-cart-plus'}"></i>${inCart ? t('in_cart') : t('add_to_cart')}</button><button class="btn btn-outline modal-close-btn" style="color:var(--text-primary);border-color:var(--border-color);">${t('close_modal')}</button></div>`;
+                detailsContainer.querySelector('.modal-add-to-cart').addEventListener('click', function() { addToCart(product); closeProductModal(); });
+                detailsContainer.querySelector('.modal-close-btn').addEventListener('click', closeProductModal);
+                overlay.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeProductModal() {
+                document.getElementById('product-modal-overlay').classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            // ==================== INIT ====================
+            function init() {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                document.documentElement.setAttribute('data-lang', currentLang);
+                if (currentLang === 'en') document.body.classList.add('en');
+                else document.body.classList.remove('en');
+                updateThemeIcon();
+                renderAllProductSections();
+                renderPCBuilder();
+                updateCartUI();
+                bindEvents();
+                updateAllI18n();
+                initProductModal();
+            }
+
+            function updateThemeIcon() { const icon = $('#theme-toggle'); if (currentTheme === 'dark') icon.innerHTML = '☀️'; else icon.innerHTML = '🌙'; }
+
+            function updateAllI18n() {
+                $$('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (key === 'hero_title' || key === 'hero_sub') { el.innerHTML = t(key); } else { el.textContent = t(key); } });
+                const heroH1 = document.querySelector('.hero h1');
+                if (heroH1 && currentLang === 'en') { heroH1.innerHTML = 'Discover <span style="background: linear-gradient(135deg, #e63946 0%, #ff6b6b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">the Latest Devices</span> at Competitive Prices'; }
+                else if (heroH1 && currentLang === 'ar') { heroH1.innerHTML = 'اكتشف <span style="background: linear-gradient(135deg, #e63946 0%, #ff6b6b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">أحدث الأجهزة</span> بأسعار تنافسية'; }
+                const cartTitle = $('#cart-title'); if (cartTitle) cartTitle.textContent = t('cart_title');
+                updateCartTotalDisplay();
+            }
+
+            function createProductCard(product) {
+                const inCart = cart.find(item => item.id === product.id);
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.setAttribute('data-brand', product.brand || '');
+                card.setAttribute('data-category', product.category || '');
+                card.setAttribute('data-id', product.id);
+                card.innerHTML = `<div class="product-card-image"><img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x260?text=Product'">${product.brand === 'custom' ? '<span class="product-card-badge">🔥 ' + (currentLang === 'ar' ? 'تجميع' : 'Build') + '</span>' : ''}</div><div class="product-card-body"><h3>${product.name}</h3><div class="specs-pills">${product.specs ? Object.entries(product.specs).slice(0, 3).map(([k, v]) => `<span class="spec-pill">${k}: ${v}</span>`).join('') : ''}</div><div class="price">${formatPrice(product.price)}</div><button class="add-to-cart-btn ${inCart ? 'in-cart' : ''}" data-id="${product.id}"><i class="fas ${inCart ? 'fa-check' : 'fa-cart-plus'}"></i> ${inCart ? t('in_cart') : t('add_to_cart')}</button></div>`;
+                card.addEventListener('click', function(e) { if (e.target.closest('.add-to-cart-btn')) return; openProductModal(product); });
+                return card;
+            }
+
+            function renderAllProducts(filter = 'all', gridId = 'monitors-grid', productsArr = monitors) {
+                const grid = document.getElementById(gridId);
+                if (!grid) return;
+                const filtered = filter === 'all' ? productsArr : productsArr.filter(p => p.brand === filter || p.category === filter);
+                if (filtered.length === 0) { grid.innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i><p>${currentLang === 'ar' ? 'لا توجد منتجات' : 'No products found'}</p></div>`; return; }
+                const fragment = document.createDocumentFragment();
+                filtered.forEach(p => fragment.appendChild(createProductCard(p)));
+                grid.innerHTML = '';
+                grid.appendChild(fragment);
+            }
+
+            function renderAllProductSections() { renderAllProducts(activeMonitorCategory, 'monitors-grid', monitors); renderAllProducts(activeLaptopCategory, 'laptops-grid', laptops); renderAllProducts('all', 'pc-grid', prebuiltPCs); }
+
+            function renderPCBuilder() {
+                const container = $('#pc-builder-components');
+                if (!container) return;
+                container.innerHTML = '';
+                Object.entries(pcComponents).forEach(([key, comp]) => {
+                    const selected = builderChoices[key];
+                    const wrapper = document.createElement('div');
+                    wrapper.innerHTML = `<div class="pc-component-select ${selected ? 'selected' : ''}" data-comp="${key}"><div class="icon-circle"><i class="fas ${comp.icon}"></i></div><div class="comp-info"><div class="comp-name">${comp.label}</div><div class="comp-choice">${selected ? selected.name : t('select_component') + '...'}</div></div><div class="comp-price">${selected ? formatPrice(selected.price) : ''}</div><div class="dropdown-icon"><i class="fas fa-chevron-down"></i></div></div><div class="component-options" id="options-${key}"></div>`;
+                    container.appendChild(wrapper);
+                    const optionsDiv = wrapper.querySelector('.component-options');
+                    comp.options.forEach(opt => { const optDiv = document.createElement('div'); optDiv.className = 'component-option'; optDiv.innerHTML = `<span>${opt.name}</span><span class="opt-price">${formatPrice(opt.price)}</span>`; optDiv.addEventListener('click', () => { builderChoices[key] = opt; renderPCBuilder(); updatePCSummary(); }); optionsDiv.appendChild(optDiv); });
+                    const selectDiv = wrapper.querySelector('.pc-component-select');
+                    selectDiv.addEventListener('click', (e) => { e.stopPropagation(); document.querySelectorAll('.component-options.open').forEach(o => { if (o !== optionsDiv) o.classList.remove('open'); }); optionsDiv.classList.toggle('open'); });
+                });
+                updatePCSummary();
+            }
+
+            function updatePCSummary() {
+                const list = $('#pc-summary-list'); const totalEl = $('#pc-total-price');
+                if (!list || !totalEl) return; let total = 0; list.innerHTML = '';
+                Object.entries(pcComponents).forEach(([key, comp]) => { const selected = builderChoices[key]; const li = document.createElement('li'); if (selected) { li.innerHTML = `<span>${comp.label}: <strong>${selected.name}</strong></span><span>${formatPrice(selected.price)}</span>`; total += selected.price; } else { li.innerHTML = `<span style="color:var(--text-muted)">${comp.label}: ${t('select_component')}...</span><span>-</span>`; } list.appendChild(li); });
+                totalEl.textContent = `${t('total')}: ${formatPrice(total)}`;
+            }
+
+            function resetBuilder() { builderChoices = {}; renderPCBuilder(); updatePCSummary(); showToast(currentLang === 'ar' ? 'تم إعادة تعيين التجميع' : 'Build reset successfully'); }
+            function getBuilderName() { const cpu = builderChoices['cpu']; const gpu = builderChoices['gpu']; if (cpu && gpu) return `Custom PC: ${cpu.name.split(' ').slice(0, 3).join(' ')} + ${gpu.name.split(' ').slice(0, 3).join(' ')}`; if (cpu) return `Custom PC: ${cpu.name}`; return 'Custom PC Build'; }
+
+            function addToCart(product) { const existing = cart.find(item => item.id === product.id); if (existing) { existing.quantity += 1; } else { cart.push({ ...product, quantity: 1 }); } saveCart(); updateCartUI(); renderAllProductSections(); showToast((currentLang === 'ar' ? 'تمت الإضافة: ' : 'Added: ') + product.name); }
+            function addBuilderToCart() { const totalSelected = Object.keys(builderChoices).length; if (totalSelected < 3) { showToast(currentLang === 'ar' ? 'الرجاء اختيار 3 مكونات على الأقل' : 'Please select at least 3 components'); return; } let totalPrice = 0; const specs = {}; Object.entries(builderChoices).forEach(([key, opt]) => { totalPrice += opt.price; specs[pcComponents[key].label] = opt.name; }); const buildProduct = { id: 'build_' + Date.now(), name: getBuilderName(), brand: 'custom', price: totalPrice, image: 'https://picsum.photos/seed/build' + Date.now() + '/400/260', specs: specs, category: 'pc' }; addToCart(buildProduct); resetBuilder(); document.getElementById('pc-builder-section').scrollIntoView({ behavior: 'smooth' }); }
+            function removeFromCart(productId) { cart = cart.filter(item => item.id !== productId); saveCart(); updateCartUI(); renderAllProductSections(); }
+            function updateQuantity(productId, delta) { const item = cart.find(item => item.id === productId); if (!item) return; item.quantity += delta; if (item.quantity <= 0) { removeFromCart(productId); return; } saveCart(); updateCartUI(); }
+            function saveCart() { localStorage.setItem('azzam_cart_v2', JSON.stringify(cart)); }
+            function updateCartUI() { const badge = $('#cart-badge'); const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0); if (totalItems > 0) { badge.style.display = 'flex'; badge.textContent = totalItems; } else { badge.style.display = 'none'; } renderCartDrawer(); updateCartTotalDisplay(); }
+            function updateCartTotalDisplay() { const totalEl = $('#cart-total-display'); if (!totalEl) return; const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0); totalEl.textContent = `${t('total')}: ${formatPrice(total)}`; }
+            function renderCartDrawer() { const body = $('#cart-drawer-body'); if (!body) return; if (cart.length === 0) { body.innerHTML = `<div class="empty-state"><i class="fas fa-shopping-cart"></i><p>${t('empty_cart')}</p></div>`; } else { body.innerHTML = cart.map(item => `<div class="cart-item-mini"><img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/55?text=P'"><div class="details"><h4>${item.name}</h4><div style="color:var(--accent);font-weight:700;">${formatPrice(item.price)} × ${item.quantity}</div></div><div class="qty-control"><button class="qty-btn cart-qty-dec" data-id="${item.id}">−</button><span>${item.quantity}</span><button class="qty-btn cart-qty-inc" data-id="${item.id}">+</button><button class="qty-btn cart-remove" data-id="${item.id}" style="color:var(--accent);"><i class="fas fa-trash"></i></button></div></div>`).join(''); body.querySelectorAll('.cart-qty-inc').forEach(b => b.addEventListener('click', () => updateQuantity(b.getAttribute('data-id'), 1))); body.querySelectorAll('.cart-qty-dec').forEach(b => b.addEventListener('click', () => updateQuantity(b.getAttribute('data-id'), -1))); body.querySelectorAll('.cart-remove').forEach(b => b.addEventListener('click', () => removeFromCart(b.getAttribute('data-id')))); } }
+            function checkoutViaWhatsApp() { if (cart.length === 0) { showToast(t('empty_cart')); return; } let message = currentLang === 'ar' ? 'مرحباً، أريد طلب المنتجات التالية:\n\n' : 'Hello, I would like to order the following products:\n\n'; let total = 0; cart.forEach(item => { const itemTotal = item.price * item.quantity; total += itemTotal; message += `- ${item.name} (${item.quantity} × ${formatPrice(item.price)}) = ${formatPrice(itemTotal)}\n`; }); message += `\n${t('total')}: ${formatPrice(total)}`; window.open(`https://wa.me/201025555207?text=${encodeURIComponent(message)}`, '_blank'); }
+            function clearCart() { cart = []; saveCart(); updateCartUI(); renderAllProductSections(); }
+            function openCartDrawer() { $('#cart-drawer').classList.add('open'); $('#cart-overlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+            function closeCartDrawer() { $('#cart-drawer').classList.remove('open'); $('#cart-overlay').classList.remove('open'); document.body.style.overflow = ''; }
+            function openMobileMenu() { $('#mobile-menu').classList.add('open'); $('#mobile-overlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+            function closeMobileMenu() { $('#mobile-menu').classList.remove('open'); $('#mobile-overlay').classList.remove('open'); document.body.style.overflow = ''; }
+            function showToast(msg) { const toast = $('#toast'); toast.textContent = msg; toast.style.display = 'block'; toast.style.animation = 'none'; toast.offsetHeight; toast.style.animation = 'slideUpFade 0.4s ease'; clearTimeout(toast._timeout); toast._timeout = setTimeout(() => { toast.style.display = 'none'; }, 2500); }
+
+            function bindEvents() {
+                $('#theme-toggle').addEventListener('click', () => { currentTheme = currentTheme === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', currentTheme); localStorage.setItem('azzam_theme', currentTheme); updateThemeIcon(); });
+                $('#lang-toggle').addEventListener('click', () => { currentLang = currentLang === 'ar' ? 'en' : 'ar'; localStorage.setItem('azzam_lang', currentLang); document.documentElement.setAttribute('data-lang', currentLang); if (currentLang === 'en') document.body.classList.add('en'); else document.body.classList.remove('en'); updateAllI18n(); renderAllProductSections(); renderPCBuilder(); updateCartUI(); });
+                $('#cart-nav-btn').addEventListener('click', openCartDrawer);
+                $('#cart-overlay').addEventListener('click', closeCartDrawer);
+                $('#cart-close-btn').addEventListener('click', closeCartDrawer);
+                $('#hamburger-btn').addEventListener('click', openMobileMenu);
+                $('#mobile-overlay').addEventListener('click', closeMobileMenu);
+                $('#mobile-close').addEventListener('click', closeMobileMenu);
+                $('#mobile-menu').querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
+                $('#checkout-btn').addEventListener('click', checkoutViaWhatsApp);
+                $('#clear-cart-btn').addEventListener('click', clearCart);
+                $('#add-pc-to-cart').addEventListener('click', addBuilderToCart);
+                $('#reset-builder').addEventListener('click', resetBuilder);
+                $('#laptop-filters').addEventListener('click', (e) => { if (e.target.classList.contains('category-tab')) { $$('#laptop-filters .category-tab').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); activeLaptopCategory = e.target.getAttribute('data-filter'); renderAllProducts(activeLaptopCategory, 'laptops-grid', laptops); } });
+                $('#monitor-filters').addEventListener('click', (e) => { if (e.target.classList.contains('category-tab')) { $$('#monitor-filters .category-tab').forEach(b => b.classList.remove('active')); e.target.classList.add('active'); activeMonitorCategory = e.target.getAttribute('data-filter'); renderAllProducts(activeMonitorCategory, 'monitors-grid', monitors); } });
+                document.addEventListener('click', (e) => { if (e.target.closest('.add-to-cart-btn')) { const btn = e.target.closest('.add-to-cart-btn'); const productId = btn.getAttribute('data-id'); const allProducts = [...laptops, ...monitors, ...prebuiltPCs]; const product = allProducts.find(p => p.id === productId); if (product) addToCart(product); } if (!e.target.closest('.pc-component-select') && !e.target.closest('.component-options')) { document.querySelectorAll('.component-options.open').forEach(o => o.classList.remove('open')); } });
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !authOverlay.classList.contains('open')) { closeCartDrawer(); closeMobileMenu(); } });
+                $$('.nav-links a, .mobile-menu a').forEach(link => { link.addEventListener('click', function(e) { const href = this.getAttribute('href'); if (href && href.startsWith('#')) { e.preventDefault(); const target = document.querySelector(href); if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); $$('.nav-links a').forEach(l => l.classList.remove('active')); this.classList.add('active'); } } }); });
+            }
+
+            init();
+            console.log('🚀 Azzam Technology Store Ready | 🔐 OTP Admin Auth Active');
+        })();
     </script>
 
-    <!-- زر الأدمن المخفي -->
-<div class="admin-secret-btn" id="admin-secret-btn" herff="admin.html">
-    <a href="admin.html"> </i>
+
+<!-- ==================== WARRANTY POLICY MODAL ==================== -->
+<style>
+    .warranty-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 5000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+    }
+    .warranty-modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+    }
+    .warranty-modal {
+        background: var(--bg-card);
+        border-radius: var(--radius-xl);
+        width: 100%;
+        max-width: 650px;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow-xl);
+        position: relative;
+        animation: modalSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border-color);
+        padding: 0;
+    }
+    @keyframes modalSlideIn {
+        from { opacity: 0; transform: translateY(30px) scale(0.96); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .warranty-modal-header {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: #fff;
+        padding: 24px 28px;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+    }
+    .warranty-modal-header .shield-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--gradient-accent);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+    }
+    .warranty-modal-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 800;
+    }
+    .warranty-modal-header p {
+        opacity: 0.8;
+        font-size: 0.85rem;
+        margin-top: 4px;
+    }
+    .warranty-modal-close {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition-smooth);
+        z-index: 5;
+    }
+    .warranty-modal-close:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+    }
+    .warranty-modal-body {
+        padding: 28px 24px;
+    }
+    .warranty-card {
+        background: var(--bg-secondary);
+        border-radius: var(--radius-md);
+        padding: 20px;
+        margin-bottom: 16px;
+        border: 1px solid var(--border-color);
+        transition: var(--transition-smooth);
+    }
+    .warranty-card:hover {
+        border-color: var(--accent);
+        box-shadow: var(--shadow-md);
+    }
+    .warranty-card .card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+    .warranty-card .card-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+    }
+    .card-icon.monitors { background: #dbeafe; color: #1e40af; }
+    .card-icon.laptops { background: #d1fae5; color: #065f46; }
+    .card-icon.battery { background: #fef3c7; color: #92400e; }
+    .warranty-card .card-title {
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+    }
+    .warranty-card .card-subtitle {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+    .warranty-card .warranty-period {
+        display: inline-block;
+        background: var(--accent);
+        color: #fff;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .warranty-card ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .warranty-card ul li {
+        padding: 6px 0;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        color: var(--text-secondary);
+        border-bottom: 1px solid var(--border-light);
+    }
+    .warranty-card ul li:last-child { border-bottom: none; }
+    .warranty-card ul li::before {
+        content: '✓';
+        color: #22c55e;
+        font-weight: bold;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+    .warranty-card ul li.warning::before {
+        content: '⚠️';
+        color: #f59e0b;
+    }
+    .warranty-note {
+        background: #fffbeb;
+        border: 1px solid #fcd34d;
+        border-radius: var(--radius-md);
+        padding: 16px;
+        margin-top: 16px;
+        text-align: center;
+        color: #92400e;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    .warranty-note i {
+        color: #f59e0b;
+        margin-left: 6px;
+    }
+    .warranty-footer-note {
+        text-align: center;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+    .warranty-footer-note strong {
+        color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+        .warranty-modal { max-width: 95vw; }
+        .warranty-modal-body { padding: 20px 16px; }
+        .warranty-card { padding: 14px; }
+    }
+</style>
+
+<div class="warranty-modal-overlay" id="warranty-modal-overlay">
+    <div class="warranty-modal">
+        <button class="warranty-modal-close" id="warranty-modal-close">&times;</button>
+        <div class="warranty-modal-header">
+            <div class="shield-icon"><i class="fas fa-shield-alt"></i></div>
+            <h2>سياسة الضمان والاستبدال</h2>
+            <p>Azzam Technology - نضمن لك الجودة والثقة</p>
+        </div>
+        <div class="warranty-modal-body">
+            <!-- الشاشات وأجهزة PC -->
+            <div class="warranty-card">
+                <div class="card-header">
+                    <div class="card-icon monitors"><i class="fas fa-desktop"></i></div>
+                    <div>
+                        <div class="card-title">🖥️ الشاشات وأجهزة PC المجمّعة</div>
+                        <div class="card-subtitle">شاشات + أجهزة كمبيوتر مكتبية</div>
+                    </div>
+                </div>
+                <span class="warranty-period">🗓️ ضمان شهر واحد</span>
+                <ul>
+                    <li>ضمان استبدال فقط (ليس استرجاع)</li>
+                    <li>يغطي عيوب الصناعة فقط</li>
+                    <li>يشمل: الشاشة، اللوحة الأم، المعالج، كرت الشاشة، الذاكرة، التخزين</li>
+                    <li class="warning">الضمان لا يشمل Power Supply (مزود الطاقة) في أجهزة PC</li>
+                    <li>يُشترط أن يكون الجهاز بحالته الأصلية عند الاستبدال</li>
+                </ul>
+            </div>
+
+            <!-- أجهزة اللابتوب -->
+            <div class="warranty-card">
+                <div class="card-header">
+                    <div class="card-icon laptops"><i class="fas fa-laptop"></i></div>
+                    <div>
+                        <div class="card-title">💻 أجهزة اللابتوب</div>
+                        <div class="card-subtitle">لابتوبات مستوردة</div>
+                    </div>
+                </div>
+                <span class="warranty-period">🗓️ ضمان 3 شهور</span>
+                <ul>
+                    <li>ضمان شامل لمدة 3 أشهر ضد عيوب الصناعة</li>
+                    <li>شهر استبدال كامل للجهاز</li>
+                    <li>يغطي: الشاشة، اللوحة الأم، المعالج، الذاكرة، التخزين</li>
+                    <li>يُقبل الجهاز للاستبدال بحالته المباع بها</li>
+                </ul>
+            </div>
+
+            <!-- البطارية والشاحن -->
+            <div class="warranty-card">
+                <div class="card-header">
+                    <div class="card-icon battery"><i class="fas fa-battery-full"></i></div>
+                    <div>
+                        <div class="card-title">🔋 البطارية والشاحن</div>
+                        <div class="card-subtitle">بطارية + شاحن اللابتوب</div>
+                    </div>
+                </div>
+                <span class="warranty-period">🗓️ ضمان شهر واحد فقط</span>
+                <ul>
+                    <li>ضمان استبدال لمدة شهر واحد</li>
+                    <li>يغطي عيوب الصناعة في البطارية والشاحن</li>
+                    <li>لا يشمل التلف الناتج عن سوء الاستخدام</li>
+                </ul>
+            </div>
+
+            <!-- ملاحظة هامة -->
+            <div class="warranty-note">
+                <i class="fas fa-exclamation-triangle"></i>
+                هام: يُقبل الجهاز للاستبدال بحالته المباع بها (سواء شاشة - PC - لابتوب). لا يتم الاستبدال في حالة وجود كسور أو خدوش أو سوء استخدام.
+            </div>
+
+            <!-- تذييل -->
+            <div class="warranty-footer-note">
+                <p>📞 للاستفسار عن الضمان أو طلب الاستبدال:</p>
+                <p><strong>واتساب: 01025555207</strong> | <strong>هاتف: 0223932070</strong></p>
+                <p style="margin-top:6px;font-size:0.8rem;">📍 مول البستان - الطابق الأرضي - القاهرة - مصر</p>
+                <p style="margin-top:4px;font-size:0.75rem;opacity:0.7;">&copy; 2026 Azzam Technology. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- مؤقت الضغط -->
-<div class="press-timer" id="press-timer">1.0s</div>
+<script>
+    // ==================== WARRANTY MODAL ====================
+    (function() {
+        const overlay = document.getElementById('warranty-modal-overlay');
+        const closeBtn = document.getElementById('warranty-modal-close');
 
+        function openWarrantyModal(e) {
+            e.preventDefault();
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeWarrantyModal() {
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // ربط جميع روابط الضمان والاستبدال
+        document.addEventListener('DOMContentLoaded', function() {
+            // البحث عن جميع الروابط التي تشير إلى policy.html أو تحتوي على كلمة "ضمان" أو "استبدال"
+            const warrantyLinks = document.querySelectorAll('a[href*="policy"], a[href*="warranty"], a[href*="ضمان"], a[href*="استبدال"]');
+            
+            warrantyLinks.forEach(link => {
+                link.addEventListener('click', openWarrantyModal);
+            });
+
+            // أيضاً ربط أي رابط يحتوي على نص "الضمان والاستبدال"
+            document.querySelectorAll('a').forEach(link => {
+                if (link.textContent.includes('الضمان') && link.textContent.includes('الاستبدال')) {
+                    link.addEventListener('click', openWarrantyModal);
+                }
+            });
+        });
+
+        // إغلاق النافذة
+        closeBtn.addEventListener('click', closeWarrantyModal);
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closeWarrantyModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && overlay.classList.contains('open')) {
+                closeWarrantyModal();
+            }
+        });
+    })();
+</script>
+
+<style>
+    .floating-chat-btn {
+        position: fixed;
+        bottom: 24px;
+        left: 24px;
+        z-index: 9999;
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+        transition: all 0.3s;
+        font-family: 'Tajawal', sans-serif;
+    }
+    .floating-chat-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 28px rgba(34, 197, 94, 0.5);
+    }
+    @media (max-width: 768px) {
+        .floating-chat-btn {
+            bottom: 16px;
+            left: 12px;
+            padding: 10px 16px;
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+<a href="chat-bot.html" class="floating-chat-btn">
+    <i class="fas fa-robot"></i>
+</a>
 </body>
 </html>
