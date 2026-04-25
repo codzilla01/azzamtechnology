@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Azzam Technology | المساعد الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e63946;
+            --primary-dark: #c92a37;
+            --dark: #1a1a2e;
+            --bg: #f0f4f8;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --radius: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ========== الحاوية الرئيسية ========== */
+        .chat-page {
+            width: 100%;
+            max-width: 800px;
+            height: 90vh;
+            max-height: 700px;
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* ========== الهيدر ========== */
+        .chat-page-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .chat-page-header .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+        }
+        .chat-page-header .brand-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .chat-page-header .brand-text h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+        .chat-page-header .brand-text p {
+            margin: 0;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+        .chat-page-header .actions {
+            display: flex;
+            gap: 8px;
+        }
+        .chat-page-header .actions a,
+        .chat-page-header .actions button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+        .chat-page-header .actions a:hover,
+        .chat-page-header .actions button:hover {
+            background: var(--primary);
+        }
+
+        /* ========== جسم المحادثة ========== */
+        .chat-page-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .chat-page-body::-webkit-scrollbar { width: 5px; }
+        .chat-page-body::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* ========== الرسائل ========== */
+        .msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            animation: msgSlide 0.3s ease;
+            word-wrap: break-word;
+        }
+        @keyframes msgSlide {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .msg.bot {
+            background: #fff;
+            align-self: flex-start;
+            border-bottom-right-radius: 6px;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+            white-space: pre-line;
+        }
+        .msg.user {
+            background: var(--primary);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-left-radius: 6px;
+        }
+        .msg .highlight {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* ========== مؤشر الكتابة ========== */
+        .typing {
+            display: flex;
+            gap: 4px;
+            padding: 10px 14px;
+            background: #fff;
+            border-radius: 18px;
+            align-self: flex-start;
+            border: 1px solid #e2e8f0;
+        }
+        .typing span {
+            width: 8px;
+            height: 8px;
+            background: #94a3b8;
+            border-radius: 50%;
+            animation: typingDot 1.3s infinite;
+        }
+        .typing span:nth-child(2) { animation-delay: 0.2s; }
+        .typing span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingDot {
+            0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+            30% { opacity: 1; transform: translateY(-5px); }
+        }
+
+        /* ========== أزرار سريعة ========== */
+        .quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 4px 0;
+        }
+        .quick-chip {
+            background: #fff;
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            font-family: 'Tajawal', sans-serif;
+            white-space: nowrap;
+        }
+        .quick-chip:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* ========== منطقة الإدخال ========== */
+        .chat-page-input {
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            background: #fff;
+            flex-shrink: 0;
+        }
+        .chat-page-input input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-family: 'Tajawal', sans-serif;
+            outline: none;
+            transition: 0.2s;
+        }
+        .chat-page-input input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(230,57,70,0.1);
+        }
+        .chat-page-input button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: 0.2s;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-page-input button:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        /* ========== الفوتر ========== */
+        .chat-page-footer {
+            text-align: center;
+            padding: 8px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: #f1f5f9;
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .chat-page-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ========== تجاوب ========== */
+        @media (max-width: 600px) {
+            .chat-page {
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+            .chat-page-body { padding: 12px; }
+            .msg { font-size: 0.82rem; max-width: 90%; }
+            .chat-page-input { padding: 10px 12px; }
+            .chat-page-input input { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-page">
+        <!-- ========== هيدر ========== -->
+        <div class="chat-page-header">
+            <a href="index.html" class="brand">
+                <div class="brand-icon"><i class="fas fa-microchip"></i></div>
+                <div class="brand-text">
+                    <h3>Azzam Technology</h3>
+                    <p>المساعد الذكي • متصل بقاعدة البيانات</p>
+                </div>
+            </a>
+            <div class="actions">
+                <button id="refreshChatBtn" title="تحديث المحادثة"><i class="fas fa-sync-alt"></i></button>
+                <a href="index.html" title="العودة للمتجر"><i class="fas fa-home"></i></a>
+            </div>
+        </div>
+
+        <!-- ========== جسم المحادثة ========== -->
+        <div class="chat-page-body" id="chatBody">
+            <!-- رسالة ترحيب -->
+            <div class="msg bot">
+                👋 مرحباً بك في <span class="highlight">Azzam Technology</span>!
+                
+                أنا المساعد الذكي، أقدر أساعدك في:
+                • 💻 أسعار ومواصفات اللابتوبات
+                • 🖥️ أسعار ومواصفات الشاشات
+                • 🔧 تجميع جهاز PC
+                • 📊 مقارنة بين المنتجات
+                • 🛡️ الضمان والتوصيل
+                
+                اسألني أي سؤال!
+            </div>
+            <div class="quick-chips" id="initialQuickChips">
+                <button class="quick-chip" data-q="أسعار اللابتوبات">💻 اللابتوبات</button>
+                <button class="quick-chip" data-q="الشاشات المتاحة">🖥️ الشاشات</button>
+                <button class="quick-chip" data-q="كيف أجمع PC">🔧 تجميع PC</button>
+                <button class="quick-chip" data-q="عايز أقارن بين منتجين">📊 مقارنة</button>
+                <button class="quick-chip" data-q="الضمان">🛡️ الضمان</button>
+                <button class="quick-chip" data-q="أرخص منتج عندكم">💰 أرخص منتج</button>
+            </div>
+        </div>
+
+        <!-- ========== منطقة الإدخال ========== -->
+        <div class="chat-page-input">
+            <input type="text" id="chatInput" placeholder="اكتب سؤالك هنا... مثال: أسعار اللابتوبات" autocomplete="off">
+            <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+
+        <!-- ========== فooter ========== -->
+        <div class="chat-page-footer">
+            📞 واتساب: <a href="https://wa.me/201025555207">01025555207</a> | 
+            📍 مول البستان - القاهرة | 
+            <a href="index.html">العودة للمتجر</a>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ==================== العناصر ====================
+            const chatBody = document.getElementById('chatBody');
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const refreshBtn = document.getElementById('refreshChatBtn');
+
+            const STORAGE_KEY = 'store_all_products';
+            const CHATBOT_KEY = 'chatbot_data';
+
+            // ==================== تحميل البيانات ====================
+            function getAllProducts() {
+                try {
+                    const stored = localStorage.getItem(STORAGE_KEY);
+                    return stored ? JSON.parse(stored) : [];
+                } catch(e) {
+                    return [];
+                }
+            }
+
+            function getChatbotData() {
+                try {
+                    const stored = localStorage.getItem(CHATBOT_KEY);
+                    return stored ? JSON.parse(stored) : null;
+                } catch(e) {
+                    return null;
+                }
+            }
+
+            // ==================== تحليل النية ====================
+            function detectIntent(msg) {
+                const m = msg.toLowerCase().trim();
+                const products = getAllProducts();
+
+                if (/^(مرحبا|السلام|اهلا|هلا|صباح|مساء|hi|hello)/i.test(m)) return { type: 'greeting' };
+                if (/شكرا|شكراً|تسلم|يعطيك|مشكور/i.test(m)) return { type: 'thanks' };
+                if (/ضمان|استبدال|صيانة|كفالة/i.test(m)) return { type: 'warranty' };
+                if (/شحن|توصيل|دليفري|توصل/i.test(m)) return { type: 'delivery' };
+                if (/اتصال|رقم|هاتف|موبايل|عنوان|موقعكم|وين|فين/i.test(m)) return { type: 'contact' };
+                if (/مقارن|قارن|ايهما|الفرق|vs|الأفضل/i.test(m)) {
+                    const prods = [];
+                    for (const p of products) {
+                        if (p.name && m.includes(p.name.split(' ')[0].toLowerCase()) && !prods.find(pp => pp.id === p.id)) prods.push(p);
+                    }
+                    return { type: 'compare', products: prods };
+                }
+                if (/تجميع|build|assembl|راكب|قطع/i.test(m)) return { type: 'build_pc' };
+                if (/ارخص|أرخص|اقل|رخيص|رخيصة/i.test(m)) return { type: 'cheapest' };
+                if (/اغلى|أغلى|اعلى|غالي/i.test(m)) return { type: 'most_expensive' };
+                if (/لابتوب|لاب|لاب توب|laptop|notebook/i.test(m)) return { type: 'laptop' };
+                if (/شاشة|شاشات|monitor|screen/i.test(m)) return { type: 'monitor' };
+                if (/\bpc\b|كمبيوتر|كمبيوتر|desktop|تجميعة/i.test(m)) return { type: 'pc' };
+                if (/كل|جميع|عندكم|منتجات|متاح|موجود/i.test(m)) return { type: 'all_products' };
+                if (/سعر|بكام|اسعار|أسعار|سعرها|تكلفة|بكم/i.test(m)) return { type: 'price_general' };
+                if (/عرض|خصم|تخفيض|offer/i.test(m)) return { type: 'offers' };
+                if (/مواصفات|specs|رام|معالج|تخزين/i.test(m)) return { type: 'specs' };
+
+                // بحث بالاسم
+                const found = products.filter(p => p.name && p.name.toLowerCase().includes(m));
+                if (found.length > 0) return { type: 'search', products: found };
+
+                return { type: 'unknown' };
+            }
+
+            // ==================== الردود الذكية ====================
+            function getResponse(intent, userMsg) {
+                const chatbotData = getChatbotData();
+                const products = getAllProducts();
+                const m = userMsg.toLowerCase().trim();
+
+                // 1. قاعدة معرفة مخصصة من الأدمن
+                if (chatbotData && chatbotData.qa) {
+                    for (const qa of chatbotData.qa) {
+                        if (qa.keywords && qa.keywords.some(k => m.includes(k.toLowerCase()))) {
+                            return qa.response;
+                        }
+                    }
+                }
+
+                // 2. معالجة النية
+                switch (intent.type) {
+                    case 'greeting':
+                        const h = new Date().getHours();
+                        const g = h < 12 ? 'صباح' : 'مساء';
+                        return `🌅 ${g} الخير! كيف أقدر أساعدك اليوم؟\n\nأخبرني عن اللي بتدور عليه:\n• 💻 لابتوب\n• 🖥️ شاشة\n• 🔧 تجميع PC\n• 📊 مقارنة منتجات`;
+
+                    case 'thanks':
+                        const thanks = ['🙏 العفو! سعيد بخدمتك.', '😊 تسلم! أي وقت أنا موجود.', '💖 الشكر لله! بالتوفيق.'];
+                        return thanks[Math.floor(Math.random() * thanks.length)];
+
+                    case 'warranty':
+                        return '🛡️ *الضمان في Azzam Technology:*\n\n• 🖥️ الشاشات وPC: ضمان شهر (استبدال فقط)\n• 💻 اللابتوبات: ضمان 3 شهور (شهر استبدال)\n• 🔋 البطارية والشاحن: ضمان شهر\n\n⚠️ الضمان لا يشمل Power Supply\n⚠️ الجهاز يُقبل بحالته المباع بها\n\n📞 للاستفسار: 01025555207';
+
+                    case 'delivery':
+                        return '🚚 *خدمة التوصيل:*\n\n• نوصل لجميع محافظات مصر\n• الشحن مجاني للطلبات فوق 5,000 ج.م\n• التوصيل خلال 2-4 أيام عمل\n• نقبل الدفع عند الاستلام\n\n📍 موقعنا: مول البستان - القاهرة';
+
+                    case 'contact':
+                        return '📞 *معلومات الاتصال:*\n\n• واتساب: 01025555207\n• هاتف أرضي: 0223932070\n• إيميل: technologyazzam@gmail.com\n• العنوان: مول البستان - الطابق الأرضي - القاهرة\n\n🕐 ساعات العمل: 12 ظهراً - 10 مساءً';
+
+                    case 'laptop':
+                        const laps = products.filter(p => p.type === 'laptop');
+                        if (laps.length === 0) return '⚠️ لا توجد لابتوبات متاحة حالياً. تواصل معنا للمساعدة: 01025555207';
+                        let lr = '💻 *اللابتوبات المتاحة:*\n';
+                        laps.slice(0, 8).forEach((l, i) => {
+                            lr += `\n${i+1}. ${l.name}\n   💰 السعر: ${l.price.toLocaleString()} ج.م`;
+                            if (l.specs && Object.keys(l.specs).length > 0) {
+                                const specs = Object.entries(l.specs).slice(0, 3).map(([k,v]) => `${k}: ${v}`).join(' | ');
+                                lr += `\n   📋 ${specs}`;
+                            }
+                        });
+                        if (laps.length > 8) lr += `\n\n... و ${laps.length - 8} منتجات أخرى.`;
+                        return lr;
+
+                    case 'monitor':
+                        const mons = products.filter(p => p.type === 'monitor');
+                        if (mons.length === 0) return '⚠️ لا توجد شاشات متاحة حالياً.';
+                        let mr = '🖥️ *الشاشات المتاحة:*\n';
+                        mons.slice(0, 8).forEach((mo, i) => {
+                            mr += `\n${i+1}. ${mo.name}\n   💰 السعر: ${mo.price.toLocaleString()} ج.م`;
+                        });
+                        return mr;
+
+                    case 'pc':
+                        const pcs = products.filter(p => p.type === 'pc');
+                        if (pcs.length === 0) return '⚠️ لا توجد أجهزة PC مجمعة حالياً. يمكنك تجميع جهازك بنفسك من قسم "تجميع PC"!';
+                        let pr = '🖥️ *أجهزة PC المجمعة:*\n';
+                        pcs.slice(0, 8).forEach((p, i) => {
+                            pr += `\n${i+1}. ${p.name}\n   💰 السعر: ${p.price.toLocaleString()} ج.م`;
+                        });
+                        return pr;
+
+                    case 'all_products':
+                        if (products.length === 0) return '⚠️ لا توجد منتجات حالياً.';
+                        const types = {};
+                        products.forEach(p => { if (!types[p.type]) types[p.type] = []; types[p.type].push(p); });
+                        let ar = '📋 *جميع المنتجات:*\n';
+                        Object.entries(types).forEach(([type, items]) => {
+                            const emoji = type === 'laptop' ? '💻' : type === 'monitor' ? '🖥️' : type === 'pc' ? '🖥️' : '🔧';
+                            ar += `\n${emoji} ${type === 'laptop' ? 'لابتوبات' : type === 'monitor' ? 'شاشات' : type === 'pc' ? 'PC' : 'قطع'} (${items.length}):\n`;
+                            items.slice(0, 3).forEach((item, i) => {
+                                ar += `   ${i+1}. ${item.name} - ${item.price.toLocaleString()} ج.م\n`;
+                            });
+                        });
+                        return ar;
+
+                    case 'price_general':
+                        if (products.length === 0) return '⚠️ لا توجد منتجات.';
+                        const cheap = products.reduce((a, b) => a.price < b.price ? a : b);
+                        const exp = products.reduce((a, b) => a.price > b.price ? a : b);
+                        return `💰 *نطاق الأسعار:*\n\n• الأرخص: ${cheap.name}\n   السعر: ${cheap.price.toLocaleString()} ج.م\n\n• الأعلى: ${exp.name}\n   السعر: ${exp.price.toLocaleString()} ج.م\n\n💡 حدد النوع (لابتوب/شاشة/PC) للتفاصيل!`;
+
+                    case 'cheapest':
+                        if (products.length === 0) return '⚠️ لا توجد منتجات.';
+                        const cheapest = products.reduce((a, b) => a.price < b.price ? a : b);
+                        return `💰 *أرخص منتج:*\n\n${cheapest.name}\nالسعر: ${cheapest.price.toLocaleString()} ج.م\n\n📞 للطلب: 01025555207`;
+
+                    case 'most_expensive':
+                        if (products.length === 0) return '⚠️ لا توجد منتجات.';
+                        const mostExp = products.reduce((a, b) => a.price > b.price ? a : b);
+                        return `💎 *أغلى منتج:*\n\n${mostExp.name}\nالسعر: ${mostExp.price.toLocaleString()} ج.م`;
+
+                    case 'build_pc':
+                        const comps = products.filter(p => p.type === 'component');
+                        const cpuCount = comps.filter(c => c.componentType === 'cpu').length;
+                        const gpuCount = comps.filter(c => c.componentType === 'gpu').length;
+                        const ramCount = comps.filter(c => c.componentType === 'ram').length;
+                        const storageCount = comps.filter(c => c.componentType === 'storage').length;
+                        return `🔧 *تجميع جهاز PC:*\n\nالقطع المتوفرة:\n• 🧠 معالجات: ${cpuCount} خيار\n• 🎮 كروت شاشة: ${gpuCount} خيار\n• 🧮 ذاكرة RAM: ${ramCount} خيار\n• 💾 تخزين: ${storageCount} خيار\n• ⚡ مزود طاقة\n• 📦 صناديق\n\n💡 توجه لموقعنا وابدأ التجميع الآن!`;
+
+                    case 'compare':
+                        if (intent.products && intent.products.length >= 2) {
+                            const a = intent.products[0], b = intent.products[1];
+                            const diff = Math.abs(a.price - b.price);
+                            const better = a.price < b.price ? a.name : b.name;
+                            let cr = `📊 *مقارنة بين منتجين:*\n\n`;
+                            cr += `🅰️ ${a.name}\n   💰 ${a.price.toLocaleString()} ج.م\n`;
+                            cr += `\n🅱️ ${b.name}\n   💰 ${b.price.toLocaleString()} ج.م\n`;
+                            cr += `\n💡 الأوفر: ${better} (بفارق ${diff.toLocaleString()} ج.م)`;
+                            cr += `\n\n📞 للطلب: 01025555207`;
+                            return cr;
+                        }
+                        return '📊 للمقارنة، أخبرني باسم المنتجين. مثال: "قارن بين Dell XPS و MacBook Pro"';
+
+                    case 'search':
+                        if (intent.products.length === 1) {
+                            const p = intent.products[0];
+                            let sr = `✅ *وجدت هذا المنتج:*\n\n📛 ${p.name}\n💰 السعر: ${p.price.toLocaleString()} ج.م\n🏷️ الماركة: ${p.brand || 'غير محدد'}`;
+                            if (p.specs && Object.keys(p.specs).length > 0) {
+                                sr += '\n📋 المواصفات:';
+                                Object.entries(p.specs).forEach(([k, v]) => { sr += `\n   • ${k}: ${v}`; });
+                            }
+                            return sr + '\n\n📞 للطلب: 01025555207';
+                        }
+                        let srl = `🔍 *${intent.products.length} نتائج:*\n`;
+                        intent.products.slice(0, 6).forEach((p, i) => {
+                            srl += `\n${i+1}. ${p.name} - ${p.price.toLocaleString()} ج.م`;
+                        });
+                        return srl;
+
+                    case 'offers':
+                        return '🎁 *عروض اليوم:*\n\n• خصم 5% على أول طلب\n• توصيل مجاني للطلبات فوق 5,000 ج.م\n• ضمان إضافي مجاني على اللابتوبات\n\n📞 للحجز: 01025555207';
+
+                    default:
+                        return '🤔 أقدر أساعدك في:\n\n• 💻 أسعار ومواصفات اللابتوبات\n• 🖥️ أسعار ومواصفات الشاشات\n• 🔧 تجميع PC\n• 📊 مقارنة المنتجات\n• 🛡️ الضمان والتوصيل\n• 💰 العروض والتخفيضات\n\n💬 اسألني أي سؤال!';
+                }
+            }
+
+            // ==================== واجهة المستخدم ====================
+            function addMessage(text, type) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `msg ${type}`;
+                msgDiv.innerHTML = text.replace(/\n/g, '<br>').replace(/\*(.*?)\*/g, '<span class="highlight">$1</span>');
+                chatBody.appendChild(msgDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+                return msgDiv;
+            }
+
+            function showTyping() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'typing';
+                typingDiv.innerHTML = '<span></span><span></span><span></span>';
+                chatBody.appendChild(typingDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+                return typingDiv;
+            }
+
+            function addQuickChips(intentType) {
+                const existing = chatBody.querySelector('.quick-chips');
+                if (existing) existing.remove();
+
+                const chipsDiv = document.createElement('div');
+                chipsDiv.className = 'quick-chips';
+
+                let items = ["💻 أسعار اللابتوبات", "🖥️ الشاشات", "🔧 تجميع PC", "🛡️ الضمان"];
+                if (intentType === 'laptop') items = ["مواصفات Dell XPS", "أرخص لابتوب", "مقارنة لابتوبين", "العروض"];
+                if (intentType === 'monitor') items = ["شاشات للألعاب", "أرخص شاشة", "مقارنة شاشتين"];
+                if (intentType === 'build_pc') items = ["القطع المتوفرة", "كم تكلفة التجميع", "أفضل معالج"];
+                if (intentType === 'compare') items = ["قارن لي لابتوبين", "أفضل شاشة للسعر"];
+
+                items.forEach(txt => {
+                    const chip = document.createElement('button');
+                    chip.className = 'quick-chip';
+                    chip.textContent = txt;
+                    chip.addEventListener('click', () => sendMessage(txt));
+                    chipsDiv.appendChild(chip);
+                });
+
+                chatBody.appendChild(chipsDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+
+            async function sendMessage(text) {
+                if (!text.trim()) return;
+
+                addMessage(text, 'user');
+                chatInput.value = '';
+
+                const typing = showTyping();
+                const delay = 500 + Math.random() * 500;
+                await new Promise(r => setTimeout(r, delay));
+                typing.remove();
+
+                const intent = detectIntent(text);
+                const response = getResponse(intent, text);
+                addMessage(response, 'bot');
+                addQuickChips(intent.type);
+            }
+
+            // ==================== الأحداث ====================
+            sendBtn.addEventListener('click', () => sendMessage(chatInput.value));
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage(chatInput.value);
+            });
+
+            refreshBtn.addEventListener('click', () => {
+                chatBody.innerHTML = '';
+                const welcomeMsg = document.createElement('div');
+                welcomeMsg.className = 'msg bot';
+                welcomeMsg.innerHTML = '👋 مرحباً بك مجدداً! اسألني أي سؤال.';
+                chatBody.appendChild(welcomeMsg);
+            });
+
+            // الأزرار السريعة الأولية
+            document.querySelectorAll('.quick-chip').forEach(chip => {
+                chip.addEventListener('click', function() {
+                    sendMessage(this.dataset.q);
+                });
+            });
+
+            // تركيز الإدخال
+            chatInput.focus();
+
+            console.log('✅ صفحة المساعد الذكي جاهزة | Azzam Technology');
+            console.log('📦 المنتجات المحملة:', getAllProducts().length);
+        })();
+    </script>
+</body>
+</html>
