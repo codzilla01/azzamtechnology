@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عزام تكنولوجي | أقسام الحاسوب واللابتوب والشاشات</title>
+    <title>Azzam Technology | أقسام الحاسوب واللابتوب والشاشات</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --font-main: 'Tajawal', sans-serif;
@@ -20,6 +20,7 @@
             --radius-lg: 20px;
             --radius-xl: 28px;
             --radius-full: 9999px;
+            --progress-height: 5px;
         }
 
         [data-theme="light"] {
@@ -27,15 +28,17 @@
             --bg-secondary: #ffffff;
             --bg-tertiary: #f1f5f9;
             --bg-card: #ffffff;
+            --bg-glass: rgba(255,255,255,0.8);
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --text-muted: #94a3b8;
             --border-color: #e2e8f0;
+            --border-light: #f1f5f9;
             --accent: #e63946;
             --accent-hover: #c92a37;
             --accent-glow: rgba(230,57,70,0.15);
-            --gradient-hero: linear-gradient(135deg, #0f172a, #1e3a5f, #1a1a2e);
-            --gradient-accent: linear-gradient(135deg, #e63946, #ff6b6b);
+            --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1a1a2e 100%);
+            --gradient-accent: linear-gradient(135deg, #e63946 0%, #ff6b6b 100%);
             --nav-bg: rgba(255,255,255,0.85);
             --footer-bg: #0f172a;
             --footer-text: #cbd5e1;
@@ -46,15 +49,17 @@
             --bg-secondary: #111827;
             --bg-tertiary: #1a2332;
             --bg-card: #151d2b;
+            --bg-glass: rgba(21,29,43,0.85);
             --text-primary: #f1f5f9;
             --text-secondary: #cbd5e1;
             --text-muted: #64748b;
             --border-color: #1e293b;
+            --border-light: #1a2332;
             --accent: #e63946;
             --accent-hover: #ff4757;
             --accent-glow: rgba(230,57,70,0.25);
-            --gradient-hero: linear-gradient(135deg, #050a14, #0d1525, #080d18);
-            --gradient-accent: linear-gradient(135deg, #e63946, #ff6b6b);
+            --gradient-hero: linear-gradient(135deg, #050a14 0%, #0d1525 50%, #080d18 100%);
+            --gradient-accent: linear-gradient(135deg, #e63946 0%, #ff6b6b 100%);
             --nav-bg: rgba(10,15,26,0.9);
             --footer-bg: #050a14;
             --footer-text: #94a3b8;
@@ -69,27 +74,35 @@
             line-height: 1.7;
             transition: background-color var(--transition), color var(--transition);
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
         .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); }
 
-        /* NAVBAR */
+        /* ========== NAVBAR ========== */
         .navbar {
             position: sticky; top: 0; z-index: 1000;
-            background: var(--nav-bg); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color); height: 72px;
-            display: flex; align-items: center;
+            background: var(--nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+            height: 72px; display: flex; align-items: center;
         }
         .navbar .container { display: flex; align-items: center; justify-content: space-between; }
         .nav-logo {
-            display: flex; align-items: center; gap: 10px; text-decoration: none;
-            color: var(--text-primary); font-weight: 900; font-size: 1.2rem;
-            opacity: 0.4; transition: all 0.4s ease;
+            display: flex; align-items: center; gap: 12px; text-decoration: none;
+            color: var(--text-primary); font-weight: 900; font-size: 1.3rem; cursor: pointer;
+            user-select: none; -webkit-user-select: none;
+            position: relative;
         }
-        .nav-logo:hover { opacity: 1; text-shadow: 0 0 20px rgba(230,57,70,0.5); }
-        .nav-logo img { height: 40px; }
+        .nav-logo .logo-icon {
+            width: 44px; height: 44px; background: var(--gradient-accent); border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.3rem;
+            box-shadow: var(--shadow-glow); transition: var(--transition);
+        }
+        .nav-logo:active .logo-icon {
+            transform: scale(0.95);
+        }
         .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
         .nav-links a {
             text-decoration: none; color: var(--text-secondary); padding: 10px 16px;
@@ -112,10 +125,77 @@
         }
         .hamburger { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; }
 
-        /* HERO */
+        /* ========== LONG PRESS INDICATOR ========== */
+        .press-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--progress-height);
+            z-index: 10000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .press-bar-container.active {
+            opacity: 1;
+        }
+        .press-bar-fill {
+            height: 100%;
+            background: var(--gradient-accent);
+            width: 0%;
+            transition: width 0.05s linear;
+            box-shadow: 0 0 12px rgba(230,57,70,0.6);
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* ========== SECRET HINT TOAST ========== */
+        .secret-hint-toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(0,0,0,0.95);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            z-index: 10001;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s ease;
+            font-family: var(--font-main);
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        .secret-hint-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ========== MOBILE MENU ========== */
+        .mobile-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1099; display: none; }
+        .mobile-overlay.open { display: block; }
+        .mobile-menu {
+            position: fixed; top: 0; right: 0; width: 280px; height: 100%; background: var(--bg-card);
+            z-index: 1100; padding: 20px; transform: translateX(100%); transition: transform 0.3s;
+            display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-xl);
+        }
+        .mobile-menu.open { transform: translateX(0); }
+        .mobile-menu a { padding: 12px 16px; text-decoration: none; color: var(--text-primary); border-radius: var(--radius-sm); font-weight: 600; }
+        .mobile-menu a:hover { background: var(--accent); color: #fff; }
+        .mobile-close { align-self: flex-end; background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; }
+
+        /* ========== HERO ========== */
         .hero {
             background: var(--gradient-hero); color: #fff; padding: clamp(60px, 10vw, 100px) 0;
             text-align: center; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(230,57,70,0.1) 0%, transparent 70%);
+            top: -150px; right: -150px; border-radius: 50%; pointer-events: none;
         }
         .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; margin-bottom: 16px; }
         .hero h1 span { background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
@@ -128,11 +208,11 @@
             transition: var(--transition); white-space: nowrap;
         }
         .btn-primary { background: var(--gradient-accent); color: #fff; box-shadow: var(--shadow-glow); }
-        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(230,57,70,0.5); }
         .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.3); }
-        .btn-outline:hover { border-color: #fff; }
+        .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
 
-        /* SECTIONS */
+        /* ========== SECTIONS ========== */
         .section { padding: 60px 0; }
         .section-alt { background: var(--bg-secondary); }
         .section-header { text-align: center; margin-bottom: 48px; }
@@ -140,23 +220,23 @@
         .section-header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 8px; }
         .section-header .line { width: 60px; height: 4px; background: var(--gradient-accent); border-radius: 4px; margin: 16px auto 0; }
 
-        /* PRODUCTS */
+        /* ========== PRODUCTS GRID ========== */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
         .product-card {
             background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden;
             border: 1px solid var(--border-color); transition: var(--transition);
-            display: flex; flex-direction: column; cursor: pointer; box-shadow: var(--shadow-sm);
+            display: flex; flex-direction: column; cursor: pointer;
+            box-shadow: var(--shadow-sm);
         }
         .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--accent); }
         .product-card-image { position: relative; height: 220px; overflow: hidden; background: var(--bg-tertiary); }
         .product-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
         .product-card:hover .product-card-image img { transform: scale(1.05); }
-        .product-badge {
-            position: absolute; top: 12px; right: 12px; background: var(--accent); color: #fff;
-            padding: 4px 12px; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700;
-        }
+        .product-badge { position: absolute; top: 12px; right: 12px; background: var(--accent); color: #fff; padding: 4px 12px; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; z-index: 2; }
         .product-card-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
         .product-card-body h3 { font-size: 1rem; font-weight: 700; }
+        .specs-pills { display: flex; flex-wrap: wrap; gap: 4px; }
+        .spec-pill { background: var(--bg-tertiary); padding: 3px 8px; border-radius: var(--radius-full); font-size: 0.7rem; color: var(--text-muted); }
         .product-price { font-size: 1.4rem; font-weight: 900; color: var(--accent); margin-top: auto; }
         .add-to-cart-btn {
             width: 100%; padding: 10px; border-radius: var(--radius-sm); background: var(--accent);
@@ -166,10 +246,8 @@
         }
         .add-to-cart-btn:hover { background: var(--accent-hover); }
         .add-to-cart-btn.in-cart { background: #22c55e; }
-        .specs-pills { display: flex; flex-wrap: wrap; gap: 4px; }
-        .spec-pill { background: var(--bg-tertiary); padding: 3px 8px; border-radius: var(--radius-full); font-size: 0.7rem; color: var(--text-muted); }
 
-        /* PC BUILDER */
+        /* ========== PC BUILDER ========== */
         .pc-builder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
         .pc-components { display: flex; flex-direction: column; gap: 10px; }
         .pc-select {
@@ -196,7 +274,7 @@
         .pc-options.open { display: block; }
         .pc-option {
             padding: 12px 16px; cursor: pointer; transition: var(--transition);
-            border-bottom: 1px solid var(--border-color); font-size: 0.85rem;
+            border-bottom: 1px solid var(--border-light); font-size: 0.85rem;
             display: flex; justify-content: space-between;
         }
         .pc-option:hover { background: var(--accent-glow); }
@@ -207,10 +285,10 @@
         }
         .pc-summary h3 { font-size: 1.2rem; font-weight: 800; text-align: center; margin-bottom: 16px; }
         .pc-summary-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-        .pc-summary-list li { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 6px 0; border-bottom: 1px solid var(--border-color); }
+        .pc-summary-list li { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 6px 0; border-bottom: 1px solid var(--border-light); }
         .pc-total { font-size: 1.5rem; font-weight: 900; text-align: center; color: var(--accent); padding: 12px 0; border-top: 2px solid var(--border-color); }
 
-        /* CART */
+        /* ========== CART DRAWER ========== */
         .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
         .cart-overlay.open { opacity: 1; pointer-events: all; }
         .cart-drawer {
@@ -223,7 +301,7 @@
         .cart-drawer-body { flex-grow: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
         .cart-drawer-footer { padding: 16px; border-top: 1px solid var(--border-color); }
 
-        /* MODAL */
+        /* ========== MODALS ========== */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 4000;
             display: flex; align-items: center; justify-content: center; padding: 20px;
@@ -233,10 +311,10 @@
         .modal-content {
             background: var(--bg-card); border-radius: var(--radius-xl); width: 100%;
             max-width: 850px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-xl);
-            display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border-color);
-            animation: modalIn 0.35s;
+            display: grid; grid-template-columns: 1fr 1fr; animation: modalIn 0.35s;
+            border: 1px solid var(--border-color);
         }
-        @keyframes modalIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes modalIn { from { opacity: 0; transform: translateY(30px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
         .modal-close {
             position: absolute; top: 14px; left: 14px; width: 36px; height: 36px;
             border-radius: 50%; background: var(--bg-secondary); border: 1px solid var(--border-color);
@@ -249,11 +327,11 @@
         .modal-details h2 { font-size: 1.5rem; font-weight: 800; }
         .modal-price { font-size: 2rem; font-weight: 900; color: var(--accent); }
 
-        /* FOOTER */
+        /* ========== FOOTER ========== */
         .footer { background: var(--footer-bg); color: var(--footer-text); padding: 60px 0 24px; margin-top: 60px; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-bottom: 32px; }
         .footer-col h4 { color: #fff; margin-bottom: 16px; font-size: 1rem; }
-        .footer-col a { color: var(--footer-text); text-decoration: none; font-size: 0.85rem; display: block; margin-bottom: 8px; }
+        .footer-col a { color: var(--footer-text); text-decoration: none; font-size: 0.85rem; display: block; margin-bottom: 8px; transition: 0.2s; }
         .footer-col a:hover { color: #fff; }
         .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.85rem; }
 
@@ -261,26 +339,38 @@
         .empty-state i { font-size: 4rem; margin-bottom: 16px; opacity: 0.4; }
         .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #22c55e; color: #fff; padding: 12px 24px; border-radius: var(--radius-full); z-index: 5000; font-weight: 600; display: none; }
 
+        /* ========== RESPONSIVE ========== */
         @media (max-width: 992px) { .pc-builder-grid { grid-template-columns: 1fr; } .pc-summary { position: static; } }
         @media (max-width: 768px) {
             .nav-links { display: none; } .hamburger { display: flex; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
             .hero { padding: 40px 0; } .hero h1 { font-size: 1.6rem; }
             .cart-drawer { width: 100%; }
             .modal-content { grid-template-columns: 1fr; } .modal-image { min-height: 220px; }
+            .press-bar-container { height: 3px; }
         }
         @media (max-width: 480px) {
             .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
             .product-card-image { height: 150px; }
+            .press-bar-container { height: 2px; }
         }
     </style>
 </head>
 <body>
+    <!-- LONG PRESS PROGRESS BAR -->
+    <div class="press-bar-container" id="press-bar-container">
+        <div class="press-bar-fill" id="press-bar-fill"></div>
+    </div>
+
+    <!-- SECRET HINT TOAST -->
+    <div class="secret-hint-toast" id="secret-hint-toast"></div>
+
     <!-- NAVBAR -->
     <nav class="navbar">
         <div class="container">
-            <a href="index.html" class="nav-logo" id="nav-logo">
-                <img src="images/Azaam_Logo.png" alt="شعار">
-                <span>عزام تكنولوجي</span>
+            <a href="#" class="nav-logo" id="nav-logo">
+                <span class="logo-icon"><i class="fas fa-microchip"></i></span>
+                <span>Azzam Technology</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#home" class="active">الرئيسية</a></li>
@@ -300,11 +390,39 @@
         </div>
     </nav>
 
+    <!-- MOBILE MENU -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <button class="mobile-close" id="mobile-close">&times;</button>
+        <a href="#home">الرئيسية</a><a href="#monitors">شاشات</a><a href="#laptops">لابتوب</a><a href="#pc-section">PC</a><a href="#builder">تجميع PC</a>
+    </div>
+
+    <!-- CART DRAWER -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-drawer-header"><h3>🛒 سلة التسوق</h3><button class="nav-btn" id="cart-close-btn">&times;</button></div>
+        <div class="cart-drawer-body" id="cart-drawer-body"></div>
+        <div class="cart-drawer-footer">
+            <div class="pc-total" id="cart-total-display">المجموع: 0 ج.م</div>
+            <button class="btn btn-primary" id="checkout-btn" style="width:100%;justify-content:center;margin-top:8px;"><i class="fab fa-whatsapp"></i> إتمام الطلب</button>
+            <button class="btn btn-outline" id="clear-cart-btn" style="width:100%;justify-content:center;margin-top:8px;border-color:var(--accent);color:var(--accent);">تفريغ السلة</button>
+        </div>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div class="modal-overlay" id="product-modal-overlay">
+        <div class="modal-content" id="product-modal" style="position:relative;">
+            <button class="modal-close" id="product-modal-close">&times;</button>
+            <div class="modal-image" id="modal-product-image"></div>
+            <div class="modal-details" id="modal-product-details"></div>
+        </div>
+    </div>
+
     <!-- HERO -->
     <section class="hero" id="home">
         <div class="container">
             <h1>اكتشف <span>أفضل الأجهزة</span> بأسعار تنافسية</h1>
-            <p>شاشات • لابتوبات • قطع PC • تجميع جهازك المثالي</p>
+            <p>شاشات • لابتوبات • قطع PC • تجميع جهازك المثالي - كل ذلك في مكان واحد</p>
             <div class="hero-btns">
                 <a href="#monitors" class="btn btn-primary"><i class="fas fa-desktop"></i> تصفح الشاشات</a>
                 <a href="#builder" class="btn btn-outline"><i class="fas fa-tools"></i> تجميع PC</a>
@@ -357,94 +475,188 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col"><h4>عن الشركة</h4><p style="color:var(--footer-text);font-size:0.85rem;">عزام تكنولوجي تقدم أفضل الأجهزة وخدمات التجميع</p></div>
+                <div class="footer-col"><h4>عن الشركة</h4><p style="color:var(--footer-text);font-size:0.85rem;">Azzam Technology تقدم أفضل الأجهزة وخدمات التجميع</p></div>
                 <div class="footer-col"><h4>روابط سريعة</h4><a href="#home">الرئيسية</a><a href="#monitors">شاشات</a><a href="#laptops">لابتوب</a><a href="#builder">تجميع PC</a></div>
                 <div class="footer-col"><h4>معلومات الاتصال</h4><p style="font-size:0.85rem;">📍 مول البستان - القاهرة</p><p style="font-size:0.85rem;">📞 01025555207</p></div>
                 <div class="footer-col"><h4>الخدمات</h4><a href="#" id="warranty-link">الضمان والاستبدال</a><a href="chat-bot.html">المساعد الذكي</a></div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2025 عزام تكنولوجي. جميع الحقوق محفوظة.</p></div>
+            <div class="footer-bottom"><p>&copy; 2026 Azzam Technology. All rights reserved.</p></div>
         </div>
     </footer>
 
-    <!-- TOAST -->
     <div class="toast" id="toast"></div>
-
-    <!-- CART DRAWER -->
-    <div class="cart-overlay" id="cart-overlay"></div>
-    <div class="cart-drawer" id="cart-drawer">
-        <div class="cart-drawer-header"><h3>🛒 سلة التسوق</h3><button class="nav-btn" id="cart-close-btn">&times;</button></div>
-        <div class="cart-drawer-body" id="cart-drawer-body"></div>
-        <div class="cart-drawer-footer">
-            <div class="pc-total" id="cart-total-display">المجموع: 0 ج.م</div>
-            <button class="btn btn-primary" id="checkout-btn" style="width:100%;justify-content:center;margin-top:8px;"><i class="fab fa-whatsapp"></i> إتمام الطلب</button>
-            <button class="btn btn-outline" id="clear-cart-btn" style="width:100%;justify-content:center;margin-top:8px;border-color:var(--accent);color:var(--accent);">تفريغ السلة</button>
-        </div>
-    </div>
-
-    <!-- PRODUCT MODAL -->
-    <div class="modal-overlay" id="product-modal-overlay">
-        <div class="modal-content" style="position:relative;">
-            <button class="modal-close" id="product-modal-close">&times;</button>
-            <div class="modal-image" id="modal-product-image"></div>
-            <div class="modal-details" id="modal-product-details"></div>
-        </div>
-    </div>
 
     <a href="chat-bot.html" style="position:fixed;bottom:24px;left:24px;z-index:9999;background:var(--gradient-accent);color:#fff;padding:12px 20px;border-radius:50px;text-decoration:none;font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(230,57,70,0.4);font-family:var(--font-main);"><i class="fas fa-robot"></i> المساعد الذكي</a>
 
     <script>
         (function() {
-            // ==================== SUPABASE CONFIG ====================
-            const SUPABASE_URL = 'https://jbyxmlfmvxrhkmhhrysm.supabase.co';
-            const SUPABASE_KEY = 'sb_publishable_64vOtnLIPMFTpKB0SYt3OQ_W8ZusySp';
+            // ==================== CONSTANTS ====================
+            const STORAGE_KEY = 'store_all_products';
+            const ADMIN_URL = 'admin.html';
+            const LONG_PRESS_DURATION = 2000; // 2 ثانية
 
             const $ = s => document.querySelector(s);
             const $$ = s => document.querySelectorAll(s);
 
-            // ==================== API CALLS ====================
-            async function fetchProducts() {
-                try {
-                    const response = await fetch(`${SUPABASE_URL}/rest/v1/products?order=created_at.desc`, {
-                        headers: {
-                            'apikey': SUPABASE_KEY,
-                            'Authorization': `Bearer ${SUPABASE_KEY}`,
-                            'Content-Type': 'application/json'
+            // ==================== ADMIN SECRET ACCESS ====================
+            const logoEl = document.getElementById('nav-logo');
+            const pressBarContainer = document.getElementById('press-bar-container');
+            const pressBarFill = document.getElementById('press-bar-fill');
+            const secretHintToast = document.getElementById('secret-hint-toast');
+
+            let pressStartTime = 0;
+            let pressTimer = null;
+            let isPressing = false;
+
+            /**
+             * عرض تلميح سري
+             */
+            function showSecretHint(message, duration = 2000) {
+                if (!secretHintToast) return;
+                secretHintToast.textContent = message;
+                secretHintToast.classList.add('show');
+                clearTimeout(secretHintToast._timer);
+                secretHintToast._timer = setTimeout(() => {
+                    secretHintToast.classList.remove('show');
+                }, duration);
+            }
+
+            /**
+             * بدء الضغط المطول
+             */
+            function startLongPress(e) {
+                if (e.type === 'touchstart') {
+                    // لا نمنع السلوك الافتراضي للسماح بالسحب والتمرير
+                }
+                if (isPressing) return;
+                isPressing = true;
+                pressStartTime = Date.now();
+
+                // إظهار شريط التقدم
+                pressBarContainer.classList.add('active');
+                pressBarFill.style.width = '0%';
+                pressBarFill.style.transition = 'none';
+
+                // تحديث شريط التقدم كل 30ms
+                pressTimer = setInterval(() => {
+                    const elapsed = Date.now() - pressStartTime;
+                    const progress = Math.min((elapsed / LONG_PRESS_DURATION) * 100, 100);
+                    pressBarFill.style.width = progress + '%';
+
+                    // تلميحات تدريجية
+                    if (elapsed > 500 && elapsed < 700) {
+                        showSecretHint('🤔 اضغط باستمرار...', 1000);
+                    } else if (elapsed > 1000 && elapsed < 1200) {
+                        showSecretHint('🔍 اقتربت... استمر!', 1000);
+                    } else if (elapsed > 1500 && elapsed < 1700) {
+                        showSecretHint('🔥 تقريباً هناك!', 1000);
+                    }
+
+                    // تم الوصول للمدة المطلوبة
+                    if (elapsed >= LONG_PRESS_DURATION) {
+                        stopLongPress(true);
+                        showSecretHint('✅ جاري فتح لوحة التحكم...', 2000);
+                        // تأثير وميض على الشعار
+                        const logoIcon = logoEl?.querySelector('.logo-icon');
+                        if (logoIcon) {
+                            logoIcon.style.transform = 'scale(1.2)';
+                            logoIcon.style.boxShadow = '0 0 50px rgba(34,197,94,0.8)';
                         }
-                    });
-                    if (!response.ok) throw new Error('Failed to fetch');
-                    return await response.json();
-                } catch(e) {
-                    console.error('Error fetching products:', e);
-                    return [];
+                        setTimeout(() => {
+                            window.location.href = ADMIN_URL;
+                        }, 500);
+                    }
+                }, 30);
+            }
+
+            /**
+             * إيقاف الضغط المطول
+             */
+            function stopLongPress(success = false) {
+                if (!isPressing && !pressTimer) return;
+                isPressing = false;
+                clearInterval(pressTimer);
+                pressTimer = null;
+
+                // إخفاء شريط التقدم
+                pressBarContainer.classList.remove('active');
+                if (!success) {
+                    pressBarFill.style.transition = 'width 0.3s ease';
+                    pressBarFill.style.width = '0%';
                 }
             }
 
-            async function loadStoreProducts() {
-                const all = await fetchProducts();
-                const pcComponents = {
-                    cpu: { label: 'المعالج (CPU)', icon: 'fa-microchip', options: [] },
-                    motherboard: { label: 'اللوحة الأم', icon: 'fa-server', options: [] },
-                    gpu: { label: 'كرت الشاشة (GPU)', icon: 'fa-tv', options: [] },
-                    ram: { label: 'الذاكرة (RAM)', icon: 'fa-memory', options: [] },
-                    storage: { label: 'التخزين', icon: 'fa-hdd', options: [] },
-                    psu: { label: 'مزود الطاقة (PSU)', icon: 'fa-bolt', options: [] },
-                    case: { label: 'الصندوق (Case)', icon: 'fa-desktop', options: [] },
-                    monitor: { label: 'الشاشة', icon: 'fa-desktop', options: [] },
-                };
-                all.filter(p => p.type === 'component').forEach(c => {
-                    if (pcComponents[c.component_type]) {
-                        pcComponents[c.component_type].options.push({ name: c.name, price: c.price });
-                    }
-                });
-                return {
-                    laptops: all.filter(p => p.type === 'laptop'),
-                    monitors: all.filter(p => p.type === 'monitor'),
-                    prebuiltPCs: all.filter(p => p.type === 'pc'),
-                    pcComponents
-                };
+            // ربط الأحداث بالشعار
+            if (logoEl) {
+                // Mouse events
+                logoEl.addEventListener('mousedown', startLongPress);
+                logoEl.addEventListener('mouseup', () => stopLongPress(false));
+                logoEl.addEventListener('mouseleave', () => stopLongPress(false));
+
+                // Touch events
+                logoEl.addEventListener('touchstart', startLongPress, { passive: true });
+                logoEl.addEventListener('touchend', () => stopLongPress(false));
+                logoEl.addEventListener('touchcancel', () => stopLongPress(false));
+
+                // منع السحب أثناء الضغط المطول
+                logoEl.addEventListener('dragstart', (e) => e.preventDefault());
             }
 
-            let data = { laptops: [], monitors: [], prebuiltPCs: [], pcComponents: {} };
+            // إلغاء الضغط عند الخروج من الصفحة
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) stopLongPress(false);
+            });
+
+            // ==================== طريقة إضافية: معامل URL ====================
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('admin') || urlParams.has('panel') || urlParams.has('secret')) {
+                window.location.href = ADMIN_URL;
+            }
+
+            // ==================== طريقة إضافية: Ctrl+Shift+A ====================
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                    e.preventDefault();
+                    showSecretHint('⌨️ اختصار لوحة التحكم', 1500);
+                    setTimeout(() => window.location.href = ADMIN_URL, 400);
+                }
+            });
+
+            // ==================== CONSOLE HINT ====================
+            console.log('%c🛡️ Azzam Technology', 'font-size:16px;font-weight:bold;color:#e63946;');
+            console.log('%c💡 اضغط مطولاً (ثانيتين) على الشعار للوصول للوحة التحكم', 'font-size:11px;color:#64748b;');
+            console.log('%c   أو استخدم ?admin في الرابط', 'font-size:10px;color:#475569;');
+            console.log('%c   أو Ctrl+Shift+A', 'font-size:10px;color:#475569;');
+
+            // ==================== STORE DATA ====================
+            function loadProducts() {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (!stored) return { laptops: [], monitors: [], prebuiltPCs: [], pcComponents: {} };
+                try {
+                    const all = JSON.parse(stored);
+                    const pcComponents = {
+                        cpu: { label: 'المعالج (CPU)', icon: 'fa-microchip', options: [] },
+                        motherboard: { label: 'اللوحة الأم', icon: 'fa-server', options: [] },
+                        gpu: { label: 'كرت الشاشة (GPU)', icon: 'fa-tv', options: [] },
+                        ram: { label: 'الذاكرة (RAM)', icon: 'fa-memory', options: [] },
+                        storage: { label: 'التخزين', icon: 'fa-hdd', options: [] },
+                        psu: { label: 'مزود الطاقة (PSU)', icon: 'fa-bolt', options: [] },
+                        case: { label: 'الصندوق (Case)', icon: 'fa-desktop', options: [] },
+                        monitor: { label: 'الشاشة', icon: 'fa-desktop', options: [] },
+                    };
+                    all.filter(p => p.type === 'component').forEach(c => {
+                        if (pcComponents[c.componentType]) pcComponents[c.componentType].options.push({ name: c.name, price: c.price });
+                    });
+                    return {
+                        laptops: all.filter(p => p.type === 'laptop'),
+                        monitors: all.filter(p => p.type === 'monitor'),
+                        prebuiltPCs: all.filter(p => p.type === 'pc'),
+                        pcComponents
+                    };
+                } catch(e) { return { laptops: [], monitors: [], prebuiltPCs: [], pcComponents: {} }; }
+            }
+
+            let data = loadProducts();
             let cart = JSON.parse(localStorage.getItem('azzam_cart_v2') || '[]');
             let builder = {};
             let currentTheme = localStorage.getItem('azzam_theme') || 'dark';
@@ -456,10 +668,10 @@
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <div class="product-card-image"><img src="${p.image || 'https://via.placeholder.com/400x260'}" alt="${p.name}" loading="lazy"></div>
+                    <div class="product-card-image"><img src="${p.image || 'https://via.placeholder.com/400x260?text=No+Image'}" alt="${p.name}" loading="lazy"></div>
                     <div class="product-card-body">
                         <h3>${p.name}</h3>
-                        <div class="specs-pills">${p.specs && typeof p.specs === 'object' ? Object.entries(p.specs).slice(0,3).map(([k,v])=>`<span class="spec-pill">${k}:${v}</span>`).join('') : ''}</div>
+                        <div class="specs-pills">${p.specs ? Object.entries(p.specs).slice(0,3).map(([k,v])=>`<span class="spec-pill">${k}:${v}</span>`).join('') : ''}</div>
                         <div class="product-price">${formatPrice(p.price)}</div>
                         <button class="add-to-cart-btn ${inCart?'in-cart':''}" data-id="${p.id}">${inCart?'✓ في السلة':'إضافة للسلة'}</button>
                     </div>`;
@@ -474,8 +686,7 @@
                 arr.forEach(p => grid.appendChild(createProductCard(p)));
             }
 
-            async function renderAll() {
-                data = await loadStoreProducts();
+            function renderAll() {
                 renderGrid('monitors-grid', data.monitors);
                 renderGrid('laptops-grid', data.laptops);
                 renderGrid('pc-grid', data.prebuiltPCs);
@@ -488,7 +699,8 @@
                 const hasAny = Object.values(data.pcComponents).some(c => c.options.length > 0);
                 if (!hasAny) {
                     container.innerHTML = '<div class="empty-state"><i class="fas fa-microchip"></i><p>لا توجد قطع تجميع</p></div>';
-                    updateSummary(); return;
+                    updateSummary();
+                    return;
                 }
                 container.innerHTML = '';
                 Object.entries(data.pcComponents).forEach(([key, comp]) => {
@@ -523,7 +735,8 @@
             function updateSummary() {
                 const list = $('#pc-summary-list'), totalEl = $('#pc-total-price');
                 if (!list || !totalEl) return;
-                let total = 0; list.innerHTML = '';
+                let total = 0;
+                list.innerHTML = '';
                 Object.entries(data.pcComponents).forEach(([key, comp]) => {
                     const sel = builder[key];
                     const li = document.createElement('li');
@@ -537,10 +750,15 @@
             function addToCart(product) {
                 const existing = cart.find(i => i.id === product.id);
                 existing ? existing.quantity++ : cart.push({ ...product, quantity: 1 });
-                saveCart(); renderAll(); showToast('تمت الإضافة: ' + product.name);
+                saveCart();
+                renderAll();
+                showToast('تمت الإضافة: ' + product.name);
             }
 
-            function saveCart() { localStorage.setItem('azzam_cart_v2', JSON.stringify(cart)); updateCartUI(); }
+            function saveCart() {
+                localStorage.setItem('azzam_cart_v2', JSON.stringify(cart));
+                updateCartUI();
+            }
 
             function updateCartUI() {
                 const total = cart.reduce((s, i) => s + i.quantity, 0);
@@ -555,22 +773,27 @@
             }
 
             function showToast(msg) {
-                const t = $('#toast'); t.textContent = msg; t.style.display = 'block';
-                t.style.animation = 'none'; t.offsetHeight; t.style.animation = 'slideUp 0.4s ease';
-                clearTimeout(t._t); t._t = setTimeout(() => t.style.display = 'none', 2500);
+                const t = $('#toast');
+                t.textContent = msg;
+                t.style.display = 'block';
+                t.style.animation = 'none';
+                t.offsetHeight;
+                t.style.animation = 'slideUp 0.4s ease';
+                clearTimeout(t._t);
+                t._t = setTimeout(() => t.style.display = 'none', 2500);
             }
 
             function openModal(p) {
                 const overlay = $('#product-modal-overlay');
                 $('#modal-product-image').innerHTML = `<img src="${p.image||'https://via.placeholder.com/400x260'}" alt="${p.name}">`;
-                const specs = p.specs && typeof p.specs === 'object' ? Object.entries(p.specs).map(([k,v])=>`<span style="background:var(--bg-tertiary);padding:6px 12px;border-radius:8px;font-size:0.8rem;">${k}: ${v}</span>`).join('') : '';
+                const specs = p.specs ? Object.entries(p.specs).map(([k,v])=>`<span style="background:var(--bg-tertiary);padding:6px 12px;border-radius:8px;font-size:0.8rem;">${k}: ${v}</span>`).join('') : '';
                 const inCart = cart.find(i => i.id === p.id);
                 $('#modal-product-details').innerHTML = `
                     <h2>${p.name}</h2>
                     <div style="color:var(--text-muted);">${p.brand||''}</div>
                     <div class="modal-price">${formatPrice(p.price)}</div>
                     <div style="display:flex;flex-wrap:wrap;gap:6px;">${specs}</div>
-                    <div style="display:flex;gap:8px;margin-top:auto;padding-top:16px;border-top:1px solid var(--border-color);">
+                    <div style="display:flex;gap:8px;margin-top:auto;padding-top:16px;border-top:1px solid var(--border-light);">
                         <button class="btn btn-primary ${inCart?'in-cart':''}" id="modal-add-btn" style="flex:1;justify-content:center;">${inCart?'✓ في السلة':'إضافة للسلة'}</button>
                         <button class="btn btn-outline" id="modal-close-btn" style="flex:1;justify-content:center;">إغلاق</button>
                     </div>`;
@@ -581,7 +804,7 @@
 
             function closeModal() { $('#product-modal-overlay').classList.remove('open'); }
 
-            // EVENTS
+            // Events
             $('#theme-toggle').addEventListener('click', () => {
                 currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
                 document.documentElement.setAttribute('data-theme', currentTheme);
@@ -592,7 +815,6 @@
             $('#cart-nav-btn').addEventListener('click', () => { $('#cart-drawer').classList.add('open'); $('#cart-overlay').classList.add('open'); });
             $('#cart-overlay').addEventListener('click', () => { $('#cart-drawer').classList.remove('open'); $('#cart-overlay').classList.remove('open'); });
             $('#cart-close-btn').addEventListener('click', () => { $('#cart-drawer').classList.remove('open'); $('#cart-overlay').classList.remove('open'); });
-
             $('#checkout-btn').addEventListener('click', () => {
                 if (!cart.length) return showToast('السلة فارغة');
                 let msg = 'مرحباً، أريد طلب:\n\n';
@@ -604,15 +826,19 @@
             $('#add-pc-to-cart').addEventListener('click', () => {
                 const sel = Object.keys(builder).length;
                 if (sel < 3) return showToast('اختر 3 مكونات على الأقل');
-                let total = 0; const specs = {};
+                let total = 0;
+                const specs = {};
                 Object.entries(builder).forEach(([k,o]) => { total += o.price; specs[data.pcComponents[k].label] = o.name; });
                 addToCart({ id: 'build_'+Date.now(), name: 'تجميعة PC', brand: 'custom', price: total, image: 'https://picsum.photos/seed/pcbuild/400/260', specs });
-                builder = {}; renderBuilder();
+                builder = {};
+                renderBuilder();
             });
             $('#reset-builder').addEventListener('click', () => { builder = {}; renderBuilder(); });
+            $('#hamburger-btn').addEventListener('click', () => { $('#mobile-menu').classList.add('open'); $('#mobile-overlay').classList.add('open'); });
+            $('#mobile-overlay').addEventListener('click', () => { $('#mobile-menu').classList.remove('open'); $('#mobile-overlay').classList.remove('open'); });
+            $('#mobile-close').addEventListener('click', () => { $('#mobile-menu').classList.remove('open'); $('#mobile-overlay').classList.remove('open'); });
             $('#product-modal-close').addEventListener('click', closeModal);
             $('#product-modal-overlay').addEventListener('click', e => { if (e.target === $('#product-modal-overlay')) closeModal(); });
-
             document.addEventListener('click', e => {
                 if (e.target.closest('.add-to-cart-btn')) {
                     const id = e.target.closest('.add-to-cart-btn').dataset.id;
@@ -624,18 +850,18 @@
                     document.querySelectorAll('.pc-options.open').forEach(o => o.classList.remove('open'));
                 }
             });
-
             $('#warranty-link').addEventListener('click', e => {
                 e.preventDefault();
                 alert('🛡️ سياسة الضمان:\n\n• الشاشات وPC: شهر (استبدال)\n• اللابتوبات: 3 شهور\n• البطارية والشاحن: شهر\n\n⚠️ الجهاز يُقبل بحالته المباع بها');
             });
 
-            // INIT
+            window.addEventListener('storage', () => { data = loadProducts(); renderAll(); updateSummary(); });
+
             document.documentElement.setAttribute('data-theme', currentTheme);
             $('#theme-toggle').innerHTML = currentTheme === 'dark' ? '☀️' : '🌙';
             renderAll();
             updateCartUI();
-            console.log('🚀 المتجر متصل بـ Supabase');
+            console.log('🚀 Azzam Technology - تصميم فاخر | 🔒 اضغط مطولاً على الشعار للوحة التحكم');
         })();
     </script>
 </body>
