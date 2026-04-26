@@ -1,8 +1,6 @@
 <p align="center">
   <img src="images/Azzam_Cover.jpg"/>
 </p>
-# ⚡ AZZAM TECHNOLOGY STORE
-> Next-Gen Digital Commerce Platform | Built for Speed, Security & Scale 🚀
 
 ## 🧠 About The Project
 AZZAM TECHNOLOGY is a modern, scalable **digital store platform** designed to deliver high-performance e-commerce experiences.
