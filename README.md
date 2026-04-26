@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="images/Azzam_Cover.jpg"/>
+</p>
 # ⚡ AZZAM TECHNOLOGY STORE
 > Next-Gen Digital Commerce Platform | Built for Speed, Security & Scale 🚀
 
