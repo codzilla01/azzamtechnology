@@ -939,38 +939,70 @@
             console.log('%c  3. أدخل الكود المرسل إليك', 'font-size:10px;color:#64748b;');
 
             // ==================== DATA ====================
-            const laptops = [
-                { id: 'l1', name: 'Dell XPS 13', brand: 'dell', price: 25000, image: 'https://picsum.photos/seed/dellxps/400/260', specs: { 'المعالج': 'i7-1360P', 'الذاكرة': '16GB', 'التخزين': '512GB SSD', 'الشاشة': '13.3"' }, category: 'laptop' },
-                { id: 'l2', name: 'MacBook Pro 16', brand: 'apple', price: 45000, image: 'https://picsum.photos/seed/macbook/400/260', specs: { 'المعالج': 'M3 Pro', 'الذاكرة': '32GB', 'التخزين': '1TB', 'الشاشة': '16"' }, category: 'laptop' },
-                { id: 'l3', name: 'HP Spectre x360', brand: 'hp', price: 22000, image: 'https://picsum.photos/seed/hpspectre/400/260', specs: { 'المعالج': 'i5-1335U', 'الذاكرة': '8GB', 'التخزين': '256GB', 'الشاشة': '13.5"' }, category: 'laptop' },
-                { id: 'l4', name: 'Lenovo ThinkPad X1', brand: 'lenovo', price: 28000, image: 'https://picsum.photos/seed/thinkpad/400/260', specs: { 'المعالج': 'i7-1370P', 'الذاكرة': '16GB', 'التخزين': '1TB', 'الشاشة': '14"' }, category: 'laptop' },
-                { id: 'l5', name: 'Asus ROG Zephyrus', brand: 'asus', price: 35000, image: 'https://picsum.photos/seed/rogzeph/400/260', specs: { 'المعالج': 'i9-13900H', 'الذاكرة': '32GB', 'التخزين': '1TB', 'الشاشة': '15.6"' }, category: 'laptop' },
-                { id: 'l6', name: 'Dell Inspiron 15', brand: 'dell', price: 12000, image: 'https://picsum.photos/seed/inspiron/400/260', specs: { 'المعالج': 'i3-1215U', 'الذاكرة': '8GB', 'التخزين': '256GB', 'الشاشة': '15.6"' }, category: 'laptop' },
-            ];
+// ==================== DATA - من localStorage فقط ====================
+const STORAGE_KEY = 'store_all_products';
 
-            const monitors = [
-                { id: 'm1', name: 'Samsung 24" FHD', brand: 'samsung', price: 3200, image: 'https://picsum.photos/seed/sam24/400/260', specs: { 'الدقة': '1920x1080', 'التردد': '75Hz', 'النوع': 'IPS', 'الحجم': '24"' }, category: 'monitor' },
-                { id: 'm2', name: 'LG UltraGear 27"', brand: 'lg', price: 6500, image: 'https://picsum.photos/seed/lg27/400/260', specs: { 'الدقة': '2560x1440', 'التردد': '165Hz', 'النوع': 'IPS', 'الحجم': '27"' }, category: 'monitor' },
-                { id: 'm3', name: 'Dell 27" 4K', brand: 'dell', price: 8900, image: 'https://picsum.photos/seed/dell4k/400/260', specs: { 'الدقة': '3840x2160', 'التردد': '60Hz', 'النوع': 'IPS', 'الحجم': '27"' }, category: 'monitor' },
-                { id: 'm4', name: 'ASUS TUF 24" 144Hz', brand: 'asus', price: 4500, image: 'https://picsum.photos/seed/asus144/400/260', specs: { 'الدقة': '1920x1080', 'التردد': '144Hz', 'النوع': 'VA', 'الحجم': '24"' }, category: 'monitor' },
-            ];
+function loadStoreProducts() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) {
+        return { laptops: [], monitors: [], prebuiltPCs: [], pcComponents: {} };
+    }
+    try {
+        const all = JSON.parse(stored);
+        
+        // تصنيف المنتجات
+        const laptops = all.filter(p => p.type === 'laptop');
+        const monitors = all.filter(p => p.type === 'monitor');
+        const prebuiltPCs = all.filter(p => p.type === 'pc');
+        const components = all.filter(p => p.type === 'component');
+        
+        // بناء كائن قطع التجميع
+        const pcComponents = {
+            cpu: { label: 'المعالج (CPU)', icon: 'fa-microchip', options: [] },
+            motherboard: { label: 'اللوحة الأم (Motherboard)', icon: 'fa-server', options: [] },
+            gpu: { label: 'كرت الشاشة (GPU)', icon: 'fa-tv', options: [] },
+            ram: { label: 'الذاكرة (RAM)', icon: 'fa-memory', options: [] },
+            storage: { label: 'التخزين (Storage)', icon: 'fa-hdd', options: [] },
+            psu: { label: 'مزود الطاقة (PSU)', icon: 'fa-bolt', options: [] },
+            case: { label: 'الصندوق (Case)', icon: 'fa-desktop', options: [] },
+            monitor: { label: 'الشاشة (Monitor)', icon: 'fa-desktop', options: [] },
+        };
+        
+        components.forEach(comp => {
+            if (pcComponents[comp.componentType]) {
+                pcComponents[comp.componentType].options.push({
+                    name: comp.name,
+                    price: comp.price,
+                    image: comp.image || ''
+                });
+            }
+        });
+        
+        return { laptops, monitors, prebuiltPCs, pcComponents };
+    } catch (e) {
+        console.error('خطأ في تحميل المنتجات:', e);
+        return { laptops: [], monitors: [], prebuiltPCs: [], pcComponents: {} };
+    }
+}
 
-            const prebuiltPCs = [
-                { id: 'pc1', name: 'Gaming Beast RTX 4070', brand: 'custom', price: 42000, image: 'https://picsum.photos/seed/gamingpc/400/260', specs: { 'المعالج': 'i7-13700K', 'الذاكرة': '32GB', 'التخزين': '1TB NVMe', 'كرت الشاشة': 'RTX 4070' }, category: 'pc' },
-                { id: 'pc2', name: 'Workstation Pro i9', brand: 'custom', price: 55000, image: 'https://picsum.photos/seed/workstation/400/260', specs: { 'المعالج': 'i9-13900K', 'الذاكرة': '64GB', 'التخزين': '2TB NVMe', 'كرت الشاشة': 'RTX 4080' }, category: 'pc' },
-                { id: 'pc3', name: 'Budget Office PC', brand: 'custom', price: 9500, image: 'https://picsum.photos/seed/officepc/400/260', specs: { 'المعالج': 'i3-12100', 'الذاكرة': '8GB', 'التخزين': '256GB SSD', 'كرت الشاشة': 'Integrated' }, category: 'pc' },
-            ];
+// تحميل البيانات الأولية
+let storeData = loadStoreProducts();
+let laptops = storeData.laptops;
+let monitors = storeData.monitors;
+let prebuiltPCs = storeData.prebuiltPCs;
+let pcComponents = storeData.pcComponents;
 
-            const pcComponents = {
-                cpu: { label: 'المعالج (CPU)', icon: 'fa-microchip', options: [{ name: 'Intel Core i9-14900K', price: 18500 }, { name: 'Intel Core i7-14700K', price: 12500 }, { name: 'Intel Core i5-14600K', price: 8500 }, { name: 'AMD Ryzen 9 7950X', price: 17000 }, { name: 'AMD Ryzen 7 7800X3D', price: 13000 }] },
-                motherboard: { label: 'اللوحة الأم (Motherboard)', icon: 'fa-server', options: [{ name: 'ASUS ROG Z790 Hero', price: 9500 }, { name: 'MSI MAG Z790 Tomahawk', price: 6500 }, { name: 'Gigabyte B760 Aorus Elite', price: 4200 }, { name: 'ASRock X670E Taichi', price: 8800 }] },
-                gpu: { label: 'كرت الشاشة (GPU)', icon: 'fa-tv', options: [{ name: 'NVIDIA RTX 4090 24GB', price: 42000 }, { name: 'NVIDIA RTX 4080 16GB', price: 28000 }, { name: 'NVIDIA RTX 4070 12GB', price: 16500 }, { name: 'AMD RX 7900 XTX 24GB', price: 25000 }, { name: 'NVIDIA RTX 4060 8GB', price: 9500 }] },
-                ram: { label: 'الذاكرة (RAM)', icon: 'fa-memory', options: [{ name: '64GB DDR5 6000MHz (2x32GB)', price: 7500 }, { name: '32GB DDR5 6000MHz (2x16GB)', price: 3800 }, { name: '16GB DDR5 5200MHz (2x8GB)', price: 1800 }, { name: '32GB DDR4 3600MHz (2x16GB)', price: 2200 }] },
-                storage: { label: 'التخزين (Storage)', icon: 'fa-hdd', options: [{ name: 'Samsung 990 Pro 2TB NVMe', price: 5500 }, { name: 'WD Black SN850X 1TB NVMe', price: 2800 }, { name: 'Samsung 870 EVO 1TB SATA SSD', price: 1400 }, { name: 'Seagate Barracuda 2TB HDD', price: 900 }] },
-                psu: { label: 'مزود الطاقة (PSU)', icon: 'fa-bolt', options: [{ name: 'Corsair RM1000x 1000W Gold', price: 4200 }, { name: 'EVGA SuperNOVA 850W Gold', price: 3200 }, { name: 'Cooler Master 750W Bronze', price: 1800 }] },
-                case: { label: 'الصندوق (Case)', icon: 'fa-desktop', options: [{ name: 'NZXT H9 Flow', price: 3500 }, { name: 'Corsair 5000D Airflow', price: 2800 }, { name: 'Lian Li O11 Dynamic', price: 3200 }, { name: 'Cooler Master MasterBox Q300L', price: 1200 }] },
-                monitor: { label: 'الشاشة (Monitor)', icon: 'fa-desktop', options: [{ name: 'LG 27" 4K 144Hz', price: 8900 }, { name: 'Samsung Odyssey G9 49"', price: 22000 }, { name: 'ASUS 24" 1080p 144Hz', price: 4200 }] },
-            };
+// الاستماع لتحديثات localStorage من لوحة التحكم
+window.addEventListener('storage', () => {
+    storeData = loadStoreProducts();
+    laptops = storeData.laptops;
+    monitors = storeData.monitors;
+    prebuiltPCs = storeData.prebuiltPCs;
+    pcComponents = storeData.pcComponents;
+    renderAllProductSections();
+    renderPCBuilder();
+    console.log('🔄 تم تحديث المنتجات من لوحة التحكم');
+});
 
             // ==================== STATE ====================
             let cart = JSON.parse(localStorage.getItem('azzam_cart_v2')) || [];
