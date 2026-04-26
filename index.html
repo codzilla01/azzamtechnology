@@ -104,8 +104,40 @@
         /* ========== NAVBAR ========== */
         .navbar { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); box-shadow: var(--nav-shadow); transition: all var(--transition-smooth); padding: 0; height: 68px; display: flex; align-items: center; }
         .navbar .container { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); font-weight: 800; font-size: 1.25rem; white-space: nowrap; cursor: pointer; user-select: none; }
-        .nav-logo .logo-icon { width: 42px; height: 42px; background: var(--gradient-accent); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem; box-shadow: var(--shadow-glow); }
+        
+        /* ✅ تأثير زجاجي بشفافية عالية */
+        .nav-logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            text-decoration: none; 
+            color: var(--text-primary); 
+            font-weight: 800; 
+            font-size: 1.25rem; 
+            white-space: nowrap; 
+            cursor: pointer; 
+            user-select: none;
+            opacity: 0.4;
+            filter: blur(0px);
+            transition: all 0.4s ease;
+        }
+        .nav-logo:hover {
+            opacity: 1;
+            filter: blur(0);
+            text-shadow: 0 0 20px rgba(230, 57, 70, 0.5);
+        }
+        .nav-logo .logo-icon { 
+            width: 42px; 
+            height: 42px; 
+            background: var(--gradient-accent); 
+            border-radius: var(--radius-sm); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #fff; 
+            font-size: 1.2rem; 
+            box-shadow: var(--shadow-glow); 
+        }
         .nav-links { display: flex; align-items: center; gap: 6px; list-style: none; flex-wrap: wrap; }
         .nav-links a { text-decoration: none; color: var(--text-secondary); padding: 8px 14px; border-radius: var(--radius-full); transition: var(--transition-smooth); font-weight: 500; font-size: 0.9rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
         .nav-links a:hover, .nav-links a.active { color: var(--accent); background: var(--accent-glow); }
