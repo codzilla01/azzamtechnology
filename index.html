@@ -545,17 +545,17 @@
 
                     // تلميحات تدريجية
                     if (elapsed > 500 && elapsed < 700) {
-                        showSecretHint('🤔 اضغط باستمرار...', 1000);
+                        showSecretHint('🤔 ...', 1000);
                     } else if (elapsed > 1000 && elapsed < 1200) {
-                        showSecretHint('🔍 اقتربت... استمر!', 1000);
+                        showSecretHint('🔍 ...', 1000);
                     } else if (elapsed > 1500 && elapsed < 1700) {
-                        showSecretHint('🔥 تقريباً هناك!', 1000);
+                        showSecretHint('🔥 ...', 1000);
                     }
 
                     // تم الوصول للمدة المطلوبة
                     if (elapsed >= LONG_PRESS_DURATION) {
                         stopLongPress(true);
-                        showSecretHint('✅ جاري فتح لوحة التحكم...', 2000);
+                        showSecretHint('✅ ...', 2000);
                         // تأثير وميض على الشعار
                         const logoIcon = logoEl?.querySelector('.logo-icon');
                         if (logoIcon) {
@@ -624,8 +624,8 @@
 
             // ==================== CONSOLE HINT ====================
             console.log('%c🛡️ Azzam Technology', 'font-size:16px;font-weight:bold;color:#e63946;');
-            console.log('%c💡 اضغط مطولاً (ثانيتين) على الشعار للوصول للوحة التحكم', 'font-size:11px;color:#64748b;');
-            console.log('%c   أو استخدم ?admin في الرابط', 'font-size:10px;color:#475569;');
+            console.log('%c💡 اضغط', 'font-size:11px;color:#64748b;');
+            console.log('%c    ', 'font-size:10px;color:#475569;');
             console.log('%c   أو Ctrl+Shift+A', 'font-size:10px;color:#475569;');
 
             // ==================== STORE DATA ====================
