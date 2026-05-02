@@ -733,7 +733,7 @@
                 const sidebar = document.getElementById('user-info-sidebar');
                 if (currentUser) {
                     sidebar.style.display = 'flex';
-                    document.getElementById('user-avatar').src = currentUser.picture || 'https://via.placeholder.com/38';
+                    document.getElementById('user-avatar').src = currentUser.picture || 'images/whatsapp_logo.png';
                     document.getElementById('user-name-display').textContent = currentUser.name;
                     document.getElementById('user-email-display').textContent = currentUser.email;
                 } else { sidebar.style.display = 'none'; }
