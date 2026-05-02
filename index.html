@@ -407,10 +407,11 @@
     <script>
         (function() {
             // ==================== إعدادات GitHub ====================
-            const GITHUB_CLIENT_ID = 'Ov23liGApsfGjqopAY4s'; // Client ID الخاص بك
+            const GITHUB_CLIENT_ID = 'Ov23lidVG7ATivwtV8qI'; // Client ID الخاص بك
             
             const AUTHORIZED_GITHUB_USERS = [
                 'codzilla01',
+                
             ];
 
             const STORAGE_KEY = 'store_all_products';
@@ -435,28 +436,31 @@
 
             // ==================== GITHUB AUTH ====================
             function loginWithGitHub() {
-                console.log('🔑 Starting GitHub login...');
-                
-                if (!GITHUB_CLIENT_ID) {
-                    showLoginError('الرجاء إعداد GitHub Client ID');
-                    return;
-                }
+    console.log('🔑 Starting GitHub login...');
+    
+    if (!GITHUB_CLIENT_ID || GITHUB_CLIENT_ID === 'YOUR_GITHUB_CLIENT_ID') {
+        showLoginError('⚠️ الرجاء إعداد GitHub Client ID أولاً');
+        return;
+    }
 
-                const state = Math.random().toString(36).substring(2, 18);
-                sessionStorage.setItem('github_oauth_state', state);
+    const state = Math.random().toString(36).substring(2, 18);
+    sessionStorage.setItem('github_oauth_state', state);
 
-                const redirectUri = window.location.origin + window.location.pathname;
-                
-                const authUrl = 'https://github.com/login/oauth/authorize?' +
-                    'client_id=' + encodeURIComponent(GITHUB_CLIENT_ID) +
-                    '&redirect_uri=' + encodeURIComponent(redirectUri) +
-                    '&scope=read:user' +
-                    '&state=' + state +
-                    '&allow_signup=false';
+    // ✅ رابط Vercel الثابت - هذا هو المهم!
+    const redirectUri = 'https://azzamtechnology.vercel.app/admin.html';
+    
+    console.log('🎯 Redirect URI:', redirectUri);
 
-                console.log('🔗 Redirecting to:', authUrl);
-                window.location.href = authUrl;
-            }
+    const authUrl = 'https://github.com/login/oauth/authorize?' +
+        'client_id=' + encodeURIComponent(GITHUB_CLIENT_ID) +
+        '&redirect_uri=' + encodeURIComponent(redirectUri) +
+        '&scope=read:user' +
+        '&state=' + state +
+        '&allow_signup=false';
+
+    console.log('🔗 Redirecting to GitHub...');
+    window.location.href = authUrl;
+}
 
             function handleGitHubCallback() {
                 const params = new URL(window.location.href).searchParams;
