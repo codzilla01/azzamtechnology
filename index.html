@@ -333,6 +333,169 @@
             .product-card-image { height: 150px; }
             .product-price { font-size: 1.2rem; }
         }
+
+        /* ========== تحسينات الجوال للوحة التحكم ========== */
+
+/* تحسين السايدبار للموبايل */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 280px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 200;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-right: 0 !important;
+        padding: 16px;
+    }
+    
+    .mobile-menu-btn {
+        display: flex !important;
+        position: fixed;
+        top: 12px;
+        right: 12px;
+    }
+    
+    .sidebar-overlay.show {
+        display: block;
+    }
+}
+
+/* تحسين الجداول في الجوال */
+@media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .top-bar h2 {
+        font-size: 1.3rem;
+    }
+    
+    .top-bar-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .top-bar-actions .form-control {
+        width: 100% !important;
+    }
+    
+    .stats-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 16px;
+    }
+    
+    .stat-card .stat-number {
+        font-size: 1.6rem;
+    }
+    
+    .panel {
+        padding: 16px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .table-container {
+        margin: 0 -16px;
+        border-radius: 0;
+    }
+    
+    th, td {
+        padding: 8px;
+        font-size: 0.7rem;
+    }
+    
+    .product-thumb {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .btn {
+        padding: 8px 14px;
+        font-size: 0.75rem;
+    }
+    
+    .btn-sm {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+    }
+    
+    .btn-xs {
+        padding: 3px 6px;
+        font-size: 0.65rem;
+    }
+    
+    .image-upload-area {
+        min-height: 100px;
+        padding: 16px;
+    }
+    
+    .image-upload-area i {
+        font-size: 1.8rem;
+    }
+    
+    .image-preview {
+        max-height: 180px;
+    }
+    
+    .coupon-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .coupon-code-display {
+        font-size: 0.9rem;
+    }
+}
+
+/* شاشات صغيرة جداً */
+@media (max-width: 480px) {
+    .stats-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .login-card {
+        padding: 24px 16px;
+    }
+    
+    .login-card .login-logo {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .login-card h2 {
+        font-size: 1.3rem;
+    }
+    
+    .otp-input {
+        width: 38px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+    
+    .otp-input-group {
+        gap: 5px;
+    }
+    
+    .sidebar {
+        width: 260px;
+    }
+}
     </style>
 </head>
 <body>
