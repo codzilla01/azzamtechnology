@@ -496,6 +496,100 @@
         width: 260px;
     }
 }
+
+        /* ========== تحسينات خاصة بالموقع الرئيسي ========== */
+
+@media (max-width: 768px) {
+    /* تصغير الهيرو */
+    .hero {
+        padding: 50px 0 40px;
+    }
+    
+    .hero::before {
+        width: 300px;
+        height: 300px;
+        top: -100px;
+        right: -100px;
+    }
+    
+    /* تحسين أزرار التنقل السفلي */
+    .nav-links a {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    /* تحسين كروت المنتجات */
+    .product-card-image {
+        height: 180px;
+    }
+    
+    .product-badges .badge {
+        padding: 3px 10px;
+        font-size: 0.65rem;
+    }
+    
+    .quick-action-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+    }
+    
+    /* تحسين قسم تجميع PC */
+    .pc-select {
+        padding: 12px;
+    }
+    
+    .pc-select .circle {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    /* تحسين شريط الخصم */
+    .coupon-bar {
+        flex-direction: column;
+        padding: 12px;
+        font-size: 0.8rem;
+        gap: 6px;
+    }
+    
+    /* تحسين الفوتر */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .footer-col {
+        text-align: center;
+    }
+    
+    /* تحسين زر المساعد العائم */
+    a[href="chat-bot.html"] {
+        bottom: 12px;
+        left: 12px;
+        padding: 10px 16px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-card-image {
+        height: 140px;
+    }
+    
+    .spec-pill {
+        padding: 2px 6px;
+        font-size: 0.65rem;
+    }
+    
+    .product-price {
+        font-size: 1rem;
+    }
+    
+    .product-price-old {
+        font-size: 0.7rem;
+    }
+}
     </style>
 </head>
 <body>
