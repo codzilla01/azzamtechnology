@@ -1,966 +1,968 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azzam Technology | لوحة التحكم المتقدمة</title>
+    <title>Azzam Technology | أجهزة الكمبيوتر واللابتوب</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#e63946">
     <style>
         :root {
-            --primary: #e63946;
-            --primary-dark: #c92a37;
-            --primary-light: #ff6b6b;
-            --bg: #0f172a;
-            --bg-secondary: #1e293b;
-            --card: #1a2332;
-            --glass: rgba(26, 35, 50, 0.9);
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border: #263348;
-            --border-light: #1e2d42;
-            --shadow: 0 4px 16px rgba(0,0,0,0.2);
-            --shadow-lg: 0 12px 40px rgba(0,0,0,0.4);
-            --shadow-glow: 0 0 30px rgba(230,57,70,0.3);
-            --radius: 16px;
-            --radius-sm: 10px;
+            --font-main: 'Tajawal', sans-serif;
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             --radius-xs: 6px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --sidebar-width: 280px;
-            --font: 'Tajawal', sans-serif;
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-full: 9999px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1a2332;
+            --bg-card: linear-gradient(145deg, #1a1f2e 0%, #151929 100%);
+            --bg-glass: rgba(26, 31, 46, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #1e293b;
+            --border-light: #263348;
+            --accent: #e63946;
+            --accent-hover: #ff4757;
+            --accent-glow: rgba(230, 57, 70, 0.25);
+            --gradient-hero: linear-gradient(135deg, #0a0e17 0%, #141c2b 50%, #0f1419 100%);
             --gradient-accent: linear-gradient(135deg, #e63946 0%, #ff6b6b 100%);
-            --gradient-sidebar: linear-gradient(180deg, #0a0f1a 0%, #111827 50%, #0d1525 100%);
-            --gradient-card: linear-gradient(145deg, #1a2332 0%, #15202d 100%);
+            --gradient-card-hover: linear-gradient(145deg, #1f2937 0%, #1a2332 100%);
+            --nav-bg: rgba(10, 14, 23, 0.92);
+            --badge-new: linear-gradient(135deg, #22c55e, #16a34a);
+            --badge-sale: linear-gradient(135deg, #e63946, #ff6b6b);
+            --shimmer: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            --bg-glass: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(203, 213, 225, 0.3);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --border-light: #f1f5f9;
+            --accent: #e63946;
+            --accent-hover: #c92a37;
+            --accent-glow: rgba(230, 57, 70, 0.15);
+            --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1a1a2e 100%);
+            --gradient-accent: linear-gradient(135deg, #e63946 0%, #ff6b6b 100%);
+            --gradient-card-hover: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+            --nav-bg: rgba(255, 255, 255, 0.92);
+            --badge-new: linear-gradient(135deg, #22c55e, #16a34a);
+            --badge-sale: linear-gradient(135deg, #e63946, #ff6b6b);
+            --shimmer: linear-gradient(90deg, transparent, rgba(0,0,0,0.02), transparent);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
         body {
-            font-family: var(--font);
-            background: var(--bg);
-            color: var(--text);
+            font-family: var(--font-main);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.7;
-            min-height: 100vh;
+            transition: background-color var(--transition), color var(--transition);
+            overflow-x: hidden;
         }
 
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-        ::-webkit-scrollbar-thumb { background: var(--gradient-accent); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--accent), #ff6b6b); border-radius: 10px; }
 
-        .login-overlay {
-            position: fixed; inset: 0;
-            background: radial-gradient(circle at center, #1a1a2e 0%, #0a0e17 100%);
-            z-index: 10000; display: flex; align-items: center; justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-        .login-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        .login-card {
-            background: var(--gradient-card); border-radius: 24px; padding: 40px 32px;
-            text-align: center; max-width: 440px; width: 90%;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset;
-            animation: loginSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(20px);
-        }
-        @keyframes loginSlideIn {
-            from { opacity: 0; transform: translateY(40px) scale(0.92); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .login-card .login-logo {
-            width: 80px; height: 80px; background: var(--gradient-accent);
-            border-radius: 20px; display: inline-flex; align-items: center;
-            justify-content: center; font-size: 2rem; color: #fff;
-            margin-bottom: 20px; box-shadow: 0 12px 30px rgba(230,57,70,0.5);
-        }
-        .login-card h2 { font-size: 1.6rem; font-weight: 900; color: #fff; margin-bottom: 4px; }
-        .login-card p { color: var(--text-muted); font-size: 0.9rem; }
-        .login-card .authorized-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(34,197,94,0.15); color: #4ade80;
-            padding: 6px 14px; border-radius: 20px; font-size: 0.75rem;
-            margin: 12px 0; border: 1px solid rgba(34,197,94,0.3);
-        }
-        .login-card .authorized-badge i { font-size: 0.8rem; }
+        .container { width: 100%; max-width: 1320px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); }
 
-        /* Telegram Button */
-        .telegram-btn {
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            width: 100%; padding: 14px; border: 2px solid #0088cc;
-            border-radius: 14px; background: linear-gradient(135deg, #0088cc, #0099dd); 
-            cursor: pointer; font-weight: 700; font-size: 1rem; font-family: var(--font); color: #fff;
-            transition: all 0.3s;
+        /* ========== NAVBAR GLASS ========== */
+        .navbar {
+            position: sticky; top: 0; z-index: 1000;
+            background: var(--nav-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--glass-border); 
+            height: 76px; display: flex; align-items: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.1);
         }
-        .telegram-btn:hover { 
-            background: linear-gradient(135deg, #0099dd, #00aaff); 
-            border-color: #00aaff; 
-            box-shadow: 0 8px 24px rgba(0,136,204,0.3);
-            transform: translateY(-2px);
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo {
+            display: flex; align-items: center; gap: 12px; text-decoration: none;
+            color: var(--text-primary); font-weight: 900; font-size: 1.35rem;
         }
-        .telegram-btn:disabled {
-            opacity: 0.6; cursor: not-allowed; transform: none;
+        .nav-logo .logo-icon {
+            width: 46px; height: 46px; background: var(--gradient-accent); border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.3rem;
+            box-shadow: 0 4px 20px var(--accent-glow); transition: var(--transition);
         }
-        .telegram-btn i { font-size: 1.4rem; }
+        .nav-logo:hover .logo-icon { transform: scale(1.08); }
+        .nav-links { display: flex; align-items: center; gap: 6px; list-style: none; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-secondary); padding: 10px 18px;
+            border-radius: var(--radius-full); transition: var(--transition);
+            font-weight: 600; font-size: 0.9rem; position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active { color: #fff; background: var(--gradient-accent); }
+        .nav-actions { display: flex; align-items: center; gap: 8px; }
+        .nav-btn {
+            width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border-color);
+            background: var(--bg-glass); color: var(--text-primary); cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-size: 1rem;
+            transition: var(--transition); position: relative; backdrop-filter: blur(8px);
+        }
+        .nav-btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 4px 16px var(--accent-glow); }
+        .cart-badge {
+            position: absolute; top: -6px; right: -6px; background: var(--gradient-accent); color: #fff;
+            font-size: 0.7rem; min-width: 21px; height: 21px; border-radius: var(--radius-full);
+            display: flex; align-items: center; justify-content: center; font-weight: 700;
+            box-shadow: 0 2px 8px rgba(230,57,70,0.5);
+        }
+        .hamburger { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.6rem; cursor: pointer; }
 
-        /* OTP Step */
-        .auth-step { display: none; }
-        .auth-step.active { display: block; }
-
-        .otp-input-group {
-            display: flex; gap: 10px; justify-content: center; margin: 20px 0;
+        /* ========== HERO ========== */
+        .hero {
+            background: var(--gradient-hero); color: #fff; padding: clamp(70px, 12vw, 110px) 0;
+            text-align: center; position: relative; overflow: hidden;
         }
-        .otp-input {
-            width: 50px; height: 55px;
-            text-align: center; font-size: 1.5rem; font-weight: 700;
-            border: 2px solid var(--border); border-radius: 10px;
-            background: var(--bg-secondary); color: #fff;
-            font-family: monospace;
+        .hero::before {
+            content: ''; position: absolute; width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(230,57,70,0.08) 0%, transparent 70%);
+            top: -200px; right: -200px; border-radius: 50%; pointer-events: none;
+            animation: float 8s ease-in-out infinite;
         }
-        .otp-input:focus {
-            border-color: #0088cc;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0,136,204,0.2);
-        }
-
-        .timer-display {
-            color: #f59e0b; font-size: 0.85rem; margin: 12px 0;
-        }
-
-        .resend-link {
-            color: #0088cc; cursor: pointer; font-size: 0.85rem; text-decoration: underline;
-        }
-        .resend-link.disabled { color: var(--text-muted); cursor: not-allowed; text-decoration: none; pointer-events: none; }
-
-        .login-card .divider {
-            display: flex; align-items: center; text-align: center; margin: 20px 0;
-            color: var(--text-muted); font-size: 0.8rem;
-        }
-        .login-card .divider::before, .login-card .divider::after {
-            content: ''; flex: 1; border-bottom: 1px solid var(--border);
-        }
-        .login-card .divider::before { margin-left: 12px; }
-        .login-card .divider::after { margin-right: 12px; }
-        .login-card .skip-btn {
-            background: none; border: 1px solid var(--border); color: var(--text-muted);
-            cursor: pointer; font-family: var(--font); font-size: 0.9rem;
-            padding: 10px 20px; border-radius: 10px; transition: all 0.2s;
-        }
-        .login-card .skip-btn:hover { color: #fff; border-color: var(--primary); }
-        .error-msg { color: #ef4444; font-size: 0.85rem; margin-top: 14px; display: none; }
-        .error-msg.show { display: block; }
-
-        .back-btn {
-            background: none; border: none; color: var(--text-muted);
-            cursor: pointer; font-size: 0.85rem; margin-top: 12px;
-        }
-        .back-btn:hover { color: #fff; }
-
-        .admin-layout { display: flex; min-height: 100vh; }
-        .sidebar {
-            width: var(--sidebar-width); background: var(--gradient-sidebar);
-            color: #fff; position: fixed; top: 0; right: 0; height: 100vh;
-            z-index: 100; display: flex; flex-direction: column;
-            transition: transform var(--transition); overflow-y: auto;
-            box-shadow: 4px 0 30px rgba(0,0,0,0.5);
-            border-left: 1px solid var(--border);
-        }
-        .sidebar-header {
-            padding: 28px 24px 20px; border-bottom: 1px solid var(--border);
-            text-align: center;
-        }
-        .sidebar-header .logo-icon {
-            width: 56px; height: 56px; background: var(--gradient-accent);
-            border-radius: 16px; display: inline-flex; align-items: center;
-            justify-content: center; font-size: 1.5rem; margin-bottom: 8px;
-            box-shadow: 0 8px 24px rgba(230,57,70,0.4);
-        }
-        .sidebar-header .logo-text { font-size: 1.2rem; font-weight: 900; }
-        .sidebar-header .logo-sub { font-size: 0.7rem; color: var(--text-muted); }
-        
-        .user-info {
-            display: flex; align-items: center; gap: 10px;
-            padding: 14px; margin: 12px; background: rgba(255,255,255,0.03);
-            border-radius: var(--radius-sm); border: 1px solid var(--border);
-        }
-        .user-info img { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--primary); }
-        .user-info .user-details { flex: 1; min-width: 0; }
-        .user-info .user-name { color: #fff; font-weight: 700; font-size: 0.85rem; }
-        .user-info .user-email { color: var(--text-muted); font-size: 0.7rem; }
-        .logout-btn {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            color: #fff; cursor: pointer; padding: 6px 12px; border-radius: 8px;
-            font-family: var(--font); font-size: 0.75rem; transition: all 0.2s;
-        }
-        .logout-btn:hover { background: var(--primary); border-color: var(--primary); }
-
-        .sidebar-nav { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 2px; }
-        .sidebar-nav a {
-            display: flex; align-items: center; gap: 12px; padding: 12px 18px;
-            color: var(--text-muted); text-decoration: none; border-radius: 12px;
-            transition: var(--transition); font-weight: 500; font-size: 0.9rem;
-            cursor: pointer; position: relative;
-        }
-        .sidebar-nav a:hover { background: rgba(255,255,255,0.04); color: #fff; }
-        .sidebar-nav a.active {
-            background: var(--gradient-accent); color: #fff;
-            box-shadow: 0 6px 20px rgba(230,57,70,0.4);
-        }
-        .sidebar-nav a i { width: 22px; text-align: center; font-size: 1rem; }
-        .sidebar-nav a .badge-nav {
-            position: absolute; left: 12px; background: #22c55e; color: #fff;
-            font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 700;
-        }
-
-        .sidebar-footer {
-            padding: 16px; border-top: 1px solid var(--border);
-            font-size: 0.8rem; color: var(--text-muted); text-align: center;
-        }
-        .sidebar-footer a { color: var(--text-muted); text-decoration: none; display: block; margin-bottom: 4px; }
-        .sidebar-footer a:hover { color: #fff; }
-
-        .main-content {
-            flex: 1; margin-right: var(--sidebar-width);
-            padding: 28px; min-height: 100vh;
-        }
-        .top-bar {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 28px; flex-wrap: wrap; gap: 14px;
-        }
-        .top-bar h2 { font-size: 1.6rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
-        .top-bar h2 i { color: var(--primary-light); }
-        .top-bar-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-
-        .stats-row {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 18px; margin-bottom: 28px;
-        }
-        .stat-card {
-            background: var(--gradient-card); padding: 24px;
-            border-radius: var(--radius); border: 1px solid var(--border);
-            transition: var(--transition); position: relative; overflow: hidden;
-        }
-        .stat-card::after {
-            content: ''; position: absolute; top: -50%; right: -50%; width: 100px; height: 100px;
-            background: radial-gradient(circle, rgba(230,57,70,0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .stat-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 8px 28px rgba(0,0,0,0.3); }
-        .stat-card .stat-icon { font-size: 1.8rem; margin-bottom: 10px; position: relative; z-index: 1; }
-        .stat-card .stat-number { font-size: 2.2rem; font-weight: 900; color: var(--primary-light); position: relative; z-index: 1; }
-        .stat-card .stat-label { color: var(--text-muted); font-size: 0.85rem; position: relative; z-index: 1; }
-        .stat-card .stat-change { font-size: 0.75rem; color: #22c55e; position: relative; z-index: 1; }
-
-        .panel {
-            background: var(--gradient-card); border-radius: var(--radius);
-            padding: 28px; border: 1px solid var(--border);
-            display: none; animation: fadeSlide 0.4s ease;
-            box-shadow: var(--shadow);
-        }
-        .panel.active { display: block; }
-        @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        @keyframes float { 0%,100% { transform: translate(0, 0); } 50% { transform: translate(-30px, 30px); } }
+        .hero h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 16px; line-height: 1.2; }
+        .hero h1 span { background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.15rem; opacity: 0.85; max-width: 650px; margin: 0 auto 36px; }
+        .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
         .btn {
-            padding: 10px 22px; border: none; border-radius: 10px;
-            cursor: pointer; font-weight: 700; font-size: 0.85rem;
-            transition: var(--transition); display: inline-flex; align-items: center;
-            gap: 8px; font-family: inherit; white-space: nowrap;
+            display: inline-flex; align-items: center; gap: 8px; padding: 12px 32px;
+            border-radius: var(--radius-full); font-weight: 700; text-decoration: none;
+            cursor: pointer; border: none; font-family: inherit; font-size: 0.95rem;
+            transition: var(--transition); white-space: nowrap; position: relative; overflow: hidden;
         }
-        .btn-primary { background: var(--gradient-accent); color: #fff; box-shadow: 0 4px 16px rgba(230,57,70,0.3); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(230,57,70,0.5); }
-        .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
-        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-        .btn-danger { background: #dc3545; color: #fff; }
-        .btn-success { background: #22c55e; color: #fff; }
-        .btn-warning { background: #f59e0b; color: #fff; }
-        .btn-telegram { background: linear-gradient(135deg, #0088cc, #0099dd); color: #fff; }
-        .btn-sm { padding: 6px 14px; font-size: 0.75rem; }
-        .btn-xs { padding: 4px 10px; font-size: 0.7rem; border-radius: 6px; }
+        .btn::after {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+            background: rgba(255,255,255,0.2); border-radius: 50%; transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .btn:active::after { width: 300px; height: 300px; }
+        .btn-primary { background: var(--gradient-accent); color: #fff; box-shadow: 0 4px 20px var(--accent-glow); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(230,57,70,0.5); }
+        .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.25); }
+        .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
 
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .form-group { margin-bottom: 18px; }
-        .form-group label { display: block; margin-bottom: 6px; font-weight: 700; font-size: 0.85rem; color: var(--text-muted); }
-        .form-control {
-            width: 100%; padding: 10px 16px; border: 1.5px solid var(--border);
-            border-radius: 10px; font-size: 0.9rem; font-family: inherit;
-            transition: var(--transition); background: var(--bg-secondary); color: var(--text);
-        }
-        .form-control:focus {
-            border-color: var(--primary); outline: none;
-            box-shadow: 0 0 0 3px rgba(230,57,70,0.15);
-            background: var(--bg);
-        }
-        select.form-control { cursor: pointer; }
-        textarea.form-control { resize: vertical; min-height: 90px; }
+        /* ========== SECTIONS ========== */
+        .section { padding: 70px 0; }
+        .section-alt { background: var(--bg-secondary); }
+        .section-header { text-align: center; margin-bottom: 48px; }
+        .section-header h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .section-header p { color: var(--text-muted); font-size: 1rem; margin-top: 8px; }
+        .section-header .line { width: 70px; height: 4px; background: var(--gradient-accent); border-radius: 2px; margin: 16px auto 0; }
 
-        .table-container { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        th, td { padding: 12px 16px; text-align: right; border-bottom: 1px solid var(--border); }
-        th { background: var(--bg-secondary); font-weight: 700; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        tr:hover td { background: rgba(255,255,255,0.02); }
-        .product-thumb { width: 54px; height: 54px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); }
+        /* ========== PRODUCT CARD GLASS ========== */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
+        .product-card {
+            background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden;
+            border: 1px solid var(--glass-border); transition: all var(--transition);
+            display: flex; flex-direction: column; cursor: pointer;
+            box-shadow: var(--glass-shadow); position: relative;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        }
+        .product-card:hover {
+            transform: translateY(-10px); 
+            box-shadow: 0 24px 60px rgba(0,0,0,0.25), 0 0 0 1px var(--accent) inset;
+            background: var(--gradient-card-hover);
+        }
+        .product-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: var(--shimmer); transition: left 0.7s; z-index: 1; pointer-events: none;
+        }
+        .product-card:hover::before { left: 100%; }
+        .product-card-image {
+            position: relative; height: 240px; overflow: hidden; background: var(--bg-tertiary);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .product-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+        .product-card:hover .product-card-image img { transform: scale(1.08); }
+        
+        /* Badges */
+        .product-badges { position: absolute; top: 12px; right: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 2; }
         .badge {
-            padding: 4px 12px; border-radius: 20px; font-size: 0.7rem;
-            font-weight: 700; display: inline-block;
+            padding: 5px 14px; border-radius: var(--radius-full); font-size: 0.72rem; font-weight: 700;
+            backdrop-filter: blur(8px); box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-        .badge-laptop { background: rgba(59,130,246,0.2); color: #60a5fa; }
-        .badge-monitor { background: rgba(34,197,94,0.2); color: #4ade80; }
-        .badge-pc { background: rgba(168,85,247,0.2); color: #c084fc; }
-        .badge-component { background: rgba(251,146,60,0.2); color: #fb923c; }
-        .badge-active { background: rgba(34,197,94,0.2); color: #4ade80; }
-        .badge-inactive { background: rgba(239,68,68,0.2); color: #f87171; }
-        .stock-indicator { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-left: 6px; }
-        .stock-high { background: #22c55e; }
-        .stock-low { background: #f59e0b; }
-        .stock-out { background: #ef4444; }
+        .badge-new { background: var(--badge-new); color: #fff; }
+        .badge-sale { background: var(--badge-sale); color: #fff; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(230,57,70,0.5); } 50% { box-shadow: 0 0 0 12px rgba(230,57,70,0); } }
+        
+        /* Quick actions */
+        .product-quick-actions {
+            position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; gap: 6px;
+            opacity: 0; transform: translateX(-20px); transition: all var(--transition); z-index: 2;
+        }
+        .product-card:hover .product-quick-actions { opacity: 1; transform: translateX(0); }
+        .quick-action-btn {
+            width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); color: #fff;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; transition: var(--transition);
+        }
+        .quick-action-btn:hover { background: var(--accent); border-color: var(--accent); }
+        .quick-action-btn.active { background: #ef4444; border-color: #ef4444; }
 
-        .image-upload-area {
-            border: 2px dashed var(--border); border-radius: var(--radius);
-            padding: 24px; text-align: center; cursor: pointer;
-            transition: var(--transition); background: var(--bg-secondary);
-            position: relative; min-height: 140px;
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; gap: 10px;
+        .product-card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2; }
+        .product-card-body .brand { color: var(--text-muted); font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+        .product-card-body h3 { font-size: 1.1rem; font-weight: 700; line-height: 1.4; }
+        .specs-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+        .spec-pill {
+            background: var(--bg-tertiary); padding: 4px 10px; border-radius: var(--radius-full);
+            font-size: 0.72rem; color: var(--text-secondary); border: 1px solid var(--border-light);
         }
-        .image-upload-area:hover { border-color: var(--primary); background: rgba(230,57,70,0.05); }
-        .image-upload-area.has-image { border-style: solid; border-color: #22c55e; }
-        .image-upload-area i { font-size: 2.5rem; color: var(--text-muted); }
-        .image-upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-        .image-preview-container { display: none; margin-top: 14px; }
-        .image-preview-container.show { display: block; }
-        .image-preview { max-width: 100%; max-height: 280px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+        .product-price-row { display: flex; align-items: baseline; gap: 8px; margin-top: auto; }
+        .product-price { font-size: 1.5rem; font-weight: 900; color: var(--accent); }
+        .product-price-old { font-size: 0.85rem; color: var(--text-muted); text-decoration: line-through; }
+        .product-discount { font-size: 0.75rem; color: #22c55e; font-weight: 700; }
+        .add-to-cart-btn {
+            width: 100%; padding: 12px; border-radius: var(--radius-sm); background: var(--gradient-accent);
+            color: #fff; border: none; cursor: pointer; font-weight: 700; font-family: inherit;
+            font-size: 0.9rem; transition: var(--transition); display: flex; align-items: center;
+            justify-content: center; gap: 8px; margin-top: 8px; position: relative; overflow: hidden;
+        }
+        .add-to-cart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); }
+        .add-to-cart-btn.in-cart { background: #22c55e; }
 
-        .coupon-card {
-            background: var(--bg-secondary); padding: 16px; border-radius: var(--radius-sm);
-            border: 1px solid var(--border); display: flex; justify-content: space-between;
-            align-items: center; margin-bottom: 10px; transition: var(--transition);
+        /* ========== COUPON BAR ========== */
+        .coupon-bar {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff; padding: 14px 20px; text-align: center; font-weight: 600;
+            font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 12px;
         }
-        .coupon-card:hover { border-color: var(--primary); }
-        .coupon-code-display {
-            font-family: monospace; font-size: 1.1rem; font-weight: 700;
-            background: var(--bg); padding: 6px 16px; border-radius: 8px;
-            border: 1px dashed var(--border); letter-spacing: 1px;
+        .coupon-code {
+            background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: var(--radius-full);
+            cursor: pointer; font-family: monospace; letter-spacing: 1px; border: 1px dashed rgba(255,255,255,0.4);
+            transition: var(--transition);
         }
+        .coupon-code:hover { background: rgba(255,255,255,0.25); }
+
+        /* ========== PC BUILDER ========== */
+        .pc-builder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+        .pc-components { display: flex; flex-direction: column; gap: 10px; }
+        .pc-select {
+            background: var(--bg-card); border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md); padding: 16px; cursor: pointer;
+            transition: var(--transition); display: flex; align-items: center; gap: 14px;
+        }
+        .pc-select:hover { border-color: var(--accent); box-shadow: 0 4px 16px var(--accent-glow); }
+        .pc-select.selected { border-color: #22c55e; background: rgba(34,197,94,0.06); }
+        .pc-select .circle {
+            width: 44px; height: 44px; border-radius: 50%; background: var(--bg-tertiary);
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: var(--transition);
+        }
+        .pc-select.selected .circle { background: #22c55e; color: #fff; }
+        .pc-summary {
+            background: var(--bg-card); border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg); padding: 28px; position: sticky; top: 90px;
+            box-shadow: var(--glass-shadow); backdrop-filter: blur(12px);
+        }
+        .pc-total { font-size: 1.8rem; font-weight: 900; text-align: center; color: var(--accent); padding: 16px 0; border-top: 2px solid var(--border-color); }
+
+        /* ========== COMPARISON STICKY BAR ========== */
+        .comparison-bar {
+            position: fixed; bottom: 24px; right: 24px; z-index: 999;
+            background: var(--bg-card); border: 1px solid var(--accent);
+            border-radius: var(--radius-lg); padding: 12px 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            display: none; align-items: center; gap: 12px; backdrop-filter: blur(16px);
+            animation: slideUp 0.4s ease;
+        }
+        .comparison-bar.show { display: flex; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ========== DRAWER & MODAL ========== */
+        .cart-overlay, .modal-overlay, .mobile-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 2000;
+            opacity: 0; pointer-events: none; transition: opacity 0.35s; backdrop-filter: blur(4px);
+        }
+        .cart-overlay.open, .modal-overlay.open, .mobile-overlay.open { opacity: 1; pointer-events: all; }
+        .cart-drawer, .mobile-menu {
+            position: fixed; top: 0; right: 0; height: 100%; background: var(--bg-card);
+            box-shadow: -8px 0 40px rgba(0,0,0,0.4); transform: translateX(100%); 
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 2001; display: flex; flex-direction: column;
+        }
+        .cart-drawer { width: 420px; max-width: 92vw; }
+        .cart-drawer.open { transform: translateX(0); }
+        .mobile-menu { width: 300px; padding: 24px; gap: 12px; }
+        .mobile-menu.open { transform: translateX(0); }
 
         .toast {
             position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
             background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fff;
-            padding: 14px 28px; border-radius: 30px; z-index: 9999;
-            font-weight: 600; box-shadow: 0 12px 36px rgba(0,0,0,0.4);
-            animation: slideUp 0.4s ease; display: none; border: 1px solid var(--border);
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            padding: 12px 28px; border-radius: var(--radius-full); z-index: 5000;
+            font-weight: 600; font-size: 0.9rem; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            display: none; animation: slideUp 0.4s ease; border: 1px solid var(--glass-border);
         }
 
-        .empty-state { text-align: center; padding: 50px; color: var(--text-muted); }
-        .empty-state i { font-size: 4rem; margin-bottom: 16px; opacity: 0.3; }
+        /* Footer */
+        .footer { background: #050a14; color: #94a3b8; padding: 60px 0 24px; margin-top: 80px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 36px; margin-bottom: 36px; }
+        .footer-col h4 { color: #fff; margin-bottom: 18px; font-size: 1.05rem; }
+        .footer-col a, .footer-col p { color: #94a3b8; text-decoration: none; font-size: 0.88rem; display: block; margin-bottom: 10px; transition: 0.2s; }
+        .footer-col a:hover { color: #fff; padding-right: 4px; }
 
-        @media (max-width: 992px) {
-            .sidebar { transform: translateX(100%); }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-right: 0; }
-            .form-row { grid-template-columns: 1fr; }
-            .mobile-menu-btn { display: flex !important; }
+        /* Responsive */
+        @media (max-width: 992px) { .pc-builder-grid { grid-template-columns: 1fr; } .pc-summary { position: static; } }
+        @media (max-width: 768px) {
+            .nav-links { display: none; } .hamburger { display: flex; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+            .product-card-image { height: 200px; }
+            .hero h1 { font-size: 1.8rem; }
         }
-        .mobile-menu-btn {
-            display: none; position: fixed; top: 14px; right: 14px; z-index: 200;
-            width: 44px; height: 44px; border-radius: 12px;
-            background: var(--gradient-accent); color: #fff; border: none;
-            cursor: pointer; font-size: 1.2rem; box-shadow: 0 6px 20px rgba(230,57,70,0.4);
+        @media (max-width: 480px) {
+            .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .product-card-image { height: 150px; }
+            .product-price { font-size: 1.2rem; }
         }
-        .sidebar-overlay {
-            display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,0.6); z-index: 99; backdrop-filter: blur(4px);
-        }
-        .sidebar-overlay.show { display: block; }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN OVERLAY -->
-    <div class="login-overlay" id="login-overlay">
-        <div class="login-card">
-            <div class="login-logo"><i class="fas fa-shield-halved"></i></div>
-            <h2>لوحة التحكم</h2>
-            <p>Azzam Technology</p>
-            
-            <div class="authorized-badge">
-                <i class="fas fa-check-circle"></i>
-                الدخول مقيد للمستخدم المصرح له فقط
-            </div>
+    <!-- COUPON BAR -->
+    <div class="coupon-bar" id="coupon-bar">
+        <i class="fas fa-tag"></i> كود الخصم: 
+        <span class="coupon-code" onclick="navigator.clipboard.writeText('WELCOME10'); showToast('تم نسخ الكود!')">WELCOME10</span>
+        (خصم 10% على أول طلب)
+        <button onclick="document.getElementById('coupon-bar').style.display='none'" style="background:none;border:none;color:#fff;cursor:pointer;margin-right:12px;">✕</button>
+    </div>
 
-            <!-- Step 1: Request Code -->
-            <div class="auth-step active" id="step-request">
-                <button class="telegram-btn" id="request-code-btn">
-                    <i class="fab fa-telegram-plane"></i>
-                    طلب كود التحقق من Telegram
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo" id="nav-logo">
+                <span class="logo-icon"><i class="fas fa-microchip"></i></span>
+                <span>Azzam Technology</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">الرئيسية</a></li>
+                <li><a href="#monitors">🖥️ شاشات</a></li>
+                <li><a href="#laptops">💻 لابتوب</a></li>
+                <li><a href="#pc-section">PC مجمّع</a></li>
+                <li><a href="#builder">🔧 تجميع PC</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-btn" id="theme-toggle" title="تغيير المظهر">🌙</button>
+                <button class="nav-btn" id="compare-btn" title="مقارنة المنتجات (0)">
+                    <i class="fas fa-balance-scale"></i>
+                    <span class="cart-badge" id="compare-badge" style="display:none">0</span>
                 </button>
-                <p style="color:var(--text-muted);font-size:0.75rem;margin-top:12px;">
-                    سيتم إرسال كود تحقق لمرة واحدة إلى الحساب المصرح له
-                </p>
-                <div class="error-msg" id="step1-error"></div>
-                <div class="success-msg" id="step1-success" style="color:#22c55e;font-size:0.85rem;margin-top:14px;display:none;"></div>
+                <button class="nav-btn" id="wishlist-btn" title="المفضلة">
+                    <i class="fas fa-heart"></i>
+                    <span class="cart-badge" id="wishlist-badge" style="display:none">0</span>
+                </button>
+                <button class="nav-btn" id="cart-nav-btn" title="سلة التسوق">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+                </button>
+                <button class="hamburger" id="hamburger-btn"><i class="fas fa-bars"></i></button>
             </div>
+        </div>
+    </nav>
 
-            <!-- Step 2: Enter OTP -->
-            <div class="auth-step" id="step-verify">
-                <p style="color:#4ade80;margin-bottom:4px;">
-                    <i class="fas fa-paper-plane"></i> تم إرسال الكود إلى Telegram
-                </p>
-                <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:16px;">
-                    أدخل الكود المكون من 6 أرقام
-                </p>
-                <div class="otp-input-group">
-                    <input type="text" class="otp-input" maxlength="1" id="otp-1" inputmode="numeric" pattern="[0-9]">
-                    <input type="text" class="otp-input" maxlength="1" id="otp-2" inputmode="numeric" pattern="[0-9]">
-                    <input type="text" class="otp-input" maxlength="1" id="otp-3" inputmode="numeric" pattern="[0-9]">
-                    <input type="text" class="otp-input" maxlength="1" id="otp-4" inputmode="numeric" pattern="[0-9]">
-                    <input type="text" class="otp-input" maxlength="1" id="otp-5" inputmode="numeric" pattern="[0-9]">
-                    <input type="text" class="otp-input" maxlength="1" id="otp-6" inputmode="numeric" pattern="[0-9]">
-                </div>
-                <div class="timer-display" id="timer-display"></div>
-                <span class="resend-link disabled" id="resend-link">إعادة إرسال الكود</span>
-                <div class="error-msg" id="step2-error"></div>
-                <button class="back-btn" id="back-btn"><i class="fas fa-arrow-right"></i> العودة</button>
+    <!-- MOBILE MENU -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <button id="mobile-close" style="align-self:flex-end;background:none;border:none;color:var(--text-primary);font-size:1.8rem;cursor:pointer;">&times;</button>
+        <a href="#home" style="color:var(--text-primary);text-decoration:none;font-weight:700;padding:12px;">الرئيسية</a>
+        <a href="#monitors" style="color:var(--text-primary);text-decoration:none;font-weight:700;padding:12px;">شاشات</a>
+        <a href="#laptops" style="color:var(--text-primary);text-decoration:none;font-weight:700;padding:12px;">لابتوب</a>
+        <a href="#pc-section" style="color:var(--text-primary);text-decoration:none;font-weight:700;padding:12px;">PC</a>
+        <a href="#builder" style="color:var(--text-primary);text-decoration:none;font-weight:700;padding:12px;">تجميع PC</a>
+    </div>
+
+    <!-- COMPARISON BAR -->
+    <div class="comparison-bar" id="comparison-bar">
+        <i class="fas fa-balance-scale" style="color:var(--accent);"></i>
+        <span id="comparison-count">0 منتجات</span>
+        <button class="btn btn-primary btn-sm" id="show-comparison-btn" style="padding:6px 16px;font-size:0.8rem;">مقارنة</button>
+        <button id="clear-comparison-btn" style="background:none;border:none;color:var(--text-muted);cursor:pointer;">✕</button>
+    </div>
+
+    <!-- CART DRAWER -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div style="padding:20px;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;">
+            <h3>🛒 سلة التسوق</h3>
+            <button id="cart-close-btn" style="background:none;border:none;color:var(--text-primary);font-size:1.5rem;cursor:pointer;">&times;</button>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:16px;" id="cart-drawer-body"></div>
+        <div style="padding:16px;border-top:1px solid var(--border-color);">
+            <div style="display:flex;gap:8px;margin-bottom:8px;">
+                <input type="text" id="coupon-input" placeholder="كود الخصم" style="flex:1;padding:8px 12px;border:1px solid var(--border-color);border-radius:var(--radius-full);background:var(--bg-tertiary);color:var(--text-primary);font-family:var(--font-main);">
+                <button class="btn btn-outline" id="apply-coupon-btn" style="padding:8px 16px;">تطبيق</button>
             </div>
-
-            <div class="divider">أو</div>
-
-            <button class="skip-btn" id="skip-login-btn">
-                <i class="fas fa-user-secret"></i> دخول محدود (تجريبي)
-            </button>
+            <div id="coupon-message" style="font-size:0.8rem;margin-bottom:8px;"></div>
+            <div class="pc-total" id="cart-total-display">المجموع: 0 ج.م</div>
+            <button class="btn btn-primary" id="checkout-btn" style="width:100%;justify-content:center;margin-top:8px;"><i class="fab fa-whatsapp"></i> إتمام الطلب</button>
+            <button class="btn btn-outline" id="clear-cart-btn" style="width:100%;justify-content:center;margin-top:8px;border-color:var(--accent);color:var(--accent);">تفريغ السلة</button>
         </div>
     </div>
 
-    <!-- Mobile Menu Button -->
-    <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-    <div class="sidebar-overlay" id="sidebar-overlay"></div>
-
-    <div class="admin-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="logo-icon"><i class="fas fa-microchip"></i></div>
-                <div class="logo-text">Azzam Technology</div>
-                <div class="logo-sub">لوحة التحكم المتقدمة</div>
-            </div>
-            <div class="user-info" id="user-info-sidebar" style="display:none;">
-                <img id="user-avatar" src="" alt="User">
-                <div class="user-details">
-                    <div class="user-name" id="user-name-display">مستخدم</div>
-                    <div class="user-email" id="user-email-display">user@email.com</div>
-                </div>
-                <button class="logout-btn" id="logout-btn">خروج</button>
-            </div>
-            <nav class="sidebar-nav">
-                <a class="active" data-panel="dashboard"><i class="fas fa-chart-pie"></i> لوحة المعلومات</a>
-                <a data-panel="products"><i class="fas fa-boxes-stacked"></i> المنتجات <span class="badge-nav" id="products-count">0</span></a>
-                <a data-panel="add-product"><i class="fas fa-plus-circle"></i> إضافة منتج</a>
-                <a data-panel="inventory"><i class="fas fa-warehouse"></i> المخزون</a>
-                <a data-panel="coupons"><i class="fas fa-tags"></i> الكوبونات</a>
-                <a data-panel="pc-components"><i class="fas fa-microchip"></i> قطع PC</a>
-                <a data-panel="chatbot"><i class="fas fa-robot"></i> Chatbot</a>
-                <a data-panel="orders"><i class="fas fa-receipt"></i> سجل الطلبات</a>
-                <a data-panel="settings"><i class="fas fa-gear"></i> الإعدادات</a>
-            </nav>
-            <div class="sidebar-footer">
-                <a href="index.html"><i class="fas fa-store"></i> العودة للمتجر</a>
-                <p style="margin-top:8px;">&copy; 2026 Azzam Technology</p>
-            </div>
-        </aside>
-
-        <main class="main-content">
-            <div class="panel active" id="panel-dashboard">
-                <div class="top-bar">
-                    <h2><i class="fas fa-chart-pie"></i> لوحة المعلومات</h2>
-                    <button class="btn btn-outline btn-sm" onclick="location.reload()"><i class="fas fa-sync-alt"></i> تحديث</button>
-                </div>
-                <div class="stats-row" id="dashboard-stats"></div>
-            </div>
-        </main>
+    <!-- PRODUCT MODAL -->
+    <div class="modal-overlay" id="product-modal-overlay">
+        <div style="background:var(--bg-card);border-radius:var(--radius-xl);width:100%;max-width:900px;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;position:relative;box-shadow:0 24px 60px rgba(0,0,0,0.4);border:1px solid var(--glass-border);" id="product-modal">
+            <button id="product-modal-close" style="position:absolute;top:14px;left:14px;z-index:10;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.5);border:none;color:#fff;cursor:pointer;font-size:1.2rem;">&times;</button>
+            <div style="min-height:380px;background:var(--bg-tertiary);display:flex;align-items:center;justify-content:center;overflow:hidden;" id="modal-product-image"></div>
+            <div style="padding:28px;display:flex;flex-direction:column;gap:14px;" id="modal-product-details"></div>
+        </div>
     </div>
+
+    <!-- WISHLIST MODAL -->
+    <div class="modal-overlay" id="wishlist-modal-overlay">
+        <div style="background:var(--bg-card);border-radius:var(--radius-xl);width:100%;max-width:700px;max-height:80vh;overflow-y:auto;padding:28px;position:relative;box-shadow:0 24px 60px rgba(0,0,0,0.4);">
+            <button id="wishlist-modal-close" style="position:absolute;top:14px;left:14px;background:none;border:none;color:var(--text-primary);font-size:1.5rem;cursor:pointer;">&times;</button>
+            <h2 style="margin-bottom:20px;"><i class="fas fa-heart" style="color:var(--accent);"></i> المفضلة</h2>
+            <div id="wishlist-content"></div>
+        </div>
+    </div>
+
+    <!-- COMPARISON MODAL -->
+    <div class="modal-overlay" id="comparison-modal-overlay">
+        <div style="background:var(--bg-card);border-radius:var(--radius-xl);width:100%;max-width:1000px;max-height:85vh;overflow-y:auto;padding:28px;position:relative;box-shadow:0 24px 60px rgba(0,0,0,0.4);">
+            <button id="comparison-modal-close" style="position:absolute;top:14px;left:14px;background:none;border:none;color:var(--text-primary);font-size:1.5rem;cursor:pointer;">&times;</button>
+            <h2 style="margin-bottom:20px;"><i class="fas fa-balance-scale" style="color:var(--accent);"></i> مقارنة المنتجات</h2>
+            <div id="comparison-content" style="overflow-x:auto;"></div>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>أفضل <span>الأجهزة</span> بأسعار تنافسية</h1>
+            <p>شاشات • لابتوبات • قطع PC • تجميع جهازك المثالي - كل ذلك في مكان واحد مع ضمان وخدمة عملاء متميزة</p>
+            <div class="hero-btns">
+                <a href="#monitors" class="btn btn-primary"><i class="fas fa-desktop"></i> تصفح الشاشات</a>
+                <a href="#builder" class="btn btn-outline"><i class="fas fa-tools"></i> تجميع PC</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MONITORS -->
+    <section id="monitors" class="section">
+        <div class="container">
+            <div class="section-header"><h2><i class="fas fa-desktop"></i> الشاشات</h2><p>شاشات عالية الدقة للألعاب والعمل</p><div class="line"></div></div>
+            <div class="products-grid" id="monitors-grid"></div>
+        </div>
+    </section>
+
+    <!-- LAPTOPS -->
+    <section id="laptops" class="section section-alt">
+        <div class="container">
+            <div class="section-header"><h2><i class="fas fa-laptop"></i> أجهزة اللابتوب</h2><p>لابتوبات أصلية من أفضل الماركات العالمية</p><div class="line"></div></div>
+            <div class="products-grid" id="laptops-grid"></div>
+        </div>
+    </section>
+
+    <!-- PC -->
+    <section id="pc-section" class="section">
+        <div class="container">
+            <div class="section-header"><h2><i class="fas fa-computer"></i> أجهزة PC مجمّعة</h2><p>أجهزة مكتبية وألعاب جاهزة بأفضل المواصفات</p><div class="line"></div></div>
+            <div class="products-grid" id="pc-grid"></div>
+        </div>
+    </section>
+
+    <!-- PC BUILDER -->
+    <section id="builder" class="section section-alt">
+        <div class="container">
+            <div class="section-header"><h2><i class="fas fa-microchip"></i> تجميع PC</h2><p>اختر كل قطعة وشاهد السعر مباشرة</p><div class="line"></div></div>
+            <div class="pc-builder-grid">
+                <div class="pc-components" id="pc-builder-components"></div>
+                <div class="pc-summary" id="pc-summary">
+                    <h3 style="font-weight:800;text-align:center;margin-bottom:16px;">📋 ملخص التجميع</h3>
+                    <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;" id="pc-summary-list"></ul>
+                    <div class="pc-total" id="pc-total-price">المجموع: 0 ج.م</div>
+                    <button class="btn btn-primary" id="add-pc-to-cart" style="width:100%;justify-content:center;"><i class="fas fa-cart-plus"></i> إضافة للسلة</button>
+                    <button class="btn btn-outline" id="reset-builder" style="width:100%;margin-top:8px;border-color:var(--accent);color:var(--accent);">إعادة تعيين</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col"><h4>عن الشركة</h4><p>Azzam Technology تقدم أفضل الأجهزة وخدمات التجميع والضمان الموثوق</p></div>
+                <div class="footer-col"><h4>روابط سريعة</h4><a href="#home">الرئيسية</a><a href="#monitors">شاشات</a><a href="#laptops">لابتوب</a><a href="#builder">تجميع PC</a><a href="policy.html">سياسة الضمان</a></div>
+                <div class="footer-col"><h4>معلومات الاتصال</h4><p>📍 مول البستان - القاهرة</p><p>📞 01025555207</p><p>📧 technologyazzam@gmail.com</p></div>
+                <div class="footer-col"><h4>خدمات</h4><a href="chat-bot.html">المساعد الذكي 🤖</a><a href="#" id="warranty-link">الضمان والاستبدال</a></div>
+            </div>
+            <div style="text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);font-size:0.85rem;">
+                <p>&copy; 2026 Azzam Technology. All rights reserved.</p>
+                <p>Designed & Developed by <a href="https://me-one-blue.vercel.app/about.html" style="color: #ffffff;">Dev.Mohamed Elnil</a></p>
+            </div>
+        </div>
+    </footer>
 
     <div class="toast" id="toast"></div>
 
+    <a href="chat-bot.html" style="position:fixed;bottom:28px;left:28px;z-index:999;background:var(--gradient-accent);color:#fff;padding:12px 22px;border-radius:50px;text-decoration:none;font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(230,57,70,0.4);font-family:var(--font-main);"><i class="fas fa-robot"></i> المساعد</a>
+
     <script>
         (function() {
-            // ==================== ⚙️ إعدادات Telegram ====================
-            // 👈 ضع توكن البوت من @BotFather
-            const TELEGRAM_BOT_TOKEN = '8723447348:AAGtKoujIGCtbLXuPUWAR-B-oweiOdcDCKk';
-            // 👈 ضع Chat ID الخاص بك من @userinfobot
-            const TELEGRAM_CHAT_ID = '6776057443';
-            // 👈 المستخدم المصرح له فقط
-            const AUTHORIZED_USERNAME = 'Mr_devoleper';
-            
             const STORAGE_KEY = 'store_all_products';
-            const AUTH_KEY = 'azzam_admin_auth';
-            const OTP_KEY = 'telegram_otp_data';
+            const COUPONS_KEY = 'store_coupons';
+            const ADMIN_URL = 'admin.html';
+            const LONG_PRESS_DURATION = 2000;
 
-            let products = [];
-            let currentUser = null;
-            let otpTimer = null;
-            let otpTimeLeft = 0;
+            const $ = s => document.querySelector(s);
+            const $$ = s => document.querySelectorAll(s);
 
-            const $ = (s) => document.querySelector(s);
-            const $$ = (s) => document.querySelectorAll(s);
+            // Default coupons
+            if (!localStorage.getItem(COUPONS_KEY)) {
+                localStorage.setItem(COUPONS_KEY, JSON.stringify([
+                    { code: 'WELCOME10', discount: 10, type: 'percent', active: true, minOrder: 1000 },
+                    { code: 'AZZAM50', discount: 50, type: 'fixed', active: true, minOrder: 5000 }
+                ]));
+            }
 
-            function showToast(msg, isError = false) {
-                const toast = $('#toast');
-                if (!toast) return;
-                toast.textContent = msg;
-                toast.style.background = isError ? '#dc3545' : 'linear-gradient(135deg, #1a1a2e, #16213e)';
-                toast.style.display = 'block';
-                clearTimeout(toast._t);
-                toast._t = setTimeout(() => toast.style.display = 'none', 3000);
+            function getCoupons() { try { return JSON.parse(localStorage.getItem(COUPONS_KEY)) || []; } catch(e) { return []; } }
+
+            let data = loadProducts();
+            let cart = JSON.parse(localStorage.getItem('azzam_cart_v3') || '[]');
+            let wishlist = JSON.parse(localStorage.getItem('azzam_wishlist_v1') || '[]');
+            let comparison = JSON.parse(localStorage.getItem('azzam_comparison_v1') || '[]');
+            let builder = {};
+            let currentTheme = localStorage.getItem('azzam_theme') || 'dark';
+            let appliedCoupon = null;
+            let discountAmount = 0;
+
+            function loadProducts() {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (!stored) return { laptops: [], monitors: [], prebuiltPCs: [], pcComponents: {} };
+                try {
+                    const all = JSON.parse(stored);
+                    const pcComponents = {
+                        cpu: { label: '🧠 المعالج (CPU)', icon: 'fa-microchip', options: [] },
+                        motherboard: { label: '📟 اللوحة الأم', icon: 'fa-server', options: [] },
+                        gpu: { label: '🎮 كرت الشاشة (GPU)', icon: 'fa-tv', options: [] },
+                        ram: { label: '🧮 الذاكرة (RAM)', icon: 'fa-memory', options: [] },
+                        storage: { label: '💾 التخزين', icon: 'fa-hdd', options: [] },
+                        psu: { label: '⚡ مزود الطاقة', icon: 'fa-bolt', options: [] },
+                        case: { label: '📦 الصندوق', icon: 'fa-desktop', options: [] },
+                        monitor: { label: '🖥️ الشاشة', icon: 'fa-desktop', options: [] },
+                        cooling: { label: '❄️ التبريد', icon: 'fa-snowflake', options: [] },
+                        keyboard: { label: '⌨️ لوحة المفاتيح', icon: 'fa-keyboard', options: [] },
+                        mouse: { label: '🖱️ الفأرة', icon: 'fa-mouse-pointer', options: [] },
+                        headset: { label: '🎧 سماعة الرأس', icon: 'fa-headphones', options: [] },
+                        speakers: { label: '🔊 السماعات', icon: 'fa-volume-high', options: [] },
+                        wifi_card: { label: '📶 كارت الشبكة', icon: 'fa-wifi', options: [] },
+                    };
+                    all.filter(p => p.type === 'component').forEach(c => {
+                        if (pcComponents[c.componentType]) {
+                            pcComponents[c.componentType].options.push({ name: c.name, price: c.price, image: c.image || '', id: c.id });
+                        }
+                    });
+                    return {
+                        laptops: all.filter(p => p.type === 'laptop'),
+                        monitors: all.filter(p => p.type === 'monitor'),
+                        prebuiltPCs: all.filter(p => p.type === 'pc'),
+                        pcComponents
+                    };
+                } catch(e) { return { laptops: [], monitors: [], prebuiltPCs: [], pcComponents: {} }; }
             }
 
             function formatPrice(p) { return p.toLocaleString('en-US') + ' ج.م'; }
-
-            function showStep(step) {
-                $$('.auth-step').forEach(s => s.classList.remove('active'));
-                const el = document.getElementById('step-' + step);
-                if (el) el.classList.add('active');
-                $$('.error-msg').forEach(e => { e.textContent = ''; e.classList.remove('show'); });
-                const successEl = document.getElementById('step1-success');
-                if (successEl) successEl.style.display = 'none';
+            function showToast(msg) {
+                const t = $('#toast');
+                t.textContent = msg;
+                t.style.display = 'block';
+                t.style.animation = 'none';
+                t.offsetHeight;
+                t.style.animation = 'slideUp 0.4s ease';
+                clearTimeout(t._t);
+                t._t = setTimeout(() => t.style.display = 'none', 2800);
             }
 
-            function showError(elId, msg) {
-                const el = document.getElementById(elId);
-                if (el) { el.textContent = msg; el.classList.add('show'); }
-            }
-
-            // ==================== REQUEST OTP ====================
-            async function requestOTP() {
-                const btn = document.getElementById('request-code-btn');
-                
-                if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE') {
-                    showError('step1-error', '⚠️ لم يتم إعداد توكن البوت');
-                    return;
-                }
-
-                if (!TELEGRAM_CHAT_ID || TELEGRAM_CHAT_ID === 'YOUR_CHAT_ID_HERE') {
-                    showError('step1-error', '⚠️ لم يتم إعداد Chat ID');
-                    return;
-                }
-
-                // تعطيل الزر مؤقتاً
-                if (btn) {
-                    btn.disabled = true;
-                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
-                }
-
-                // إنشاء كود OTP
-                const otp = Math.floor(100000 + Math.random() * 900000).toString();
-                
-                // تخزين OTP
-                const otpData = {
-                    code: otp,
-                    expires: Date.now() + 300000, // 5 دقائق
-                    attempts: 0
-                };
-                sessionStorage.setItem(OTP_KEY, JSON.stringify(otpData));
-
-                // رسالة Telegram
-                const message = `🔐 *رمز تحقق - Azzam Technology*\n\n` +
-                    `👤 المستخدم: \`${AUTHORIZED_USERNAME}\`\n` +
-                    `🔢 الرمز: *${otp}*\n` +
-                    `⏰ ${new Date().toLocaleString('ar-EG')}\n` +
-                    `📍 من: ${window.location.hostname}\n\n` +
-                    `_الرمز صالح لمدة 5 دقائق_`;
-
-                try {
-                    const response = await fetch(
-                        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-                        {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                chat_id: TELEGRAM_CHAT_ID,
-                                text: message,
-                                parse_mode: 'Markdown'
-                            })
-                        }
-                    );
-
-                    const data = await response.json();
-
-                    if (data.ok) {
-                        // نجاح
-                        const successEl = document.getElementById('step1-success');
-                        if (successEl) {
-                            successEl.textContent = '✅ تم إرسال الكود إلى Telegram';
-                            successEl.style.display = 'block';
-                        }
-                        
-                        setTimeout(() => {
-                            showStep('verify');
-                            startTimer(300);
-                            const firstInput = document.getElementById('otp-1');
-                            if (firstInput) firstInput.focus();
-                        }, 800);
-                        
-                        showToast('✅ تم إرسال الكود');
-                    } else {
-                        console.error('Telegram API Error:', data);
-                        showError('step1-error', '❌ فشل الإرسال. تأكد من: \n1. بدء محادثة مع البوت\n2. صحة التوكن و Chat ID');
-                    }
-                } catch (error) {
-                    console.error('Request OTP Error:', error);
-                    showError('step1-error', '❌ فشل الاتصال بـ Telegram');
-                } finally {
-                    // إعادة تفعيل الزر
-                    if (btn) {
-                        btn.disabled = false;
-                        btn.innerHTML = '<i class="fab fa-telegram-plane"></i> طلب كود التحقق من Telegram';
-                    }
-                }
-            }
-
-            // ==================== VERIFY OTP ====================
-            function verifyOTP() {
-                const digits = [];
-                for (let i = 1; i <= 6; i++) {
-                    const input = document.getElementById('otp-' + i);
-                    digits.push(input ? input.value : '');
-                }
-                
-                const enteredOTP = digits.join('');
-                
-                if (enteredOTP.length !== 6) {
-                    showError('step2-error', 'الرجاء إدخال الرمز كاملاً (6 أرقام)');
-                    return;
-                }
-
-                const otpData = JSON.parse(sessionStorage.getItem(OTP_KEY) || '{}');
-                
-                if (!otpData.code) {
-                    showError('step2-error', 'انتهت صلاحية الرمز. اطلب رمزاً جديداً');
-                    return;
-                }
-
-                if (Date.now() > otpData.expires) {
-                    showError('step2-error', '⏰ انتهت صلاحية الرمز');
-                    sessionStorage.removeItem(OTP_KEY);
-                    return;
-                }
-
-                if (otpData.attempts >= 5) {
-                    showError('step2-error', '🚫 تجاوزت عدد المحاولات. اطلب رمزاً جديداً');
-                    sessionStorage.removeItem(OTP_KEY);
-                    return;
-                }
-
-                otpData.attempts++;
-                sessionStorage.setItem(OTP_KEY, JSON.stringify(otpData));
-
-                if (enteredOTP === otpData.code) {
-                    // ✅ نجاح التحقق
-                    sessionStorage.removeItem(OTP_KEY);
-                    clearInterval(otpTimer);
-                    
-                    currentUser = {
-                        email: AUTHORIZED_USERNAME + '@telegram',
-                        name: '@' + AUTHORIZED_USERNAME,
-                        picture: '',
-                        loginTime: new Date().toISOString(),
-                        authMethod: 'telegram',
-                        verified: true
-                    };
-                    
-                    localStorage.setItem(AUTH_KEY, JSON.stringify(currentUser));
-                    hideLoginOverlay();
-                    updateUserInfo();
-                    showToast('👋 مرحباً @' + AUTHORIZED_USERNAME + '!');
-                    loadData();
-                    refreshDashboard();
-                } else {
-                    const remaining = 5 - otpData.attempts;
-                    showError('step2-error', `❌ رمز غير صحيح. متبقي ${remaining} محاولات`);
-                    
-                    // مسح الحقول
-                    for (let i = 1; i <= 6; i++) {
-                        const input = document.getElementById('otp-' + i);
-                        if (input) input.value = '';
-                    }
-                    const firstInput = document.getElementById('otp-1');
-                    if (firstInput) firstInput.focus();
-                }
-            }
-
-            // ==================== TIMER ====================
-            function startTimer(seconds) {
-                otpTimeLeft = seconds;
-                updateTimerDisplay();
-                
-                clearInterval(otpTimer);
-                const resendLink = document.getElementById('resend-link');
-                if (resendLink) resendLink.classList.add('disabled');
-                
-                otpTimer = setInterval(() => {
-                    otpTimeLeft--;
-                    updateTimerDisplay();
-                    
-                    if (otpTimeLeft <= 0) {
-                        clearInterval(otpTimer);
-                        if (resendLink) resendLink.classList.remove('disabled');
-                        const timerDisplay = document.getElementById('timer-display');
-                        if (timerDisplay) timerDisplay.textContent = 'انتهت صلاحية الرمز';
-                    }
-                }, 1000);
-            }
-
-            function updateTimerDisplay() {
-                const minutes = Math.floor(otpTimeLeft / 60);
-                const seconds = otpTimeLeft % 60;
-                const display = document.getElementById('timer-display');
-                if (display) {
-                    display.textContent = `⏰ متبقي: ${minutes}:${seconds.toString().padStart(2, '0')}`;
-                }
-            }
-
-            function resendOTP() {
-                if (otpTimeLeft > 0) return;
-                sessionStorage.removeItem(OTP_KEY);
-                clearInterval(otpTimer);
-                
-                // مسح حقول OTP
-                for (let i = 1; i <= 6; i++) {
-                    const input = document.getElementById('otp-' + i);
-                    if (input) input.value = '';
-                }
-                
-                showStep('request');
-                
-                // إعادة تعيين رسالة النجاح
-                const successEl = document.getElementById('step1-success');
-                if (successEl) successEl.style.display = 'none';
-            }
-
-            function hideLoginOverlay() { 
-                document.getElementById('login-overlay').classList.add('hidden'); 
-            }
-            
-            function showLoginOverlay() { 
-                document.getElementById('login-overlay').classList.remove('hidden'); 
-                showStep('request');
-                const successEl = document.getElementById('step1-success');
-                if (successEl) successEl.style.display = 'none';
-            }
-
-            function logout() {
-                if (confirm('تسجيل الخروج؟')) {
-                    localStorage.removeItem(AUTH_KEY);
-                    currentUser = null;
-                    sessionStorage.removeItem(OTP_KEY);
-                    clearInterval(otpTimer);
-                    showLoginOverlay();
-                    updateUserInfo();
-                    showToast('تم تسجيل الخروج');
-                }
-            }
-
-            function updateUserInfo() {
-                const sidebar = document.getElementById('user-info-sidebar');
-                if (currentUser) {
-                    sidebar.style.display = 'flex';
-                    document.getElementById('user-avatar').src = currentUser.picture || '';
-                    document.getElementById('user-name-display').textContent = currentUser.name;
-                    document.getElementById('user-email-display').textContent = 'دخول عبر Telegram';
-                } else {
-                    sidebar.style.display = 'none';
-                }
-            }
-
-            function checkAuth() {
-                const stored = localStorage.getItem(AUTH_KEY);
-                if (stored) {
-                    try {
-                        currentUser = JSON.parse(stored);
-                        const hoursDiff = (new Date() - new Date(currentUser.loginTime)) / 3600000;
-                        if (hoursDiff > 24 || !currentUser.verified) {
-                            localStorage.removeItem(AUTH_KEY);
-                            currentUser = null;
-                        } else {
-                            hideLoginOverlay();
-                            updateUserInfo();
-                            return true;
-                        }
-                    } catch(e) {
-                        localStorage.removeItem(AUTH_KEY);
-                    }
-                }
-                showLoginOverlay();
-                return false;
-            }
-
-            function skipLogin() {
-                currentUser = {
-                    email: 'guest',
-                    name: 'زائر',
-                    picture: '',
-                    loginTime: new Date().toISOString(),
-                    isGuest: true
-                };
-                hideLoginOverlay();
-                updateUserInfo();
-                showToast('دخول محدود (زائر)');
-            }
-
-            // ==================== DATA ====================
-            function loadData() {
-                products = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            }
-
-            function refreshDashboard() {
-                const tp = products.filter(p => p.type !== 'component');
-                const tc = products.filter(p => p.type === 'component');
-                const totalStock = products.reduce((s,p) => s + (p.stock || 0), 0);
-                
-                document.getElementById('dashboard-stats').innerHTML = `
-                    <div class="stat-card">
-                        <div class="stat-icon">📦</div>
-                        <div class="stat-number">${tp.length}</div>
-                        <div class="stat-label">منتج</div>
+            function createProductCard(p) {
+                const isNew = Date.now() - new Date(p.createdAt || Date.now()).getTime() < 7 * 86400000;
+                const inWishlist = wishlist.some(w => w.id === p.id);
+                const inComparison = comparison.some(c => c.id === p.id);
+                const inCart = cart.find(i => i.id === p.id);
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-card-image">
+                        <img src="${p.image || 'https://via.placeholder.com/400x260?text=Azzam+Tech'}" alt="${p.name}" loading="lazy">
+                        <div class="product-badges">
+                            ${isNew ? '<span class="badge badge-new">جديد</span>' : ''}
+                            ${p.discount ? `<span class="badge badge-sale">-${p.discount}%</span>` : ''}
+                        </div>
+                        <div class="product-quick-actions">
+                            <button class="quick-action-btn ${inWishlist ? 'active' : ''}" data-action="wishlist" data-id="${p.id}" title="المفضلة">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button class="quick-action-btn ${inComparison ? 'active' : ''}" data-action="compare" data-id="${p.id}" title="مقارنة">
+                                <i class="fas fa-balance-scale"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🔧</div>
-                        <div class="stat-number">${tc.length}</div>
-                        <div class="stat-label">قطعة تجميع</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📊</div>
-                        <div class="stat-number">${totalStock}</div>
-                        <div class="stat-label">إجمالي المخزون</div>
-                    </div>
-                `;
-            }
-
-            // ==================== EVENTS ====================
-            function bindEvents() {
-                // Request OTP Button
-                const requestBtn = document.getElementById('request-code-btn');
-                if (requestBtn) {
-                    requestBtn.addEventListener('click', requestOTP);
-                }
-
-                // OTP Inputs
-                for (let i = 1; i <= 6; i++) {
-                    const input = document.getElementById('otp-' + i);
-                    if (input) {
-                        // منع إدخال غير الأرقام
-                        input.addEventListener('input', function(e) {
-                            this.value = this.value.replace(/[^0-9]/g, '');
-                            if (this.value.length === 1 && i < 6) {
-                                document.getElementById('otp-' + (i + 1))?.focus();
-                            }
-                            if (i === 6 && this.value.length === 1) {
-                                setTimeout(verifyOTP, 200);
-                            }
-                        });
-                        
-                        input.addEventListener('keydown', function(e) {
-                            if (e.key === 'Backspace' && this.value.length === 0 && i > 1) {
-                                document.getElementById('otp-' + (i - 1))?.focus();
-                            }
-                            if (e.key === 'Enter') {
-                                verifyOTP();
-                            }
-                        });
-                        
-                        // دعم اللصق
-                        input.addEventListener('paste', function(e) {
-                            e.preventDefault();
-                            const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
-                            if (pasted.length === 6) {
-                                for (let j = 0; j < 6; j++) {
-                                    const inp = document.getElementById('otp-' + (j + 1));
-                                    if (inp) inp.value = pasted[j];
-                                }
-                                setTimeout(verifyOTP, 200);
-                            }
-                        });
-                    }
-                }
-
-                // Resend link
-                const resendLink = document.getElementById('resend-link');
-                if (resendLink) {
-                    resendLink.addEventListener('click', resendOTP);
-                }
-
-                // Back button
-                const backBtn = document.getElementById('back-btn');
-                if (backBtn) {
-                    backBtn.addEventListener('click', () => {
-                        clearInterval(otpTimer);
-                        sessionStorage.removeItem(OTP_KEY);
-                        for (let i = 1; i <= 6; i++) {
-                            const input = document.getElementById('otp-' + i);
-                            if (input) input.value = '';
-                        }
-                        showStep('request');
-                        const successEl = document.getElementById('step1-success');
-                        if (successEl) successEl.style.display = 'none';
-                    });
-                }
-
-                // Skip Login
-                const skipBtn = document.getElementById('skip-login-btn');
-                if (skipBtn) skipBtn.addEventListener('click', skipLogin);
-
-                // Logout
-                const logoutBtn = document.getElementById('logout-btn');
-                if (logoutBtn) logoutBtn.addEventListener('click', logout);
-
-                // Sidebar
-                $$('.sidebar-nav a').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const panel = link.dataset.panel;
-                        $$('.panel').forEach(p => p.classList.remove('active'));
-                        $$('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-                        const targetPanel = document.getElementById('panel-' + panel);
-                        if (targetPanel) targetPanel.classList.add('active');
-                        link.classList.add('active');
+                    <div class="product-card-body">
+                        <div class="brand">${p.brand || 'Azzam Tech'}</div>
+                        <h3>${p.name}</h3>
+                        <div class="specs-pills">${p.specs ? Object.entries(p.specs).slice(0,3).map(([k,v])=>`<span class="spec-pill">${k}: ${v}</span>`).join('') : ''}</div>
+                        <div class="product-price-row">
+                            <span class="product-price">${formatPrice(p.price)}</span>
+                            ${p.oldPrice ? `<span class="product-price-old">${formatPrice(p.oldPrice)}</span>` : ''}
+                            ${p.discount ? `<span class="product-discount">وفر ${p.discount}%</span>` : ''}
+                        </div>
+                        <button class="add-to-cart-btn ${inCart?'in-cart':''}" data-id="${p.id}">
+                            ${inCart ? '<i class="fas fa-check"></i> في السلة' : '<i class="fas fa-cart-plus"></i> إضافة للسلة'}
+                        </button>
+                    </div>`;
+                card.querySelector('.add-to-cart-btn').addEventListener('click', (e) => { e.stopPropagation(); addToCart(p); });
+                card.querySelectorAll('.quick-action-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const action = btn.dataset.action;
+                        const id = btn.dataset.id;
+                        if (action === 'wishlist') toggleWishlist(p, btn);
+                        if (action === 'compare') toggleComparison(p, btn);
                     });
                 });
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('button')) openModal(p);
+                });
+                return card;
+            }
 
-                // Mobile
-                const mobileBtn = document.getElementById('mobile-menu-btn');
-                if (mobileBtn) {
-                    mobileBtn.addEventListener('click', () => {
-                        document.getElementById('sidebar').classList.add('open');
-                        document.getElementById('sidebar-overlay').classList.add('show');
-                    });
+            function renderGrid(id, arr) {
+                const grid = document.getElementById(id);
+                if (!grid) return;
+                grid.innerHTML = arr.length ? '' : '<div style="text-align:center;padding:60px;color:var(--text-muted);grid-column:1/-1;"><i class="fas fa-box-open" style="font-size:4rem;opacity:0.4;margin-bottom:16px;"></i><p>لا توجد منتجات حالياً</p></div>';
+                arr.forEach(p => grid.appendChild(createProductCard(p)));
+            }
+
+            function renderAll() {
+                renderGrid('monitors-grid', data.monitors);
+                renderGrid('laptops-grid', data.laptops);
+                renderGrid('pc-grid', data.prebuiltPCs);
+                renderBuilder();
+                updateAllBadges();
+            }
+
+            function renderBuilder() {
+                const container = $('#pc-builder-components');
+                if (!container) return;
+                container.innerHTML = '';
+                const hasAny = Object.values(data.pcComponents).some(c => c.options.length > 0);
+                if (!hasAny) {
+                    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted);"><i class="fas fa-microchip" style="font-size:3rem;opacity:0.4;"></i><p>لا توجد قطع تجميع</p></div>';
+                    updateSummary();
+                    return;
                 }
-
-                const overlay = document.getElementById('sidebar-overlay');
-                if (overlay) {
-                    overlay.addEventListener('click', () => {
-                        document.getElementById('sidebar').classList.remove('open');
-                        overlay.classList.remove('show');
+                Object.entries(data.pcComponents).forEach(([key, comp]) => {
+                    if (!comp.options.length) return;
+                    const selected = builder[key];
+                    const wrap = document.createElement('div');
+                    wrap.style.marginBottom = '8px';
+                    wrap.innerHTML = `
+                        <div class="pc-select ${selected?'selected':''}" data-comp="${key}">
+                            <div class="circle"><i class="fas ${comp.icon}"></i></div>
+                            <div style="flex:1;">
+                                <div style="font-weight:700;">${comp.label}</div>
+                                <div style="font-size:0.8rem;color:var(--text-muted);">${selected?.name || 'اختر...'}</div>
+                            </div>
+                            <div style="font-weight:700;color:var(--accent);">${selected ? formatPrice(selected.price) : ''}</div>
+                        </div>
+                        <div class="pc-options" id="opts-${key}" style="display:none;background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-md);overflow:hidden;max-height:260px;overflow-y:auto;"></div>`;
+                    container.appendChild(wrap);
+                    const optsDiv = wrap.querySelector('.pc-options');
+                    comp.options.forEach(o => {
+                        const d = document.createElement('div');
+                        d.style.cssText = 'padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;border-bottom:1px solid var(--border-light);font-size:0.85rem;transition:0.2s;';
+                        d.innerHTML = `<span>${o.name}</span><span style="color:var(--accent);font-weight:700;">${formatPrice(o.price)}</span>`;
+                        d.addEventListener('click', (e) => { e.stopPropagation(); builder[key] = o; renderBuilder(); updateSummary(); });
+                        d.addEventListener('mouseenter', () => d.style.background = 'var(--accent-glow)');
+                        d.addEventListener('mouseleave', () => d.style.background = '');
+                        optsDiv.appendChild(d);
                     });
+                    wrap.querySelector('.pc-select').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        document.querySelectorAll('.pc-options').forEach(x => { if (x !== optsDiv) x.style.display = 'none'; });
+                        optsDiv.style.display = optsDiv.style.display === 'block' ? 'none' : 'block';
+                    });
+                });
+                updateSummary();
+            }
+
+            function updateSummary() {
+                const list = $('#pc-summary-list'), totalEl = $('#pc-total-price');
+                if (!list || !totalEl) return;
+                let total = 0;
+                list.innerHTML = '';
+                Object.entries(data.pcComponents).forEach(([key, comp]) => {
+                    const sel = builder[key];
+                    const li = document.createElement('li');
+                    li.style.cssText = 'display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-light);font-size:0.85rem;';
+                    li.innerHTML = sel ? `<span>${comp.label}: <strong>${sel.name}</strong></span><span style="color:var(--accent);">${formatPrice(sel.price)}</span>` : `<span style="color:var(--text-muted)">${comp.label}: اختر...</span><span>-</span>`;
+                    if (sel) total += sel.price;
+                    list.appendChild(li);
+                });
+                totalEl.textContent = `المجموع: ${formatPrice(total)}`;
+            }
+
+            function addToCart(product) {
+                const existing = cart.find(i => i.id === product.id);
+                existing ? existing.quantity++ : cart.push({ ...product, quantity: 1 });
+                saveCart();
+                renderAll();
+                showToast('✓ تمت الإضافة: ' + product.name);
+            }
+
+            function saveCart() {
+                localStorage.setItem('azzam_cart_v3', JSON.stringify(cart));
+                updateCartUI();
+            }
+
+            function updateCartUI() {
+                const total = cart.reduce((s, i) => s + i.quantity, 0);
+                $('#cart-badge').style.display = total ? 'flex' : 'none';
+                $('#cart-badge').textContent = total;
+                const body = $('#cart-drawer-body');
+                let subtotal = cart.reduce((s,i) => s + i.price * i.quantity, 0);
+                discountAmount = 0;
+                if (appliedCoupon) {
+                    if (appliedCoupon.type === 'percent') discountAmount = subtotal * (appliedCoupon.discount / 100);
+                    else discountAmount = appliedCoupon.discount;
+                }
+                const finalTotal = Math.max(0, subtotal - discountAmount);
+                if (!cart.length) body.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted);"><i class="fas fa-shopping-cart" style="font-size:3rem;opacity:0.4;"></i><p>السلة فارغة</p></div>';
+                else body.innerHTML = cart.map(i => `
+                    <div style="display:flex;gap:12px;align-items:center;padding:12px;background:var(--bg-tertiary);border-radius:var(--radius-sm);margin-bottom:8px;">
+                        <img src="${i.image||'https://via.placeholder.com/60'}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;" loading="lazy">
+                        <div style="flex:1;min-width:0;">
+                            <strong style="font-size:0.85rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${i.name}</strong>
+                            <div style="color:var(--accent);font-weight:700;">${formatPrice(i.price)} × ${i.quantity}</div>
+                        </div>
+                        <button class="nav-btn" style="width:32px;height:32px;font-size:0.8rem;" data-remove="${i.id}"><i class="fas fa-trash"></i></button>
+                    </div>
+                `).join('');
+                body.querySelectorAll('[data-remove]').forEach(b => b.addEventListener('click', () => { cart = cart.filter(i => i.id !== b.dataset.remove); saveCart(); renderAll(); }));
+                let displayText = `المجموع: ${formatPrice(subtotal)}`;
+                if (discountAmount > 0) displayText += ` <span style="color:#22c55e;">(-${formatPrice(discountAmount)} خصم)</span> <strong>= ${formatPrice(finalTotal)}</strong>`;
+                $('#cart-total-display').innerHTML = displayText;
+            }
+
+            function toggleWishlist(product, btn) {
+                const idx = wishlist.findIndex(w => w.id === product.id);
+                if (idx === -1) {
+                    wishlist.push(product);
+                    showToast('❤️ أضيف للمفضلة');
+                    if (btn) btn.classList.add('active');
+                } else {
+                    wishlist.splice(idx, 1);
+                    showToast('تمت إزالة من المفضلة');
+                    if (btn) btn.classList.remove('active');
+                }
+                localStorage.setItem('azzam_wishlist_v1', JSON.stringify(wishlist));
+                updateAllBadges();
+            }
+
+            function toggleComparison(product, btn) {
+                if (comparison.some(c => c.id === product.id)) {
+                    comparison = comparison.filter(c => c.id !== product.id);
+                    if (btn) btn.classList.remove('active');
+                    showToast('تمت إزالة من المقارنة');
+                } else {
+                    if (comparison.length >= 4) { showToast('يمكن مقارنة 4 منتجات كحد أقصى'); return; }
+                    comparison.push(product);
+                    if (btn) btn.classList.add('active');
+                    showToast('⚖️ أضيف للمقارنة');
+                }
+                localStorage.setItem('azzam_comparison_v1', JSON.stringify(comparison));
+                updateComparisonBar();
+                updateAllBadges();
+            }
+
+            function updateComparisonBar() {
+                const bar = $('#comparison-bar');
+                const count = $('#comparison-count');
+                const badge = $('#compare-badge');
+                if (comparison.length > 0) {
+                    bar.classList.add('show');
+                    count.textContent = comparison.length + ' منتجات';
+                    badge.style.display = 'flex';
+                    badge.textContent = comparison.length;
+                } else {
+                    bar.classList.remove('show');
+                    badge.style.display = 'none';
                 }
             }
 
-            // ==================== INIT ====================
-            function init() {
-                console.log('🚀 Admin Panel - Telegram Auth');
-                console.log('👤 Authorized: @' + AUTHORIZED_USERNAME);
-                
-                bindEvents();
-                
-                const isAuth = checkAuth();
-                if (isAuth) {
-                    loadData();
-                    refreshDashboard();
-                }
-                
-                console.log('✅ Ready');
+            function updateAllBadges() {
+                $('#wishlist-badge').style.display = wishlist.length ? 'flex' : 'none';
+                $('#wishlist-badge').textContent = wishlist.length;
+                updateComparisonBar();
             }
 
-            init();
+            function openModal(p) {
+                const overlay = $('#product-modal-overlay');
+                $('#modal-product-image').innerHTML = `<img src="${p.image||'https://via.placeholder.com/400x400'}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;">`;
+                const specs = p.specs ? Object.entries(p.specs).map(([k,v])=>`<span style="background:var(--bg-tertiary);padding:6px 14px;border-radius:var(--radius-full);font-size:0.8rem;">${k}: ${v}</span>`).join('') : '';
+                const inCart = cart.find(i => i.id === p.id);
+                $('#modal-product-details').innerHTML = `
+                    <div style="color:var(--text-muted);font-size:0.85rem;">${p.brand||''}</div>
+                    <h2 style="font-size:1.6rem;">${p.name}</h2>
+                    <div style="font-size:2.2rem;font-weight:900;color:var(--accent);">${formatPrice(p.price)}</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;">${specs}</div>
+                    <p style="color:var(--text-secondary);">${p.description || 'لا يوجد وصف مفصل'}</p>
+                    <div style="display:flex;gap:8px;margin-top:auto;padding-top:16px;border-top:1px solid var(--border-light);">
+                        <button class="btn btn-primary" id="modal-add-btn" style="flex:1;justify-content:center;">${inCart?'✓ في السلة':'إضافة للسلة'}</button>
+                        <button class="btn btn-outline" id="modal-wishlist-btn" style="flex:1;justify-content:center;">${wishlist.some(w=>w.id===p.id)?'❤️ محفوظ':'🤍 مفضلة'}</button>
+                    </div>`;
+                $('#modal-add-btn').addEventListener('click', () => { addToCart(p); closeModal(); });
+                $('#modal-wishlist-btn').addEventListener('click', () => { toggleWishlist(p); closeModal(); });
+                overlay.classList.add('open');
+            }
+
+            function closeModal() { $('#product-modal-overlay').classList.remove('open'); }
+
+            // Coupon System
+            $('#apply-coupon-btn').addEventListener('click', () => {
+                const code = $('#coupon-input').value.trim();
+                if (!code) return;
+                const coupons = getCoupons();
+                const found = coupons.find(c => c.code === code && c.active);
+                const msg = $('#coupon-message');
+                if (!found) { msg.innerHTML = '<span style="color:#ef4444;">كود غير صالح</span>'; appliedCoupon = null; }
+                else if (cart.reduce((s,i)=>s+i.price*i.quantity,0) < (found.minOrder || 0)) { msg.innerHTML = `<span style="color:#f59e0b;">الحد الأدنى للطلب ${formatPrice(found.minOrder)}</span>`; appliedCoupon = null; }
+                else { appliedCoupon = found; msg.innerHTML = `<span style="color:#22c55e;">✓ تم تطبيق الخصم (${found.discount}${found.type==='percent'?'%':' ج.م'})</span>`; }
+                saveCart();
+            });
+
+            // Checkout
+            $('#checkout-btn').addEventListener('click', () => {
+                if (!cart.length) return showToast('السلة فارغة');
+                let subtotal = cart.reduce((s,i)=>s+i.price*i.quantity,0);
+                let total = Math.max(0, subtotal - discountAmount);
+                let msg = '🛒 *طلب جديد من Azzam Technology*\n\n';
+                cart.forEach(i => msg += `• ${i.name} (${i.quantity} × ${formatPrice(i.price)})\n`);
+                msg += `\n💰 المجموع: ${formatPrice(subtotal)}`;
+                if (discountAmount > 0) msg += `\n🎟️ خصم: -${formatPrice(discountAmount)}`;
+                msg += `\n✨ الإجمالي: *${formatPrice(total)}*`;
+                if (appliedCoupon) msg += `\n📋 كود الخصم: ${appliedCoupon.code}`;
+                window.open(`https://wa.me/201025555207?text=${encodeURIComponent(msg)}`, '_blank');
+            });
+
+            $('#clear-cart-btn').addEventListener('click', () => { cart = []; appliedCoupon = null; saveCart(); renderAll(); showToast('تم تفريغ السلة'); });
+            $('#cart-nav-btn').addEventListener('click', () => { $('#cart-drawer').classList.add('open'); $('#cart-overlay').classList.add('open'); });
+            $('#cart-overlay').addEventListener('click', () => { $('#cart-drawer').classList.remove('open'); $('#cart-overlay').classList.remove('open'); });
+            $('#cart-close-btn').addEventListener('click', () => { $('#cart-drawer').classList.remove('open'); $('#cart-overlay').classList.remove('open'); });
+            $('#add-pc-to-cart').addEventListener('click', () => {
+                const selected = Object.entries(builder).filter(([k,o]) => o);
+                if (selected.length < 3) return showToast('اختر 3 مكونات على الأقل');
+                let total = 0; const specs = {};
+                selected.forEach(([k,o]) => { total += o.price; specs[data.pcComponents[k].label] = o.name; });
+                addToCart({ id: 'build_'+Date.now(), name: '🖥️ تجميعة PC مخصصة', brand: 'Azzam Custom', price: total, image: 'https://picsum.photos/seed/pcbuild/400/260', specs });
+                builder = {}; renderBuilder();
+            });
+            $('#reset-builder').addEventListener('click', () => { builder = {}; renderBuilder(); });
+            $('#theme-toggle').addEventListener('click', () => {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                localStorage.setItem('azzam_theme', currentTheme);
+                $('#theme-toggle').innerHTML = currentTheme === 'dark' ? '☀️' : '🌙';
+            });
+            $('#hamburger-btn').addEventListener('click', () => { $('#mobile-menu').classList.add('open'); $('#mobile-overlay').classList.add('open'); });
+            $('#mobile-overlay').addEventListener('click', () => { $('#mobile-menu').classList.remove('open'); $('#mobile-overlay').classList.remove('open'); });
+            $('#mobile-close').addEventListener('click', () => { $('#mobile-menu').classList.remove('open'); $('#mobile-overlay').classList.remove('open'); });
+            $('#product-modal-close').addEventListener('click', closeModal);
+            $('#product-modal-overlay').addEventListener('click', e => { if (e.target === $('#product-modal-overlay')) closeModal(); });
+            $('#wishlist-btn').addEventListener('click', () => {
+                const overlay = $('#wishlist-modal-overlay');
+                const content = $('#wishlist-content');
+                content.innerHTML = wishlist.length ? wishlist.map(p => `
+                    <div style="display:flex;gap:16px;align-items:center;padding:12px;background:var(--bg-tertiary);border-radius:var(--radius-sm);margin-bottom:8px;">
+                        <img src="${p.image||'https://via.placeholder.com/80'}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;">
+                        <div style="flex:1;"><strong>${p.name}</strong><div style="color:var(--accent);font-weight:700;">${formatPrice(p.price)}</div></div>
+                        <button class="btn btn-primary btn-sm" data-add="${p.id}">أضف للسلة</button>
+                    </div>
+                `).join('') : '<p style="text-align:center;color:var(--text-muted);">لا توجد منتجات في المفضلة</p>';
+                content.querySelectorAll('[data-add]').forEach(b => {
+                    b.addEventListener('click', () => {
+                        const p = wishlist.find(w => w.id === b.dataset.add);
+                        if (p) { addToCart(p); $('#wishlist-modal-overlay').style.opacity = '0'; $('#wishlist-modal-overlay').style.pointerEvents = 'none'; }
+                    });
+                });
+                overlay.style.opacity = '1'; overlay.style.pointerEvents = 'all';
+            });
+            $('#wishlist-modal-close').addEventListener('click', () => { $('#wishlist-modal-overlay').style.opacity = '0'; $('#wishlist-modal-overlay').style.pointerEvents = 'none'; });
+            $('#wishlist-modal-overlay').addEventListener('click', e => { if (e.target === $('#wishlist-modal-overlay')) { $('#wishlist-modal-overlay').style.opacity = '0'; $('#wishlist-modal-overlay').style.pointerEvents = 'none'; } });
+            $('#show-comparison-btn').addEventListener('click', () => {
+                const overlay = $('#comparison-modal-overlay');
+                const content = $('#comparison-content');
+                if (comparison.length < 2) { showToast('أضف منتجين على الأقل للمقارنة'); return; }
+                const allKeys = new Set();
+                comparison.forEach(p => { if (p.specs) Object.keys(p.specs).forEach(k => allKeys.add(k)); });
+                content.innerHTML = `
+                    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+                        <thead><tr style="border-bottom:2px solid var(--border-color);">
+                            <th style="padding:10px;"></th>
+                            ${comparison.map(p => `<th style="padding:10px;"><img src="${p.image||'https://via.placeholder.com/100'}" style="width:100px;height:80px;object-fit:cover;border-radius:8px;"><br><strong>${p.name}</strong></th>`).join('')}
+                        </tr></thead>
+                        <tbody>
+                            <tr><td>السعر</td>${comparison.map(p => `<td style="color:var(--accent);font-weight:900;font-size:1.1rem;">${formatPrice(p.price)}</td>`).join('')}</tr>
+                            <tr><td>الماركة</td>${comparison.map(p => `<td>${p.brand||'-'}</td>`).join('')}</tr>
+                            ${[...allKeys].map(k => `<tr><td>${k}</td>${comparison.map(p => `<td>${p.specs?.[k] || '-'}</td>`).join('')}</tr>`).join('')}
+                        </tbody>
+                    </table>`;
+                overlay.style.opacity = '1'; overlay.style.pointerEvents = 'all';
+            });
+            $('#comparison-modal-close').addEventListener('click', () => { $('#comparison-modal-overlay').style.opacity = '0'; $('#comparison-modal-overlay').style.pointerEvents = 'none'; });
+            $('#comparison-modal-overlay').addEventListener('click', e => { if (e.target === $('#comparison-modal-overlay')) { $('#comparison-modal-overlay').style.opacity = '0'; $('#comparison-modal-overlay').style.pointerEvents = 'none'; } });
+            $('#clear-comparison-btn').addEventListener('click', () => { comparison = []; localStorage.setItem('azzam_comparison_v1', '[]'); updateComparisonBar(); renderAll(); });
+            $('#warranty-link').addEventListener('click', e => { e.preventDefault(); window.open('policy.html', '_blank'); });
+
+            document.addEventListener('click', e => {
+                if (!e.target.closest('.pc-select') && !e.target.closest('.pc-options')) {
+                    document.querySelectorAll('.pc-options').forEach(o => o.style.display = 'none');
+                }
+            });
+
+            window.addEventListener('storage', () => { data = loadProducts(); renderAll(); updateSummary(); });
+
+            // Secret admin access
+            const logoEl = $('#nav-logo');
+            let pressStart = 0, pressTimer = null;
+            if (logoEl) {
+                logoEl.addEventListener('mousedown', () => { pressStart = Date.now(); pressTimer = setTimeout(() => { window.location.href = ADMIN_URL; }, LONG_PRESS_DURATION); });
+                logoEl.addEventListener('mouseup', () => clearTimeout(pressTimer));
+                logoEl.addEventListener('mouseleave', () => clearTimeout(pressTimer));
+                logoEl.addEventListener('touchstart', () => { pressStart = Date.now(); pressTimer = setTimeout(() => { window.location.href = ADMIN_URL; }, LONG_PRESS_DURATION); });
+                logoEl.addEventListener('touchend', () => clearTimeout(pressTimer));
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); setTimeout(() => window.location.href = ADMIN_URL, 400); }
+            });
+
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            $('#theme-toggle').innerHTML = currentTheme === 'dark' ? '☀️' : '🌙';
+            renderAll();
+            updateCartUI();
+            updateAllBadges();
+            console.log('🚀 Azzam Technology v3.0 - تصميم فاخر + كوبونات + مقارنة + مفضلة');
+            console.log('✨ الميزات: Glassmorphism | Coupons | Wishlist | Comparison | Smart UI');
         })();
     </script>
 </body>
