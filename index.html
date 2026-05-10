@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azzam Technology | أجهزة الكمبيوتر واللابتوب</title>
+    <title>Azzam Technology | الشاشات و أجهزة الكمبيوتر واللابتوب</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -76,9 +76,47 @@
 
         .navbar { position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid var(--glass-border); height: 76px; display: flex; align-items: center; box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
         .navbar .container { display: flex; align-items: center; justify-content: space-between; }
-        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); font-weight: 900; font-size: 1.35rem; }
-        .nav-logo .logo-icon { width: 46px; height: 46px; background: var(--gradient-accent); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.3rem; box-shadow: 0 4px 20px var(--accent-glow); transition: var(--transition); }
-        .nav-logo:hover .logo-icon { transform: scale(1.08); }
+        .nav-logo {
+            display: flex; align-items: center; gap: 12px; text-decoration: none;
+            color: var(--text-primary); font-weight: 900; font-size: 1.35rem;
+            cursor: pointer; user-select: none; -webkit-user-select: none;
+            position: relative;
+        }
+        .nav-logo .logo-icon {
+            width: 46px; height: 46px; background: var(--gradient-accent); border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.3rem;
+            box-shadow: 0 4px 20px var(--accent-glow); transition: var(--transition);
+        }
+
+        /* ========== 🔐 شريط تقدم الضغط المطول ========== */
+        .secret-press-bar {
+            position: fixed; top: 0; left: 0; right: 0; height: 3px;
+            background: transparent; z-index: 10001;
+            pointer-events: none; transition: all 0.1s;
+        }
+        .secret-press-bar.active {
+            background: rgba(230, 57, 70, 0.3);
+        }
+        .secret-press-bar .fill {
+            height: 100%; width: 0%;
+            background: var(--gradient-accent);
+            transition: width 0.05s linear;
+            box-shadow: 0 0 10px rgba(230, 57, 70, 0.6);
+        }
+
+        /* ========== 🔐 تلميح سري ========== */
+        .secret-hint {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.9); color: #fff;
+            padding: 8px 16px; border-radius: 20px;
+            font-size: 0.8rem; z-index: 10002;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+            font-family: var(--font-main);
+            white-space: nowrap;
+        }
+        .secret-hint.show { opacity: 1; }
+
         .nav-links { display: flex; align-items: center; gap: 6px; list-style: none; }
         .nav-links a { text-decoration: none; color: var(--text-secondary); padding: 10px 18px; border-radius: var(--radius-full); transition: var(--transition); font-weight: 600; font-size: 0.9rem; }
         .nav-links a:hover, .nav-links a.active { color: #fff; background: var(--gradient-accent); }
@@ -161,51 +199,45 @@
         .pc-summary { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 28px; position: sticky; top: 90px; box-shadow: var(--glass-shadow); backdrop-filter: blur(12px); }
         .pc-total { font-size: 1.8rem; font-weight: 900; text-align: center; color: var(--accent); padding: 16px 0; border-top: 2px solid var(--border-color); }
 
-        /* ========== ✅ PRODUCT MODAL ========== */
-        .product-modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-            z-index: 5000; display: none; align-items: center; justify-content: center;
-            padding: 20px; backdrop-filter: blur(6px);
-        }
+        /* ========== PRODUCT MODAL ========== */
+        .product-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(6px); }
         .product-modal-overlay.open { display: flex; }
-        .product-modal {
-            background: var(--bg-card); border-radius: var(--radius-xl);
-            width: 100%; max-width: 900px; max-height: 90vh;
-            overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-            animation: modalIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
+        .product-modal { background: var(--bg-card); border-radius: var(--radius-xl); width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--glass-border); box-shadow: 0 30px 80px rgba(0,0,0,0.6); animation: modalIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
         @keyframes modalIn { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .modal-close-btn {
-            position: absolute; top: 14px; left: 14px; z-index: 10;
-            width: 36px; height: 36px; border-radius: 50%;
-            background: rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.3);
-            color: #fff; cursor: pointer; font-size: 1.2rem;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s;
-        }
+        .modal-close-btn { position: absolute; top: 14px; left: 14px; z-index: 10; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.3); color: #fff; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
         .modal-close-btn:hover { background: var(--accent); border-color: var(--accent); }
-        .modal-product-image {
-            min-height: 380px; background: var(--bg-tertiary);
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden; position: relative;
-        }
+        .modal-product-image { min-height: 380px; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
         .modal-product-image img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-        .modal-product-details {
-            padding: clamp(20px, 3vw, 32px);
-            display: flex; flex-direction: column; gap: 12px;
-            overflow-y: auto; max-height: 80vh;
-        }
-        .modal-product-details .modal-brand { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+        .modal-product-details { padding: clamp(20px, 3vw, 32px); display: flex; flex-direction: column; gap: 12px; overflow-y: auto; max-height: 80vh; }
+        .modal-product-details .modal-brand { color: var(--text-muted); font-size: 0.85rem; }
         .modal-product-details h2 { font-size: clamp(1.3rem, 2.5vw, 1.6rem); font-weight: 800; }
         .modal-product-details .modal-price { font-size: clamp(1.8rem, 3vw, 2.2rem); font-weight: 900; color: var(--accent); }
-        .modal-product-details .modal-description { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; }
         .modal-specs-grid { display: flex; flex-wrap: wrap; gap: 6px; }
         .modal-spec-tag { background: var(--bg-tertiary); padding: 5px 12px; border-radius: var(--radius-full); font-size: 0.75rem; color: var(--text-secondary); border: 1px solid var(--border-light); }
         .modal-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-light); }
         .modal-actions-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        /* ========== 🔐 ADMIN LOGIN MODAL (سري) ========== */
+        .admin-login-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 20000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(12px); padding: 20px; }
+        .admin-login-overlay.open { display: flex; }
+        .admin-login-card { background: var(--bg-card); border-radius: 24px; padding: 32px 24px; text-align: center; max-width: 400px; width: 100%; border: 1px solid var(--glass-border); box-shadow: 0 30px 80px rgba(0,0,0,0.7); position: relative; animation: modalIn 0.3s ease; }
+        .admin-login-card .admin-icon { width: 60px; height: 60px; background: var(--gradient-accent); border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; margin-bottom: 12px; box-shadow: 0 8px 24px rgba(230,57,70,0.4); }
+        .admin-login-card h3 { color: var(--text-primary); font-size: 1.2rem; margin-bottom: 16px; }
+        .admin-login-card .auth-step { display: none; }
+        .admin-login-card .auth-step.active { display: block; }
+        .admin-login-card .telegram-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; border: 2px solid #0088cc; border-radius: 12px; background: linear-gradient(135deg, #0088cc, #0099dd); cursor: pointer; font-weight: 700; font-size: 0.9rem; font-family: var(--font-main); color: #fff; transition: all 0.2s; }
+        .admin-login-card .telegram-btn:hover { background: linear-gradient(135deg, #0099dd, #00aaff); }
+        .admin-login-card .telegram-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .admin-login-card .otp-input-group { display: flex; gap: 8px; justify-content: center; margin: 16px 0; }
+        .admin-login-card .otp-input { width: 46px; height: 50px; text-align: center; font-size: 1.3rem; font-weight: 700; border: 2px solid var(--border-color); border-radius: 10px; background: var(--bg-secondary); color: var(--text-primary); font-family: monospace; }
+        .admin-login-card .otp-input:focus { border-color: #0088cc; outline: none; }
+        .admin-login-card .timer-display { color: #f59e0b; font-size: 0.8rem; margin: 8px 0; }
+        .admin-login-card .resend-link { color: #0088cc; cursor: pointer; font-size: 0.8rem; }
+        .admin-login-card .resend-link.disabled { color: var(--text-muted); cursor: not-allowed; pointer-events: none; }
+        .admin-login-card .error-msg { color: #ef4444; font-size: 0.8rem; margin-top: 8px; display: none; }
+        .admin-login-card .error-msg.show { display: block; }
+        .admin-login-close { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+        .admin-login-close:hover { background: var(--accent); }
 
         .footer { background: #050a14; color: #94a3b8; padding: 60px 0 24px; margin-top: 80px; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 36px; margin-bottom: 36px; }
@@ -213,25 +245,30 @@
         .footer-col a, .footer-col p { color: #94a3b8; text-decoration: none; font-size: 0.88rem; display: block; margin-bottom: 10px; transition: 0.2s; }
         .footer-col a:hover { color: #fff; padding-right: 4px; }
 
-        @media (max-width: 768px) {
-            .product-modal { grid-template-columns: 1fr; }
-            .modal-product-image { min-height: 250px; }
-        }
-        @media (max-width: 480px) {
-            .modal-actions-row .btn { flex: 1; justify-content: center; font-size: 0.8rem; padding: 10px; }
-        }
+        @media (max-width: 768px) { .product-modal { grid-template-columns: 1fr; } .modal-product-image { min-height: 250px; } }
+        @media (max-width: 480px) { .modal-actions-row .btn { flex: 1; justify-content: center; font-size: 0.8rem; padding: 10px; } }
         @media (max-width: 992px) { .pc-builder-grid { grid-template-columns: 1fr; } .pc-summary { position: static; } }
         @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display: flex; } .products-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; } .product-card-image { height: 200px; } .hero h1 { font-size: 1.8rem; } }
-        @media (max-width: 480px) { .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; } .product-card-image { height: 150px; } .product-price { font-size: 1.2rem; } .monitor-tab { padding: 6px 14px; font-size: 0.75rem; } }
+        @media (max-width: 480px) { .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; } .product-card-image { height: 150px; } .product-price { font-size: 1.2rem; } .monitor-tab { padding: 6px 14px; font-size: 0.75rem; } .admin-login-card .otp-input { width: 38px; height: 44px; font-size: 1.1rem; } }
     </style>
 </head>
 <body>
+
+    <!-- 🔐 شريط تقدم الضغط المطول -->
+    <div class="secret-press-bar" id="secret-press-bar"><div class="fill" id="secret-press-fill"></div></div>
+    
+    <!-- 🔐 تلميح سري -->
+    <div class="secret-hint" id="secret-hint"></div>
 
     <div class="coupon-bar" id="coupon-bar"><i class="fas fa-tag"></i> كود: <span class="coupon-code" onclick="navigator.clipboard.writeText('WELCOME10');showToast('تم النسخ')">WELCOME10</span> (10%) <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:#fff;cursor:pointer;">✕</button></div>
 
     <nav class="navbar">
         <div class="container">
-            <a href="#" class="nav-logo"><span class="logo-icon"><i class="fas fa-microchip"></i></span><span>Azzam Technology</span></a>
+            <!-- 🔐 الشعار يعمل كزر سري للدخول -->
+            <div class="nav-logo" id="secret-admin-trigger">
+                <span class="logo-icon"><i class="fas fa-microchip"></i></span>
+                <span>Azzam Technology</span>
+            </div>
             <ul class="nav-links">
                 <li><a href="#home" class="active">الرئيسية</a></li>
                 <li><a href="#monitors">🖥️ شاشات</a></li>
@@ -249,6 +286,36 @@
         </div>
     </nav>
 
+    <!-- 🔐 نافذة دخول المسؤول السري -->
+    <div class="admin-login-overlay" id="admin-login-overlay">
+        <div class="admin-login-card">
+            <button class="admin-login-close" id="admin-login-close">&times;</button>
+            <div class="admin-icon"><i class="fas fa-shield-halved"></i></div>
+            <h3>🔐 دخول المسؤول</h3>
+            <div class="auth-step active" id="admin-step-request">
+                <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:16px;">تحقق سريع عبر Telegram</p>
+                <button class="telegram-btn" id="admin-request-code-btn"><i class="fab fa-telegram-plane"></i> طلب كود التحقق</button>
+                <div class="error-msg" id="admin-step1-error"></div>
+                <div style="color:#22c55e;font-size:0.8rem;margin-top:8px;display:none;" id="admin-step1-success"></div>
+            </div>
+            <div class="auth-step" id="admin-step-verify">
+                <p style="color:var(--text-muted);font-size:0.8rem;">أدخل الكود المكون من 6 أرقام</p>
+                <div class="otp-input-group">
+                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-1" inputmode="numeric">
+                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-2" inputmode="numeric">
+                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-3" inputmode="numeric">
+                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-4" inputmode="numeric">
+                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-5" inputmode="numeric">
+                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-6" inputmode="numeric">
+                </div>
+                <div class="timer-display" id="admin-timer-display"></div>
+                <span class="resend-link disabled" id="admin-resend-link">إعادة الإرسال</span>
+                <div class="error-msg" id="admin-step2-error"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT MODAL & REST OF PAGE -->
     <section class="hero" id="home">
         <div class="container"><h1>أفضل <span>الأجهزة</span> بأسعار تنافسية</h1><p>شاشات • لابتوبات • قطع PC • تجميع جهازك المثالي</p><div class="hero-btns"><a href="#monitors" class="btn btn-primary"><i class="fas fa-desktop"></i> الشاشات</a><a href="#builder" class="btn btn-outline"><i class="fas fa-tools"></i> تجميع PC</a></div></div>
     </section>
@@ -280,7 +347,6 @@
         </div>
     </section>
 
-    <!-- ✅ PRODUCT DETAILS MODAL -->
     <div class="product-modal-overlay" id="product-modal-overlay">
         <div class="product-modal">
             <button class="modal-close-btn" id="modal-close-btn">&times;</button>
@@ -297,7 +363,8 @@
                 <div class="footer-col"><h4>اتصل بنا</h4><p>📍 مول البستان - القاهرة</p><p>📞 01025555207</p></div>
                 <div class="footer-col"><h4>خدمات</h4><a href="chat-bot.html">المساعد الذكي</a></div>
             </div>
-            <div style="text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);"><p>&copy; 2026 Azzam Technology</p></div>
+            <div style="text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);"><p>&copy; 2026 Azzam Technology</p>
+            <p>Designed by <a href="https://wa.me/+201010184778" style="color:var(--accent);">Mr.Developer</a></p></div>
         </div>
     </footer>
 
@@ -308,6 +375,15 @@
         (function() {
             const STORAGE_KEY = 'store_all_products';
             const WHATSAPP_NUMBER = '201025555207';
+            const ADMIN_URL = 'admin.html';
+            
+            // ==================== 🔐 إعدادات الدخول السري ====================
+            const TELEGRAM_BOT_TOKEN = '8723447348:AAGtKoujIGCtbLXuPUWAR-B-oweiOdcDCKk';
+            const TELEGRAM_CHAT_ID = '6776057443';
+            const OTP_KEY = 'telegram_otp_data';
+            const LONG_PRESS_DURATION = 3000; // 3 ثواني
+            let otpTimer = null, otpTimeLeft = 0;
+
             const $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
 
             let data = loadProducts();
@@ -318,6 +394,155 @@
             let currentTheme = localStorage.getItem('azzam_theme') || 'dark';
             let currentMonitorFilter = 'all';
 
+            // ==================== 🔐 SECRET ADMIN ACCESS ====================
+            const secretTrigger = document.getElementById('secret-admin-trigger');
+            const pressBar = document.getElementById('secret-press-bar');
+            const pressFill = document.getElementById('secret-press-fill');
+            const secretHint = document.getElementById('secret-hint');
+            let pressStart = 0, pressInterval = null, isPressing = false;
+
+            if (secretTrigger) {
+                secretTrigger.addEventListener('mousedown', startSecretPress);
+                secretTrigger.addEventListener('touchstart', startSecretPress, { passive: true });
+                secretTrigger.addEventListener('mouseup', cancelSecretPress);
+                secretTrigger.addEventListener('mouseleave', cancelSecretPress);
+                secretTrigger.addEventListener('touchend', cancelSecretPress);
+                secretTrigger.addEventListener('touchcancel', cancelSecretPress);
+                secretTrigger.addEventListener('dragstart', e => e.preventDefault());
+            }
+
+            function startSecretPress(e) {
+                if (e.type === 'touchstart') e.preventDefault();
+                if (isPressing) return;
+                isPressing = true;
+                pressStart = Date.now();
+                pressBar.classList.add('active');
+                pressFill.style.width = '0%';
+                pressFill.style.transition = 'none';
+                
+                pressInterval = setInterval(() => {
+                    const elapsed = Date.now() - pressStart;
+                    const progress = Math.min((elapsed / LONG_PRESS_DURATION) * 100, 100);
+                    pressFill.style.width = progress + '%';
+                    
+                    if (elapsed > 1000 && elapsed < 1300) showSecretHint('🔍 ...');
+                    else if (elapsed > 2000 && elapsed < 2300) showSecretHint('🔥 ...');
+                    
+                    if (elapsed >= LONG_PRESS_DURATION) {
+                        cancelSecretPress();
+                        showSecretHint('✅ تم الفتح!', 1500);
+                        const logoIcon = secretTrigger.querySelector('.logo-icon');
+                        if (logoIcon) { logoIcon.style.transform = 'scale(1.3)'; logoIcon.style.boxShadow = '0 0 30px rgba(34,197,94,0.8)'; }
+                        setTimeout(() => { if (logoIcon) { logoIcon.style.transform = ''; logoIcon.style.boxShadow = ''; } }, 800);
+                        setTimeout(() => openAdminLogin(), 500);
+                    }
+                }, 30);
+            }
+
+            function cancelSecretPress() {
+                if (!isPressing && !pressInterval) return;
+                isPressing = false;
+                clearInterval(pressInterval);
+                pressInterval = null;
+                pressBar.classList.remove('active');
+                pressFill.style.transition = 'width 0.3s ease';
+                pressFill.style.width = '0%';
+                secretHint.classList.remove('show');
+            }
+
+            function showSecretHint(msg, duration = 1500) {
+                secretHint.textContent = msg;
+                secretHint.classList.add('show');
+                clearTimeout(secretHint._timer);
+                if (duration > 0) secretHint._timer = setTimeout(() => secretHint.classList.remove('show'), duration);
+            }
+
+            // اختصار لوحة المفاتيح Ctrl+Shift+A
+            document.addEventListener('keydown', e => {
+                if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                    e.preventDefault();
+                    showSecretHint('⌨️ اختصار الدخول', 1500);
+                    setTimeout(() => openAdminLogin(), 400);
+                }
+            });
+
+            // Param في الرابط
+            if (new URL(location.href).searchParams.has('admin')) {
+                setTimeout(() => openAdminLogin(), 500);
+            }
+
+            // ==================== ADMIN LOGIN ====================
+            function openAdminLogin() {
+                document.getElementById('admin-login-overlay').classList.add('open');
+                showAdminStep('request');
+                document.getElementById('admin-step1-success').style.display = 'none';
+            }
+            function closeAdminLogin() {
+                document.getElementById('admin-login-overlay').classList.remove('open');
+                clearInterval(otpTimer);
+            }
+
+            function showAdminStep(step) {
+                $$('.admin-login-card .auth-step').forEach(s => s.classList.remove('active'));
+                const el = document.getElementById('admin-step-' + step);
+                if (el) el.classList.add('active');
+                $$('.admin-login-card .error-msg').forEach(e => { e.textContent = ''; e.classList.remove('show'); });
+            }
+            function showAdminError(elId, msg) { const el = document.getElementById(elId); if (el) { el.textContent = msg; el.classList.add('show'); } }
+
+            async function adminRequestOTP() {
+                const btn = document.getElementById('admin-request-code-btn');
+                if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...'; }
+                const otp = Math.floor(100000 + Math.random() * 900000).toString();
+                sessionStorage.setItem(OTP_KEY, JSON.stringify({ code: otp, expires: Date.now() + 300000, attempts: 0 }));
+                const msg = `🔐 *رمز تحقق*\n🔢 الرمز: *${otp}*\n⏰ ${new Date().toLocaleString('ar-EG')}\n\n_صالح 5 دقائق_`;
+                try {
+                    const r = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' }) });
+                    const d = await r.json();
+                    if (d.ok) { document.getElementById('admin-step1-success').style.display = 'block'; document.getElementById('admin-step1-success').textContent = '✅ تم الإرسال'; setTimeout(() => { showAdminStep('verify'); startAdminTimer(300); document.getElementById('admin-otp-1')?.focus(); }, 600); }
+                    else showAdminError('admin-step1-error', '❌ فشل الإرسال');
+                } catch(e) { showAdminError('admin-step1-error', '❌ فشل الاتصال'); }
+                finally { if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fab fa-telegram-plane"></i> طلب كود التحقق'; } }
+            }
+
+            function adminVerifyOTP() {
+                const digits = []; for (let i = 1; i <= 6; i++) digits.push(document.getElementById('admin-otp-' + i)?.value || '');
+                const entered = digits.join('');
+                if (entered.length !== 6) { showAdminError('admin-step2-error', 'أدخل 6 أرقام'); return; }
+                const otpData = JSON.parse(sessionStorage.getItem(OTP_KEY) || '{}');
+                if (!otpData.code) { showAdminError('admin-step2-error', 'منتهي'); return; }
+                if (Date.now() > otpData.expires) { showAdminError('admin-step2-error', 'منتهي'); return; }
+                if (otpData.attempts >= 5) { showAdminError('admin-step2-error', 'محظور'); return; }
+                otpData.attempts++;
+                if (entered === otpData.code) {
+                    sessionStorage.removeItem(OTP_KEY); clearInterval(otpTimer);
+                    sessionStorage.setItem('admin_verified', 'true');
+                    window.location.href = ADMIN_URL;
+                } else {
+                    showAdminError('admin-step2-error', `❌ خطأ - متبقي ${5-otpData.attempts} محاولات`);
+                    for (let i = 1; i <= 6; i++) document.getElementById('admin-otp-' + i).value = '';
+                    document.getElementById('admin-otp-1')?.focus();
+                }
+            }
+
+            function startAdminTimer(s) { otpTimeLeft = s; updateAdminTimerDisplay(); clearInterval(otpTimer); const rl = document.getElementById('admin-resend-link'); if (rl) rl.classList.add('disabled'); otpTimer = setInterval(() => { otpTimeLeft--; updateAdminTimerDisplay(); if (otpTimeLeft <= 0) { clearInterval(otpTimer); if (rl) rl.classList.remove('disabled'); } }, 1000); }
+            function updateAdminTimerDisplay() { const m = Math.floor(otpTimeLeft/60), s = otpTimeLeft%60; const d = document.getElementById('admin-timer-display'); if (d) d.textContent = `⏰ ${m}:${s.toString().padStart(2,'0')}`; }
+
+            // ==================== BIND ADMIN EVENTS ====================
+            document.getElementById('admin-login-close')?.addEventListener('click', closeAdminLogin);
+            document.getElementById('admin-login-overlay')?.addEventListener('click', function(e) { if (e.target === this) closeAdminLogin(); });
+            document.getElementById('admin-request-code-btn')?.addEventListener('click', adminRequestOTP);
+            document.getElementById('admin-resend-link')?.addEventListener('click', () => { if (otpTimeLeft > 0) return; sessionStorage.removeItem(OTP_KEY); clearInterval(otpTimer); for (let i=1;i<=6;i++) document.getElementById('admin-otp-'+i).value=''; showAdminStep('request'); });
+            for (let i=1;i<=6;i++) {
+                const inp = document.getElementById('admin-otp-'+i);
+                if (inp) {
+                    inp.addEventListener('input', function() { this.value=this.value.replace(/[^0-9]/g,''); if(this.value.length===1&&i<6) document.getElementById('admin-otp-'+(i+1))?.focus(); if(i===6&&this.value.length===1) setTimeout(adminVerifyOTP,200); });
+                    inp.addEventListener('keydown', function(e) { if(e.key==='Backspace'&&this.value.length===0&&i>1) document.getElementById('admin-otp-'+(i-1))?.focus(); if(e.key==='Enter') adminVerifyOTP(); });
+                    inp.addEventListener('paste', function(e) { e.preventDefault(); const pasted=(e.clipboardData||window.clipboardData).getData('text').replace(/[^0-9]/g,''); if(pasted.length===6){for(let j=0;j<6;j++)document.getElementById('admin-otp-'+(j+1)).value=pasted[j];setTimeout(adminVerifyOTP,200);} });
+                }
+            }
+
+            // ==================== PRODUCT FUNCTIONS (كما هي) ====================
             function loadProducts() {
                 const stored = localStorage.getItem(STORAGE_KEY);
                 if (!stored) return { laptops:[], monitors:[], frameless:[], curved:[], gaming:[], prebuiltPCs:[], pcComponents:{} };
@@ -333,11 +558,7 @@
                         speakers:{label:'🔊 سماعات',icon:'fa-volume-high',options:[]}, wifi_card:{label:'📶 كارت الشبكة',icon:'fa-wifi',options:[]}
                     };
                     all.filter(p=>p.type==='component').forEach(c=>{if(pcComponents[c.componentType])pcComponents[c.componentType].options.push({name:c.name,price:c.price,image:c.image||'',id:c.id});});
-                    return {
-                        laptops:all.filter(p=>p.type==='laptop'), monitors:all.filter(p=>p.type==='monitor'),
-                        frameless:all.filter(p=>p.type==='frameless'), curved:all.filter(p=>p.type==='curved'),
-                        gaming:all.filter(p=>p.type==='gaming'), prebuiltPCs:all.filter(p=>p.type==='pc'), pcComponents
-                    };
+                    return { laptops:all.filter(p=>p.type==='laptop'), monitors:all.filter(p=>p.type==='monitor'), frameless:all.filter(p=>p.type==='frameless'), curved:all.filter(p=>p.type==='curved'), gaming:all.filter(p=>p.type==='gaming'), prebuiltPCs:all.filter(p=>p.type==='pc'), pcComponents };
                 } catch(e) { return { laptops:[],monitors:[],frameless:[],curved:[],gaming:[],prebuiltPCs:[],pcComponents:{} }; }
             }
 
@@ -346,72 +567,24 @@
             function getTypeBadge(type) { const b={monitor:'badge-monitor',frameless:'badge-frameless',curved:'badge-curved',gaming:'badge-gaming'}; return b[type]||''; }
             function getTypeLabel(type) { const l={monitor:'شاشة',frameless:'Frameless',curved:'Curved',gaming:'Gaming'}; return l[type]||type; }
 
-            // ==================== ✅ PRODUCT MODAL ====================
             function openModal(p) {
                 const overlay = document.getElementById('product-modal-overlay');
                 const inWishlist = wishlist.some(w => w.id === p.id);
                 const inCart = cart.find(i => i.id === p.id);
                 const inComparison = comparison.some(c => c.id === p.id);
-                
-                // صورة المنتج
-                document.getElementById('modal-product-image').innerHTML = 
-                    `<img src="${p.image || 'https://via.placeholder.com/600x400?text=No+Image'}" alt="${p.name}" loading="lazy">`;
-                
-                // مواصفات
-                const specs = p.specs ? Object.entries(p.specs).map(([k,v]) => 
-                    `<span class="modal-spec-tag">${k}: ${v}</span>`
-                ).join('') : '';
-                
-                // تفاصيل المنتج
-                document.getElementById('modal-product-details').innerHTML = `
-                    <div class="modal-brand">${p.brand || 'Azzam Technology'}</div>
-                    <h2>${p.name}</h2>
-                    <div class="modal-price">${formatPrice(p.price)}</div>
-                    ${p.oldPrice ? `<div style="color:var(--text-muted);text-decoration:line-through;font-size:1rem;">${formatPrice(p.oldPrice)}</div>` : ''}
-                    ${p.discount ? `<div style="color:#22c55e;font-weight:700;">🔥 خصم ${p.discount}%</div>` : ''}
-                    ${p.description ? `<p class="modal-description">${p.description}</p>` : ''}
-                    ${specs ? `<div class="modal-specs-grid">${specs}</div>` : ''}
-                    ${p.condition ? `<div style="margin-top:8px;"><span style="background:var(--bg-tertiary);padding:4px 12px;border-radius:20px;font-size:0.8rem;">📦 ${p.condition === 'new' ? 'جديد' : p.condition === 'used' ? 'مستعمل' : 'مستورد'}</span></div>` : ''}
-                    
-                    <div class="modal-actions">
-                        <div class="modal-actions-row">
-                            <button class="btn btn-primary" id="modal-add-cart" style="flex:1;">
-                                <i class="fas fa-cart-plus"></i> ${inCart ? '✓ في السلة' : 'إضافة للسلة'}
-                            </button>
-                            <button class="btn btn-whatsapp" id="modal-buy-now" style="flex:1;">
-                                <i class="fab fa-whatsapp"></i> شراء مباشر
-                            </button>
-                        </div>
-                        <div class="modal-actions-row">
-                            <button class="btn btn-outline" id="modal-wishlist" style="flex:1;">
-                                <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i> ${inWishlist ? 'محفوظ' : 'المفضلة'}
-                            </button>
-                            <button class="btn btn-outline" id="modal-compare" style="flex:1;">
-                                <i class="fas fa-balance-scale"></i> ${inComparison ? 'بالقائمة' : 'مقارنة'}
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                // أحداث الأزرار
-                document.getElementById('modal-add-cart').addEventListener('click', () => { addToCart(p); closeModal(); });
+                document.getElementById('modal-product-image').innerHTML = `<img src="${p.image || 'https://via.placeholder.com/600x400'}" alt="${p.name}" loading="lazy">`;
+                const specs = p.specs ? Object.entries(p.specs).map(([k,v]) => `<span class="modal-spec-tag">${k}: ${v}</span>`).join('') : '';
+                document.getElementById('modal-product-details').innerHTML = `<div class="modal-brand">${p.brand || 'Azzam Technology'}</div><h2>${p.name}</h2><div class="modal-price">${formatPrice(p.price)}</div>${p.oldPrice?`<div style="color:var(--text-muted);text-decoration:line-through;">${formatPrice(p.oldPrice)}</div>`:''}${p.discount?`<div style="color:#22c55e;font-weight:700;">🔥 خصم ${p.discount}%</div>`:''}${p.description?`<p style="color:var(--text-secondary);">${p.description}</p>`:''}${specs?`<div class="modal-specs-grid">${specs}</div>`:''}<div class="modal-actions"><div class="modal-actions-row"><button class="btn btn-primary" id="modal-add-cart" style="flex:1;"><i class="fas fa-cart-plus"></i> ${inCart?'✓ في السلة':'إضافة للسلة'}</button><button class="btn btn-whatsapp" id="modal-buy-now" style="flex:1;"><i class="fab fa-whatsapp"></i> شراء مباشر</button></div><div class="modal-actions-row"><button class="btn btn-outline" id="modal-wishlist" style="flex:1;"><i class="${inWishlist?'fas':'far'} fa-heart"></i> ${inWishlist?'محفوظ':'المفضلة'}</button><button class="btn btn-outline" id="modal-compare" style="flex:1;"><i class="fas fa-balance-scale"></i> ${inComparison?'بالقائمة':'مقارنة'}</button></div></div>`;
+                document.getElementById('modal-add-cart').addEventListener('click', () => { addToCart(p); closeProductModal(); });
                 document.getElementById('modal-buy-now').addEventListener('click', () => { buyNow(p); });
-                document.getElementById('modal-wishlist').addEventListener('click', () => { toggleWishlist(p); closeModal(); });
-                document.getElementById('modal-compare').addEventListener('click', () => { toggleComparison(p); closeModal(); });
-                
+                document.getElementById('modal-wishlist').addEventListener('click', () => { toggleWishlist(p); closeProductModal(); });
+                document.getElementById('modal-compare').addEventListener('click', () => { toggleComparison(p); closeProductModal(); });
                 overlay.classList.add('open');
             }
 
-            function closeModal() {
-                document.getElementById('product-modal-overlay').classList.remove('open');
-            }
+            function closeProductModal() { document.getElementById('product-modal-overlay').classList.remove('open'); }
+            function buyNow(p) { window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`🛒 طلب شراء:\n📦 ${p.name}\n💰 ${formatPrice(p.price)}`)}`, '_blank'); }
 
-            function buyNow(p) {
-                const msg = `🛒 *طلب شراء مباشر*\n\n📦 ${p.name}\n💰 السعر: ${formatPrice(p.price)}\n🏷️ الماركة: ${p.brand || '-'}\n\nالرجاء تأكيد الطلب`;
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-            }
-
-            // ==================== PRODUCT CARD ====================
             function createProductCard(p) {
                 const inWishlist=wishlist.some(w=>w.id===p.id), inComparison=comparison.some(c=>c.id===p.id), inCart=cart.find(i=>i.id===p.id);
                 const card=document.createElement('div'); card.className='product-card';
@@ -424,38 +597,9 @@
 
             function renderGrid(id,arr) { const g=document.getElementById(id); if(!g)return; g.innerHTML=''; arr.forEach(p=>g.appendChild(createProductCard(p))); if(arr.length===0) g.innerHTML='<div style="text-align:center;padding:60px;color:var(--text-muted);grid-column:1/-1;">لا توجد منتجات</div>'; }
             function renderAll() { renderMonitors(currentMonitorFilter); renderGrid('laptops-grid',data.laptops); renderGrid('pc-grid',data.prebuiltPCs); renderBuilder(); updateAllBadges(); }
-
-            function renderMonitors(filter='all') {
-                currentMonitorFilter=filter;
-                let arr=[];
-                if(filter==='all') arr=[...data.monitors,...data.frameless,...data.curved,...data.gaming];
-                else if(filter==='monitor') arr=data.monitors;
-                else if(filter==='frameless') arr=data.frameless;
-                else if(filter==='curved') arr=data.curved;
-                else if(filter==='gaming') arr=data.gaming;
-                renderGrid('monitors-grid', arr);
-                $$('.monitor-tab').forEach(t=>{t.classList.remove('active');if(t.dataset.filter===filter)t.classList.add('active');});
-            }
-
-            function renderBuilder() {
-                const c=$('#pc-builder-components'); if(!c)return; c.innerHTML='';
-                const hasAny=Object.values(data.pcComponents).some(comp=>comp.options.length>0);
-                if(!hasAny){c.innerHTML='<div style="text-align:center;padding:40px;">لا توجد قطع</div>';updateSummary();return;}
-                Object.entries(data.pcComponents).forEach(([key,comp])=>{
-                    if(!comp.options.length)return;
-                    const sel=builder[key];
-                    const w=document.createElement('div'); w.style.marginBottom='8px';
-                    w.innerHTML=`<div class="pc-select ${sel?'selected':''}" data-comp="${key}"><div class="circle"><i class="fas ${comp.icon}"></i></div><div style="flex:1"><div style="font-weight:700">${comp.label}</div><div style="font-size:0.8rem;color:var(--text-muted)">${sel?.name||'اختر...'}</div></div><div style="font-weight:700;color:var(--accent)">${sel?formatPrice(sel.price):''}</div></div><div class="pc-options" id="opts-${key}" style="display:none;background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-md);overflow:hidden;max-height:260px;overflow-y:auto"></div>`;
-                    c.appendChild(w);
-                    const opts=w.querySelector('.pc-options');
-                    comp.options.forEach(o=>{const d=document.createElement('div'); d.style.cssText='padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;border-bottom:1px solid var(--border-light);font-size:0.85rem'; d.innerHTML=`<span>${o.name}</span><span style="color:var(--accent);font-weight:700">${formatPrice(o.price)}</span>`; d.addEventListener('click',e=>{e.stopPropagation();builder[key]=o;renderBuilder();updateSummary();}); opts.appendChild(d);});
-                    w.querySelector('.pc-select').addEventListener('click',e=>{e.stopPropagation();$$('.pc-options').forEach(x=>{if(x!==opts)x.style.display='none';});opts.style.display=opts.style.display==='block'?'none':'block';});
-                });
-                updateSummary();
-            }
-
+            function renderMonitors(filter='all') { currentMonitorFilter=filter; let arr=[]; if(filter==='all') arr=[...data.monitors,...data.frameless,...data.curved,...data.gaming]; else if(filter==='monitor') arr=data.monitors; else if(filter==='frameless') arr=data.frameless; else if(filter==='curved') arr=data.curved; else if(filter==='gaming') arr=data.gaming; renderGrid('monitors-grid',arr); $$('.monitor-tab').forEach(t=>{t.classList.remove('active');if(t.dataset.filter===filter)t.classList.add('active');}); }
+            function renderBuilder() { const c=$('#pc-builder-components'); if(!c)return; c.innerHTML=''; const hasAny=Object.values(data.pcComponents).some(comp=>comp.options.length>0); if(!hasAny){c.innerHTML='<div style="text-align:center;padding:40px;">لا توجد قطع</div>';updateSummary();return;} Object.entries(data.pcComponents).forEach(([key,comp])=>{if(!comp.options.length)return;const sel=builder[key];const w=document.createElement('div');w.style.marginBottom='8px';w.innerHTML=`<div class="pc-select ${sel?'selected':''}" data-comp="${key}"><div class="circle"><i class="fas ${comp.icon}"></i></div><div style="flex:1"><div style="font-weight:700">${comp.label}</div><div style="font-size:0.8rem;color:var(--text-muted)">${sel?.name||'اختر...'}</div></div><div style="font-weight:700;color:var(--accent)">${sel?formatPrice(sel.price):''}</div></div><div class="pc-options" id="opts-${key}" style="display:none;background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-md);overflow:hidden;max-height:260px;overflow-y:auto"></div>`;c.appendChild(w);const opts=w.querySelector('.pc-options');comp.options.forEach(o=>{const d=document.createElement('div');d.style.cssText='padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;border-bottom:1px solid var(--border-light);font-size:0.85rem';d.innerHTML=`<span>${o.name}</span><span style="color:var(--accent);font-weight:700">${formatPrice(o.price)}</span>`;d.addEventListener('click',e=>{e.stopPropagation();builder[key]=o;renderBuilder();updateSummary();});opts.appendChild(d);});w.querySelector('.pc-select').addEventListener('click',e=>{e.stopPropagation();$$('.pc-options').forEach(x=>{if(x!==opts)x.style.display='none';});opts.style.display=opts.style.display==='block'?'none':'block';});});updateSummary();}
             function updateSummary() { const l=$('#pc-summary-list'),t=$('#pc-total-price'); if(!l||!t)return; let total=0; l.innerHTML=''; Object.entries(data.pcComponents).forEach(([key,comp])=>{const sel=builder[key]; const li=document.createElement('li'); li.style.cssText='display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-light);font-size:0.85rem'; li.innerHTML=sel?`<span>${comp.label}: <strong>${sel.name}</strong></span><span style="color:var(--accent)">${formatPrice(sel.price)}</span>`:`<span style="color:var(--text-muted)">${comp.label}: اختر...</span><span>-</span>`; if(sel)total+=sel.price; l.appendChild(li);}); t.textContent=`المجموع: ${formatPrice(total)}`; }
-
             function addToCart(p) { const ex=cart.find(i=>i.id===p.id); ex?ex.quantity++:cart.push({...p,quantity:1}); saveCart(); renderAll(); showToast('✓ تمت الإضافة'); }
             function saveCart() { localStorage.setItem('azzam_cart_v3',JSON.stringify(cart)); updateCartUI(); }
             function updateCartUI() { const total=cart.reduce((s,i)=>s+i.quantity,0); $('#cart-badge').style.display=total?'flex':'none';$('#cart-badge').textContent=total; }
@@ -464,10 +608,9 @@
             function updateAllBadges() { $('#wishlist-badge').style.display=wishlist.length?'flex':'none';$('#wishlist-badge').textContent=wishlist.length; }
 
             // Events
-            document.getElementById('modal-close-btn').addEventListener('click', closeModal);
-            document.getElementById('product-modal-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
+            document.getElementById('modal-close-btn').addEventListener('click', closeProductModal);
+            document.getElementById('product-modal-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeProductModal(); });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProductModal(); });
             $$('.monitor-tab').forEach(t=>t.addEventListener('click',()=>renderMonitors(t.dataset.filter)));
             $('#theme-toggle').addEventListener('click',()=>{currentTheme=currentTheme==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',currentTheme);localStorage.setItem('azzam_theme',currentTheme);$('#theme-toggle').innerHTML=currentTheme==='dark'?'☀️':'🌙';});
             $('#add-pc-to-cart').addEventListener('click',()=>{const sel=Object.entries(builder).filter(([,o])=>o); if(sel.length<3)return showToast('اختر 3 مكونات على الأقل'); let total=0; const specs={}; sel.forEach(([k,o])=>{total+=o.price;specs[data.pcComponents[k].label]=o.name;}); addToCart({id:'build_'+Date.now(),name:'🖥️ تجميعة PC',brand:'Azzam Custom',price:total,image:'https://picsum.photos/seed/pcbuild/400/260',specs}); builder={}; renderBuilder(); });
@@ -480,7 +623,7 @@
             renderAll();
             updateCartUI();
             updateAllBadges();
-            console.log('🚀 Azzam Technology - مع نافذة تفاصيل المنتج');
+            console.log('🔐 Azzam Technology - دخول سري مخفي للوحة التحكم');
         })();
     </script>
 </body>
