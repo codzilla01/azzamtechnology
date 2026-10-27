@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title data-i18n="Azzam Technology | دخول الإدارة">Azzam Technology | دخول الإدارة</title>
+    <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="assets/vendor/tajawal/tajawal.css">
+    <link rel="stylesheet" href="i18n.css">
+    <link rel="stylesheet" href="auth.css">
+    <script src="i18n.js"></script>
+    <script src="auth.js" defer></script>
+</head>
+<body>
+    <header class="auth-header">
+        <a class="auth-brand" href="/" aria-label="Azzam Technology — العودة للمتجر" data-i18n-aria-label="Azzam Technology — العودة للمتجر">
+            <span class="brand-icon"><i class="fa-solid fa-microchip" aria-hidden="true"></i></span>
+            <span dir="ltr">AZZAM <strong>TECHNOLOGY</strong></span>
+        </a>
+        <div class="header-actions">
+            <a class="back-to-store" href="/"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> <span data-i18n="العودة للمتجر">العودة للمتجر</span></a>
+            <button type="button" class="language-switch" data-language-switch aria-label="EN — Switch to English" title="EN — Switch to English"><i class="fa-solid fa-globe" aria-hidden="true"></i><span data-language-label lang="en">EN</span></button>
+        </div>
+    </header>
+
+    <main class="auth-layout">
+        <section class="auth-intro" aria-labelledby="intro-title">
+            <div class="intro-kicker"><span></span> <span data-i18n="مساحة الإدارة">مساحة الإدارة</span></div>
+            <h2 id="intro-title"><span data-i18n="كل ما تحتاجه لإدارة متجرك،">كل ما تحتاجه لإدارة متجرك،</span><br><span data-i18n="في مكان واحد.">في مكان واحد.</span></h2>
+            <p data-i18n="سجّل دخولك للوصول إلى المنتجات والإعدادات وأدوات المتجر.">سجّل دخولك للوصول إلى المنتجات والإعدادات وأدوات المتجر.</p>
+            <div class="intro-note"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span data-i18n="هذه الصفحة مخصصة للمسؤول فقط.">هذه الصفحة مخصصة للمسؤول فقط.</span></div>
+        </section>
+
+        <section class="auth-card" aria-labelledby="login-title">
+            <div class="card-icon"><i class="fa-solid fa-lock" aria-hidden="true"></i></div>
+            <div id="auth-loading" class="loading" role="status" data-i18n="جارٍ التحقق من الجلسة...">جارٍ التحقق من الجلسة...</div>
+            <div id="login-view" hidden>
+                <span class="card-kicker" data-i18n="أهلاً بعودتك">أهلاً بعودتك</span>
+                <h1 id="login-title" data-i18n="دخول الإدارة">دخول الإدارة</h1>
+                <p class="card-description" data-i18n="أدخل اسم المستخدم وكلمة المرور للمتابعة.">أدخل اسم المستخدم وكلمة المرور للمتابعة.</p>
+                <form id="login-form">
+                    <div class="field"><label for="login-username" data-i18n="اسم المستخدم">اسم المستخدم</label><input id="login-username" name="username" type="text" dir="ltr" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="32" required></div>
+                    <div class="field"><label for="login-password" data-i18n="كلمة المرور">كلمة المرور</label><input id="login-password" name="password" type="password" dir="ltr" autocomplete="current-password" maxlength="256" required></div>
+                    <p id="login-error" class="auth-message error" role="alert" hidden></p>
+                    <button class="submit-button" id="login-submit" type="submit"><span data-i18n="تسجيل الدخول">تسجيل الدخول</span><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+                </form>
+                <div class="first-login"><i class="fa-regular fa-circle-question" aria-hidden="true"></i><span data-i18n="أول دخول؟ بيانات الدخول المؤقتة متاحة في إعداد الخادم.">أول دخول؟ بيانات الدخول المؤقتة متاحة في إعداد الخادم.</span></div>
+            </div>
+
+            <div id="setup-view" hidden>
+                <span class="card-kicker" data-i18n="خطوة أخيرة">خطوة أخيرة</span>
+                <h1 id="setup-title" tabindex="-1" data-i18n="أمّن حسابك">أمّن حسابك</h1>
+                <p class="card-description" data-i18n="لأمان حسابك، غيّر كلمة المرور المؤقتة قبل دخول لوحة الإدارة.">لأمان حسابك، غيّر كلمة المرور المؤقتة قبل دخول لوحة الإدارة.</p>
+                <form id="setup-form">
+                    <div class="field"><label for="setup-username" data-i18n="اسم المستخدم الجديد">اسم المستخدم الجديد</label><input id="setup-username" name="username" type="text" dir="ltr" autocomplete="username" autocapitalize="none" spellcheck="false" minlength="3" maxlength="32" pattern="[A-Za-z0-9][A-Za-z0-9._-]{2,31}" required aria-describedby="username-hint"><small id="username-hint" data-i18n="من ٣ إلى ٣٢ حرفاً إنجليزياً أو رقماً، ويمكن استخدام . و _ و -.">من ٣ إلى ٣٢ حرفاً إنجليزياً أو رقماً، ويمكن استخدام . و _ و -.</small></div>
+                    <div class="field"><label for="setup-current-password" data-i18n="كلمة المرور الحالية">كلمة المرور الحالية</label><input id="setup-current-password" name="currentPassword" type="password" dir="ltr" autocomplete="current-password" maxlength="256" required></div>
+                    <div class="field"><label for="setup-new-password" data-i18n="كلمة المرور الجديدة">كلمة المرور الجديدة</label><input id="setup-new-password" name="newPassword" type="password" dir="ltr" autocomplete="new-password" minlength="12" maxlength="128" required aria-describedby="password-hint"><small id="password-hint" data-i18n="١٢ حرفاً على الأقل. استخدم كلمة مرور فريدة.">١٢ حرفاً على الأقل. استخدم كلمة مرور فريدة.</small></div>
+                    <div class="field"><label for="setup-confirm-password" data-i18n="تأكيد كلمة المرور الجديدة">تأكيد كلمة المرور الجديدة</label><input id="setup-confirm-password" name="confirmPassword" type="password" dir="ltr" autocomplete="new-password" minlength="12" maxlength="128" required></div>
+                    <p id="setup-error" class="auth-message error" role="alert" hidden></p>
+                    <button class="submit-button" id="setup-submit" type="submit"><span data-i18n="حفظ ومتابعة">حفظ ومتابعة</span><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+                    <button class="sign-out-button" id="setup-logout" type="button" data-i18n="تسجيل الخروج">تسجيل الخروج</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer class="auth-footer">&copy; 2026 Azzam Technology</footer>
+</body>
+</html>
