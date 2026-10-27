@@ -1,0 +1,22 @@
+/* Language controls are shared by the storefront, assistant and dashboard. */
+.language-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 32px;
+    padding: 4px 9px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.2;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.language-switch:hover { background: rgba(128, 128, 128, 0.14); }
+.language-switch:focus-visible { outline: 2px solid #ef4444; outline-offset: 3px; }
+.language-switch [data-language-label] { display: inline-block; }
