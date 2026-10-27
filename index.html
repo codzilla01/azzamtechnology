@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Azzam Technology | الشاشات و أجهزة الكمبيوتر واللابتوب</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <meta name="description" content="اكتشف الشاشات واللابتوبات والأجهزة المجمّعة، أو ابدأ بتجميع جهازك مع Azzam Technology.">
+    <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="assets/vendor/tajawal/tajawal.css">
     <style>
         :root {
             --font-main: 'Tajawal', sans-serif;
@@ -251,6 +252,7 @@
         @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display: flex; } .products-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; } .product-card-image { height: 200px; } .hero h1 { font-size: 1.8rem; } }
         @media (max-width: 480px) { .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; } .product-card-image { height: 150px; } .product-price { font-size: 1.2rem; } .monitor-tab { padding: 6px 14px; font-size: 0.75rem; } .admin-login-card .otp-input { width: 38px; height: 44px; font-size: 1.1rem; } }
     </style>
+    <link rel="stylesheet" href="storefront.css">
 </head>
 <body>
 
@@ -260,38 +262,44 @@
     <!-- 🔐 تلميح سري -->
     <div class="secret-hint" id="secret-hint"></div>
 
-    <div class="coupon-bar" id="coupon-bar"><i class="fas fa-tag"></i> كود: <span class="coupon-code" onclick="navigator.clipboard.writeText('WELCOME10');showToast('تم النسخ')">WELCOME10</span> (10%) <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:#fff;cursor:pointer;">✕</button></div>
+    <a class="skip-link" href="#main-content">تخطَّ إلى المحتوى</a>
+    <div class="topbar">
+        <div class="container topbar-inner">
+            <span><span class="topbar-dot"></span> وجهتك لكل ما يخص عالم الكمبيوتر</span>
+            <a href="tel:01025555207"><i class="fa-solid fa-phone" aria-hidden="true"></i> <span dir="ltr">010 2555 5207</span></a>
+        </div>
+    </div>
 
-    <nav class="navbar">
-        <div class="container">
-            <!-- 🔐 الشعار يعمل كزر سري للدخول -->
+    <nav class="navbar" aria-label="التنقل الرئيسي">
+        <div class="container nav-inner">
+            <!-- يبقى الضغط المطول على الشعار مدخلاً للوحة التحكم -->
             <div class="nav-logo" id="secret-admin-trigger">
-                <span class="logo-icon"><i class="fas fa-microchip"></i></span>
-                <span>Azzam Technology</span>
+                <span class="logo-icon"><img src="images/Azaam_Logo.png" alt="" width="40" height="40"></span>
+                <span class="brand-name" dir="ltr"><strong>AZZAM</strong><small>TECHNOLOGY</small></span>
             </div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="main-navigation">
                 <li><a href="#home" class="active">الرئيسية</a></li>
-                <li><a href="#monitors">🖥️ شاشات</a></li>
-                <li><a href="#laptops">💻 لابتوب</a></li>
-                <li><a href="#pc-section">PC مجمّع</a></li>
-                <li><a href="#builder">🔧 تجميع PC</a></li>
+                <li><a href="#monitors">الشاشات</a></li>
+                <li><a href="#laptops">اللابتوبات</a></li>
+                <li><a href="#pc-section">أجهزة PC</a></li>
+                <li><a href="#builder">تجميع PC</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="nav-btn" id="theme-toggle">🌙</button>
-                <button class="nav-btn" id="compare-btn"><i class="fas fa-balance-scale"></i><span class="cart-badge" id="compare-badge" style="display:none">0</span></button>
-                <button class="nav-btn" id="wishlist-btn"><i class="fas fa-heart"></i><span class="cart-badge" id="wishlist-badge" style="display:none">0</span></button>
-                <button class="nav-btn" id="cart-nav-btn"><i class="fas fa-shopping-cart"></i><span class="cart-badge" id="cart-badge" style="display:none">0</span></button>
-                <button class="hamburger" id="hamburger-btn"><i class="fas fa-bars"></i></button>
+                <button type="button" class="nav-btn" id="theme-toggle" aria-label="تفعيل الوضع الفاتح" title="تغيير المظهر"><i class="fa-regular fa-sun" aria-hidden="true"></i></button>
+                <button type="button" class="nav-btn" id="compare-btn" aria-label="المقارنة" title="المقارنة"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i><span class="cart-badge" id="compare-badge" style="display:none" aria-hidden="true">0</span></button>
+                <button type="button" class="nav-btn" id="wishlist-btn" aria-label="المفضلة" title="المفضلة"><i class="fa-regular fa-heart" aria-hidden="true"></i><span class="cart-badge" id="wishlist-badge" style="display:none" aria-hidden="true">0</span></button>
+                <button type="button" class="nav-btn cart-nav-btn" id="cart-nav-btn" aria-label="السلة" title="السلة"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i><span class="cart-badge" id="cart-badge" style="display:none" aria-hidden="true">0</span></button>
+                <button type="button" class="hamburger nav-btn" id="hamburger-btn" aria-label="فتح القائمة" aria-expanded="false" aria-controls="main-navigation"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
             </div>
         </div>
     </nav>
 
     <!-- 🔐 نافذة دخول المسؤول السري -->
-    <div class="admin-login-overlay" id="admin-login-overlay">
+    <div class="admin-login-overlay" id="admin-login-overlay" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
         <div class="admin-login-card">
-            <button class="admin-login-close" id="admin-login-close">&times;</button>
+            <button class="admin-login-close" id="admin-login-close" aria-label="إغلاق نافذة دخول المسؤول">&times;</button>
             <div class="admin-icon"><i class="fas fa-shield-halved"></i></div>
-            <h3>🔐 دخول المسؤول</h3>
+            <h3 id="admin-login-title">🔐 دخول المسؤول</h3>
             <div class="auth-step active" id="admin-step-request">
                 <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:16px;">تحقق سريع عبر Telegram</p>
                 <button class="telegram-btn" id="admin-request-code-btn"><i class="fab fa-telegram-plane"></i> طلب كود التحقق</button>
@@ -315,61 +323,116 @@
         </div>
     </div>
 
-    <!-- PRODUCT MODAL & REST OF PAGE -->
-    <section class="hero" id="home">
-        <div class="container"><h1>أفضل <span>الأجهزة</span> بأسعار تنافسية</h1><p>شاشات • لابتوبات • قطع PC • تجميع جهازك المثالي</p><div class="hero-btns"><a href="#monitors" class="btn btn-primary"><i class="fas fa-desktop"></i> الشاشات</a><a href="#builder" class="btn btn-outline"><i class="fas fa-tools"></i> تجميع PC</a></div></div>
-    </section>
-
-    <section id="monitors" class="section">
-        <div class="container">
-            <div class="section-header"><h2><i class="fas fa-desktop"></i> الشاشات</h2><p>شاشات عالية الدقة للألعاب والعمل</p><div class="line"></div></div>
-            <div class="monitor-tabs" id="monitor-tabs">
-                <button class="monitor-tab active" data-filter="all">🖥️ الكل</button>
-                <button class="monitor-tab" data-filter="monitor">🖥️ عادية</button>
-                <button class="monitor-tab" data-filter="frameless">🖥️ Frameless</button>
-                <button class="monitor-tab" data-filter="curved">🖥️ Curved</button>
-                <button class="monitor-tab" data-filter="gaming">🎮 Gaming</button>
+    <main id="main-content">
+        <section class="hero" id="home" aria-labelledby="hero-title">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <span class="hero-eyebrow"><span></span> أهلاً بك في Azzam Technology</span>
+                    <h1 id="hero-title">تقنيتك المناسبة<br><span>تبدأ من هنا.</span></h1>
+                    <p>من شاشة تناسب يومك إلى تجميعة تحلم بها، كل اللي تحتاجه لعالمك الرقمي في مكان واحد.</p>
+                    <div class="hero-btns">
+                        <a href="#browse" class="btn btn-primary">اكتشف المنتجات <i class="fa-solid fa-arrow-left" aria-hidden="true"></i></a>
+                        <a href="#builder" class="btn btn-outline">ابنِ تجميعتك <i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="hero-notes" aria-label="أقسام المتجر">
+                        <span><i class="fa-solid fa-display" aria-hidden="true"></i> شاشات</span>
+                        <span><i class="fa-solid fa-laptop" aria-hidden="true"></i> لابتوبات</span>
+                        <span><i class="fa-solid fa-microchip" aria-hidden="true"></i> تجميعات PC</span>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img src="images/tech-workspace.webp" width="1376" height="768" alt="مساحة عمل تضم شاشة ولابتوب وجهاز كمبيوتر" fetchpriority="high">
+                    <div class="hero-visual-label"><span class="visual-label-icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span><span><strong>مساحتك، على طريقتك</strong><small>اختيارات تناسب احتياجك</small></span></div>
+                    <span class="hero-image-tag" dir="ltr">YOUR TECH SPACE <b>01 / 04</b></span>
+                </div>
             </div>
-            <div class="products-grid" id="monitors-grid"></div>
-        </div>
-    </section>
+        </section>
 
-    <section id="laptops" class="section section-alt"><div class="container"><div class="section-header"><h2><i class="fas fa-laptop"></i> اللابتوب</h2><p>لابتوبات أصلية</p><div class="line"></div></div><div class="products-grid" id="laptops-grid"></div></div></section>
-    <section id="pc-section" class="section"><div class="container"><div class="section-header"><h2><i class="fas fa-computer"></i> PC مجمّع</h2><p>جاهزة بأفضل المواصفات</p><div class="line"></div></div><div class="products-grid" id="pc-grid"></div></div></section>
-
-    <section id="builder" class="section section-alt">
-        <div class="container">
-            <div class="section-header"><h2><i class="fas fa-microchip"></i> تجميع PC</h2><p>اختر كل قطعة وشاهد السعر</p><div class="line"></div></div>
-            <div class="pc-builder-grid">
-                <div class="pc-components" id="pc-builder-components"></div>
-                <div class="pc-summary" id="pc-summary"><h3>📋 ملخص</h3><ul id="pc-summary-list"></ul><div class="pc-total" id="pc-total-price">0 ج.م</div><button class="btn btn-primary" id="add-pc-to-cart" style="width:100%;">إضافة للسلة</button><button class="btn btn-outline" id="reset-builder" style="width:100%;margin-top:8px;border-color:var(--accent);color:var(--accent);">إعادة تعيين</button></div>
+        <section class="browse-section" id="browse" aria-labelledby="browse-title">
+            <div class="container">
+                <div class="browse-heading">
+                    <div><span class="section-kicker">تسوّق حسب احتياجك</span><h2 id="browse-title">اكتشف عالمك التقني<span class="heading-dot">.</span></h2><p>كل قسم يقرّبك خطوة من الجهاز المناسب لك.</p></div>
+                    <a href="#monitors" class="text-link">تصفّح الأقسام <i class="fa-solid fa-arrow-left" aria-hidden="true"></i></a>
+                </div>
+                <div class="category-grid">
+                    <a class="category-card" href="#monitors"><span class="category-icon"><i class="fa-solid fa-display" aria-hidden="true"></i></span><span class="category-copy"><strong>الشاشات</strong><small>صورة أوضح لكل لحظة</small></span><i class="fa-solid fa-arrow-left category-arrow" aria-hidden="true"></i></a>
+                    <a class="category-card" href="#laptops"><span class="category-icon"><i class="fa-solid fa-laptop" aria-hidden="true"></i></span><span class="category-copy"><strong>اللابتوبات</strong><small>شغلك معك أينما كنت</small></span><i class="fa-solid fa-arrow-left category-arrow" aria-hidden="true"></i></a>
+                    <a class="category-card" href="#pc-section"><span class="category-icon"><i class="fa-solid fa-computer" aria-hidden="true"></i></span><span class="category-copy"><strong>أجهزة PC</strong><small>تجميعات جاهزة لك</small></span><i class="fa-solid fa-arrow-left category-arrow" aria-hidden="true"></i></a>
+                    <a class="category-card" href="#builder"><span class="category-icon"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i></span><span class="category-copy"><strong>تجميع جهازك</strong><small>اختيارات على مقاسك</small></span><i class="fa-solid fa-arrow-left category-arrow" aria-hidden="true"></i></a>
+                </div>
+                <div class="search-panel" role="search">
+                    <div class="search-copy"><span class="search-icon"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></span><div><strong>بتدور على حاجة معينة؟</strong><small>ابحث بالاسم، الماركة أو المواصفات</small></div></div>
+                    <div class="search-field"><label class="sr-only" for="product-search">ابحث في المنتجات</label><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="search" id="product-search" placeholder="مثلاً: شاشة أو Dell..." autocomplete="off"><button type="button" id="clear-search" aria-label="مسح البحث" hidden><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
+                </div>
+                <p class="search-status" id="search-status" role="status" aria-live="polite"></p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <div class="product-modal-overlay" id="product-modal-overlay">
+        <section id="monitors" class="section product-section" aria-labelledby="monitors-title">
+            <div class="container">
+                <div class="section-header"><div><span class="section-kicker">وضوح يصنع الفرق</span><h2 id="monitors-title">الشاشات<span class="heading-dot">.</span></h2><p>للعمل، اللعب، وكل ما بينهما.</p></div><span class="section-count" id="monitors-count"></span></div>
+                <div class="monitor-tabs" id="monitor-tabs" aria-label="تصفية الشاشات">
+                    <button type="button" class="monitor-tab active" data-filter="all" aria-pressed="true">كل الشاشات</button>
+                    <button type="button" class="monitor-tab" data-filter="monitor" aria-pressed="false">عادية</button>
+                    <button type="button" class="monitor-tab" data-filter="frameless" aria-pressed="false">بدون إطار</button>
+                    <button type="button" class="monitor-tab" data-filter="curved" aria-pressed="false">منحنية</button>
+                    <button type="button" class="monitor-tab" data-filter="gaming" aria-pressed="false">للألعاب</button>
+                </div>
+                <div class="products-grid" id="monitors-grid"></div>
+            </div>
+        </section>
+
+        <section id="laptops" class="section product-section section-alt" aria-labelledby="laptops-title">
+            <div class="container"><div class="section-header"><div><span class="section-kicker">إنجازك في كل مكان</span><h2 id="laptops-title">اللابتوبات<span class="heading-dot">.</span></h2><p>اختيارات تناسب أسلوب عملك وحياتك.</p></div><span class="section-count" id="laptops-count"></span></div><div class="products-grid" id="laptops-grid"></div></div>
+        </section>
+        <section id="pc-section" class="section product-section" aria-labelledby="pc-title">
+            <div class="container"><div class="section-header"><div><span class="section-kicker">جاهز للانطلاق</span><h2 id="pc-title">أجهزة PC المجمّعة<span class="heading-dot">.</span></h2><p>اكتشف الأجهزة الجاهزة للاستخدام.</p></div><span class="section-count" id="pc-count"></span></div><div class="products-grid" id="pc-grid"></div></div>
+        </section>
+
+        <section id="builder" class="section builder-section" aria-labelledby="builder-title">
+            <div class="container">
+                <div class="builder-heading"><div><span class="section-kicker">جهاز يشبه طموحك</span><h2 id="builder-title">تجميعك، اختيارك<span class="heading-dot">.</span></h2><p>اختر القطع المناسبة لك وتابع التكلفة خطوة بخطوة.</p></div><span class="builder-heading-icon"><i class="fa-solid fa-microchip" aria-hidden="true"></i></span></div>
+                <div class="pc-builder-grid">
+                    <div class="pc-components" id="pc-builder-components"></div>
+                    <div class="pc-summary" id="pc-summary"><div class="summary-heading"><div><span class="section-kicker">تفاصيل اختيارك</span><h3>ملخص التجميعة</h3></div><i class="fa-solid fa-list-check" aria-hidden="true"></i></div><p class="summary-hint" id="builder-hint">اختر ٣ قطع على الأقل لإضافة التجميعة للسلة.</p><ul id="pc-summary-list"></ul><div class="pc-total" id="pc-total-price">0 ج.م</div><button type="button" class="btn btn-primary" id="add-pc-to-cart">إضافة للسلة <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i></button><button type="button" class="btn builder-reset" id="reset-builder">إعادة تعيين</button></div>
+                </div>
+            </div>
+        </section>
+        <section class="help-section">
+            <div class="container help-inner"><div><span class="section-kicker">لسه محتار؟</span><h2>خلّينا نساعدك تختار صح.</h2><p>تواصل معنا لو عندك سؤال عن الأجهزة أو التجميع.</p></div><a class="btn btn-primary" href="https://wa.me/201025555207" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> تواصل معنا</a></div>
+        </section>
+    </main>
+
+    <div class="product-modal-overlay" id="product-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-product-title">
         <div class="product-modal">
-            <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+            <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="إغلاق تفاصيل المنتج">&times;</button>
             <div class="modal-product-image" id="modal-product-image"></div>
             <div class="modal-product-details" id="modal-product-details"></div>
         </div>
     </div>
 
+    <div class="drawer-overlay" id="drawer-overlay" hidden>
+        <aside class="store-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" tabindex="-1">
+            <div class="drawer-header"><div><span class="section-kicker">AZZAM TECHNOLOGY</span><h2 id="drawer-title"></h2></div><button type="button" class="drawer-close" id="drawer-close" aria-label="إغلاق النافذة"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
+            <div class="drawer-content" id="drawer-content"></div>
+            <div class="drawer-footer" id="drawer-footer"></div>
+        </aside>
+    </div>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col"><h4>عن الشركة</h4><p>Azzam Technology تقدم أفضل الأجهزة وخدمات التجميع والضمان الموثوق</p></div>
-                <div class="footer-col"><h4>روابط سريعة</h4><a href="#home">الرئيسية</a><a href="#monitors">شاشات</a><a href="#laptops">لابتوب</a><a href="#builder">تجميع PC</a></div>
-                <div class="footer-col"><h4>اتصل بنا</h4><p>📍 مول البستان - القاهرة</p><p>📞 01025555207</p></div>
-                <div class="footer-col"><h4>خدمات</h4><a href="chat-bot.html">المساعد الذكي</a></div>
+                <div class="footer-col footer-brand"><div class="footer-wordmark" dir="ltr">AZZAM <span>TECHNOLOGY</span></div><p>مساحتك لكل ما يخص أجهزة الكمبيوتر، الشاشات والتجميع.</p><a href="chat-bot.html" class="footer-assist"><i class="fa-solid fa-robot" aria-hidden="true"></i> اسأل المساعد</a></div>
+                <div class="footer-col"><h4>تصفّح المتجر</h4><a href="#monitors">الشاشات</a><a href="#laptops">اللابتوبات</a><a href="#pc-section">أجهزة PC</a><a href="#builder">تجميع جهازك</a></div>
+                <div class="footer-col"><h4>نقدر نساعدك؟</h4><a href="chat-bot.html">المساعد الذكي</a><a href="https://wa.me/201025555207" target="_blank" rel="noopener noreferrer">تواصل عبر واتساب</a></div>
+                <div class="footer-col"><h4>تواصل معنا</h4><p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> مول البستان - القاهرة</p><a href="tel:01025555207"><i class="fa-solid fa-phone" aria-hidden="true"></i> <span dir="ltr">010 2555 5207</span></a></div>
             </div>
-            <div style="text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);"><p>&copy; 2026 Azzam Technology</p>
-            <p>Designed by <a href="https://wa.me/+201010184778" style="color:var(--accent);">Mr.Developer</a></p></div>
+            <div class="footer-bottom"><p>&copy; 2026 Azzam Technology. جميع الحقوق محفوظة.</p><p>Designed by <a href="https://wa.me/+201010184778" target="_blank" rel="noopener noreferrer">Mr.Developer</a></p></div>
         </div>
     </footer>
 
-    <div class="toast" id="toast"></div>
-    <a href="chat-bot.html" style="position:fixed;bottom:28px;left:28px;z-index:999;background:var(--gradient-accent);color:#fff;padding:12px 22px;border-radius:50px;text-decoration:none;font-weight:700;font-size:0.9rem;box-shadow:0 8px 24px rgba(230,57,70,0.4);"><i class="fas fa-robot"></i> المساعد</a>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <a href="chat-bot.html" class="floating-assistant"><i class="fa-solid fa-robot" aria-hidden="true"></i> <span>المساعد</span></a>
 
     <script>
         (function() {
@@ -387,9 +450,9 @@
             const $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
 
             let data = loadProducts();
-            let cart = JSON.parse(localStorage.getItem('azzam_cart_v3') || '[]');
-            let wishlist = JSON.parse(localStorage.getItem('azzam_wishlist_v1') || '[]');
-            let comparison = JSON.parse(localStorage.getItem('azzam_comparison_v1') || '[]');
+            let cart = readList('azzam_cart_v3');
+            let wishlist = readList('azzam_wishlist_v1');
+            let comparison = readList('azzam_comparison_v1');
             let builder = {};
             let currentTheme = localStorage.getItem('azzam_theme') || 'dark';
             let currentMonitorFilter = 'all';
@@ -412,7 +475,6 @@
             }
 
             function startSecretPress(e) {
-                if (e.type === 'touchstart') e.preventDefault();
                 if (isPressing) return;
                 isPressing = true;
                 pressStart = Date.now();
@@ -542,88 +604,607 @@
                 }
             }
 
-            // ==================== PRODUCT FUNCTIONS (كما هي) ====================
-            function loadProducts() {
-                const stored = localStorage.getItem(STORAGE_KEY);
-                if (!stored) return { laptops:[], monitors:[], frameless:[], curved:[], gaming:[], prebuiltPCs:[], pcComponents:{} };
+            // ==================== STOREFRONT DATA & INTERACTIONS ====================
+            const PLACEHOLDER_IMAGE = 'images/product-placeholder.svg';
+            const drawerOverlay = $('#drawer-overlay');
+            const drawerContent = $('#drawer-content');
+            const drawerFooter = $('#drawer-footer');
+            const searchInput = $('#product-search');
+            let searchQuery = '';
+            let openDrawerType = null;
+            let drawerTrigger = null;
+            let productModalTrigger = null;
+            let productModalFocusRef = null;
+
+            function readList(key) {
                 try {
-                    const all = JSON.parse(stored);
-                    const pcComponents = {
-                        cpu:{label:'🧠 المعالج',icon:'fa-microchip',options:[]}, motherboard:{label:'📟 اللوحة الأم',icon:'fa-server',options:[]},
-                        gpu:{label:'🎮 كرت الشاشة',icon:'fa-tv',options:[]}, ram:{label:'🧮 الذاكرة',icon:'fa-memory',options:[]},
-                        storage:{label:'💾 التخزين',icon:'fa-hdd',options:[]}, psu:{label:'⚡ مزود الطاقة',icon:'fa-bolt',options:[]},
-                        case:{label:'📦 الصندوق',icon:'fa-desktop',options:[]}, monitor:{label:'🖥️ الشاشة',icon:'fa-desktop',options:[]},
-                        cooling:{label:'❄️ التبريد',icon:'fa-snowflake',options:[]}, keyboard:{label:'⌨️ لوحة مفاتيح',icon:'fa-keyboard',options:[]},
-                        mouse:{label:'🖱️ فأرة',icon:'fa-mouse-pointer',options:[]}, headset:{label:'🎧 سماعة',icon:'fa-headphones',options:[]},
-                        speakers:{label:'🔊 سماعات',icon:'fa-volume-high',options:[]}, wifi_card:{label:'📶 كارت الشبكة',icon:'fa-wifi',options:[]}
+                    const value = JSON.parse(localStorage.getItem(key) || '[]');
+                    return Array.isArray(value) ? value.filter(item => item && typeof item === 'object') : [];
+                } catch (error) {
+                    console.warn('تعذر قراءة البيانات المحلية:', key);
+                    return [];
+                }
+            }
+
+            function loadProducts() {
+                const all = readList(STORAGE_KEY);
+                const pcComponents = {
+                    cpu: { label: 'المعالج', icon: 'fa-microchip', options: [] },
+                    motherboard: { label: 'اللوحة الأم', icon: 'fa-server', options: [] },
+                    gpu: { label: 'كرت الشاشة', icon: 'fa-tv', options: [] },
+                    ram: { label: 'الذاكرة', icon: 'fa-memory', options: [] },
+                    storage: { label: 'التخزين', icon: 'fa-hard-drive', options: [] },
+                    psu: { label: 'مزود الطاقة', icon: 'fa-bolt', options: [] },
+                    case: { label: 'الصندوق', icon: 'fa-desktop', options: [] },
+                    monitor: { label: 'الشاشة', icon: 'fa-display', options: [] },
+                    cooling: { label: 'التبريد', icon: 'fa-snowflake', options: [] },
+                    keyboard: { label: 'لوحة المفاتيح', icon: 'fa-keyboard', options: [] },
+                    mouse: { label: 'الفأرة', icon: 'fa-computer-mouse', options: [] },
+                    headset: { label: 'السماعة', icon: 'fa-headphones', options: [] },
+                    speakers: { label: 'السماعات', icon: 'fa-volume-high', options: [] },
+                    wifi_card: { label: 'كارت الشبكة', icon: 'fa-wifi', options: [] }
+                };
+                all.filter(product => product.type === 'component').forEach(component => {
+                    if (pcComponents[component.componentType]) {
+                        pcComponents[component.componentType].options.push(component);
+                    }
+                });
+                return {
+                    laptops: all.filter(product => product.type === 'laptop'),
+                    monitors: all.filter(product => product.type === 'monitor'),
+                    frameless: all.filter(product => product.type === 'frameless'),
+                    curved: all.filter(product => product.type === 'curved'),
+                    gaming: all.filter(product => product.type === 'gaming'),
+                    prebuiltPCs: all.filter(product => product.type === 'pc'),
+                    pcComponents
+                };
+            }
+
+            function escapeHtml(value) {
+                return String(value ?? '').replace(/[&<>"']/g, character => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+                })[character]);
+            }
+
+            function imageSource(value) {
+                if (typeof value !== 'string' || !value.trim()) return PLACEHOLDER_IMAGE;
+                const source = value.trim();
+                // Admin uploads are stored as image data URLs (including SVG and BMP).
+                if (/^data:image\/[a-z0-9.+-]+;base64,/i.test(source)) return source;
+                try {
+                    const url = new URL(source, window.location.href);
+                    return ['http:', 'https:'].includes(url.protocol) ? source : PLACEHOLDER_IMAGE;
+                } catch (error) {
+                    return PLACEHOLDER_IMAGE;
+                }
+            }
+
+            function attachImageFallbacks(container) {
+                container.querySelectorAll('img[data-product-image]').forEach(image => {
+                    const fallback = () => {
+                        if (!image.src.endsWith('/' + PLACEHOLDER_IMAGE)) image.src = PLACEHOLDER_IMAGE;
                     };
-                    all.filter(p=>p.type==='component').forEach(c=>{if(pcComponents[c.componentType])pcComponents[c.componentType].options.push({name:c.name,price:c.price,image:c.image||'',id:c.id});});
-                    return { laptops:all.filter(p=>p.type==='laptop'), monitors:all.filter(p=>p.type==='monitor'), frameless:all.filter(p=>p.type==='frameless'), curved:all.filter(p=>p.type==='curved'), gaming:all.filter(p=>p.type==='gaming'), prebuiltPCs:all.filter(p=>p.type==='pc'), pcComponents };
-                } catch(e) { return { laptops:[],monitors:[],frameless:[],curved:[],gaming:[],prebuiltPCs:[],pcComponents:{} }; }
+                    image.addEventListener('error', fallback, { once: true });
+                    if (image.complete && image.naturalWidth === 0) fallback();
+                });
             }
 
-            function formatPrice(p) { return p.toLocaleString('en-US') + ' ج.م'; }
-            function showToast(msg) { const t=$('#toast'); t.textContent=msg; t.style.display='block'; clearTimeout(t._t); t._t=setTimeout(()=>t.style.display='none',2800); }
-            function getTypeBadge(type) { const b={monitor:'badge-monitor',frameless:'badge-frameless',curved:'badge-curved',gaming:'badge-gaming'}; return b[type]||''; }
-            function getTypeLabel(type) { const l={monitor:'شاشة',frameless:'Frameless',curved:'Curved',gaming:'Gaming'}; return l[type]||type; }
-
-            function openModal(p) {
-                const overlay = document.getElementById('product-modal-overlay');
-                const inWishlist = wishlist.some(w => w.id === p.id);
-                const inCart = cart.find(i => i.id === p.id);
-                const inComparison = comparison.some(c => c.id === p.id);
-                document.getElementById('modal-product-image').innerHTML = `<img src="${p.image || 'https://via.placeholder.com/600x400'}" alt="${p.name}" loading="lazy">`;
-                const specs = p.specs ? Object.entries(p.specs).map(([k,v]) => `<span class="modal-spec-tag">${k}: ${v}</span>`).join('') : '';
-                document.getElementById('modal-product-details').innerHTML = `<div class="modal-brand">${p.brand || 'Azzam Technology'}</div><h2>${p.name}</h2><div class="modal-price">${formatPrice(p.price)}</div>${p.oldPrice?`<div style="color:var(--text-muted);text-decoration:line-through;">${formatPrice(p.oldPrice)}</div>`:''}${p.discount?`<div style="color:#22c55e;font-weight:700;">🔥 خصم ${p.discount}%</div>`:''}${p.description?`<p style="color:var(--text-secondary);">${p.description}</p>`:''}${specs?`<div class="modal-specs-grid">${specs}</div>`:''}<div class="modal-actions"><div class="modal-actions-row"><button class="btn btn-primary" id="modal-add-cart" style="flex:1;"><i class="fas fa-cart-plus"></i> ${inCart?'✓ في السلة':'إضافة للسلة'}</button><button class="btn btn-whatsapp" id="modal-buy-now" style="flex:1;"><i class="fab fa-whatsapp"></i> شراء مباشر</button></div><div class="modal-actions-row"><button class="btn btn-outline" id="modal-wishlist" style="flex:1;"><i class="${inWishlist?'fas':'far'} fa-heart"></i> ${inWishlist?'محفوظ':'المفضلة'}</button><button class="btn btn-outline" id="modal-compare" style="flex:1;"><i class="fas fa-balance-scale"></i> ${inComparison?'بالقائمة':'مقارنة'}</button></div></div>`;
-                document.getElementById('modal-add-cart').addEventListener('click', () => { addToCart(p); closeProductModal(); });
-                document.getElementById('modal-buy-now').addEventListener('click', () => { buyNow(p); });
-                document.getElementById('modal-wishlist').addEventListener('click', () => { toggleWishlist(p); closeProductModal(); });
-                document.getElementById('modal-compare').addEventListener('click', () => { toggleComparison(p); closeProductModal(); });
-                overlay.classList.add('open');
+            function formatPrice(price) {
+                const value = Number(price);
+                return (Number.isFinite(value) ? value : 0).toLocaleString('en-US') + ' ج.م';
             }
 
-            function closeProductModal() { document.getElementById('product-modal-overlay').classList.remove('open'); }
-            function buyNow(p) { window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`🛒 طلب شراء:\n📦 ${p.name}\n💰 ${formatPrice(p.price)}`)}`, '_blank'); }
+            function showToast(message) {
+                const toast = $('#toast');
+                toast.textContent = message;
+                toast.style.display = 'block';
+                clearTimeout(toast._timer);
+                toast._timer = setTimeout(() => { toast.style.display = 'none'; }, 2800);
+            }
 
-            function createProductCard(p) {
-                const inWishlist=wishlist.some(w=>w.id===p.id), inComparison=comparison.some(c=>c.id===p.id), inCart=cart.find(i=>i.id===p.id);
-                const card=document.createElement('div'); card.className='product-card';
-                card.innerHTML=`<div class="product-card-image"><img src="${p.image||'https://via.placeholder.com/400x260'}" alt="${p.name}" loading="lazy"><div class="product-badges">${getTypeBadge(p.type)?`<span class="badge ${getTypeBadge(p.type)}">${getTypeLabel(p.type)}</span>`:''}${p.discount?`<span class="badge badge-sale">-${p.discount}%</span>`:''}</div><div class="product-quick-actions"><button class="quick-action-btn ${inWishlist?'active':''}" data-action="wishlist" data-id="${p.id}"><i class="fas fa-heart"></i></button><button class="quick-action-btn ${inComparison?'active':''}" data-action="compare" data-id="${p.id}"><i class="fas fa-balance-scale"></i></button></div></div><div class="product-card-body"><div class="brand">${p.brand||'Azzam Tech'}</div><h3>${p.name}</h3><div class="specs-pills">${p.specs?Object.entries(p.specs).slice(0,3).map(([k,v])=>`<span class="spec-pill">${k}:${v}</span>`).join(''):''}</div><div class="product-price-row"><span class="product-price">${formatPrice(p.price)}</span>${p.oldPrice?`<span class="product-price-old">${formatPrice(p.oldPrice)}</span>`:''}${p.discount?`<span class="product-discount">وفر ${p.discount}%</span>`:''}</div><button class="add-to-cart-btn ${inCart?'in-cart':''}" data-id="${p.id}">${inCart?'✓ في السلة':'إضافة للسلة'}</button></div>`;
-                card.querySelector('.add-to-cart-btn').addEventListener('click',e=>{e.stopPropagation();addToCart(p);});
-                card.querySelectorAll('.quick-action-btn').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();btn.dataset.action==='wishlist'?toggleWishlist(p,btn):toggleComparison(p,btn);}));
-                card.addEventListener('click',e=>{if(!e.target.closest('button'))openModal(p);});
+            function getTypeBadge(type) {
+                return { monitor: 'badge-monitor', frameless: 'badge-frameless', curved: 'badge-curved', gaming: 'badge-gaming' }[type] || '';
+            }
+            function getTypeLabel(type) {
+                return { monitor: 'شاشة', frameless: 'بدون إطار', curved: 'منحنية', gaming: 'للألعاب', laptop: 'لابتوب', pc: 'جهاز PC' }[type] || '';
+            }
+            function normalizeSearch(value) {
+                return String(value ?? '').normalize('NFKC').toLocaleLowerCase().trim()
+                    .replace(/[\u064b-\u065f\u0670\u0640]/g, '')
+                    .replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه');
+            }
+            function matchesSearch(product) {
+                const query = normalizeSearch(searchQuery);
+                if (!query) return true;
+                const aliases = {
+                    monitor: 'شاشة شاشات monitor', frameless: 'شاشة شاشات بدون إطار frameless',
+                    curved: 'شاشة شاشات منحنية curved', gaming: 'شاشة شاشات الألعاب gaming',
+                    laptop: 'لابتوب لابتوبات لاب laptop', pc: 'كمبيوتر كمبيوترات أجهزة جهاز تجميعة pc'
+                };
+                const specs = product.specs && typeof product.specs === 'object' ? Object.entries(product.specs).flat() : [];
+                return [product.name, product.brand, product.type, getTypeLabel(product.type), aliases[product.type], ...specs]
+                    .some(value => normalizeSearch(value).includes(query));
+            }
+            function monitorProducts(filter = currentMonitorFilter) {
+                if (filter === 'all') return [...data.monitors, ...data.frameless, ...data.curved, ...data.gaming];
+                return { monitor: data.monitors, frameless: data.frameless, curved: data.curved, gaming: data.gaming }[filter] || [];
+            }
+            function updateSearchStatus() {
+                const status = $('#search-status');
+                if (!normalizeSearch(searchQuery)) {
+                    status.textContent = '';
+                    return;
+                }
+                const count = [...monitorProducts(), ...data.laptops, ...data.prebuiltPCs].filter(matchesSearch).length;
+                status.textContent = `عدد النتائج الظاهرة: ${count} — البحث عن «${searchQuery.trim()}»`;
+            }
+            function clearSearch() {
+                searchInput.value = '';
+                searchQuery = '';
+                $('#clear-search').hidden = true;
+                renderAll();
+                searchInput.focus();
+            }
+
+            function createProductCard(product) {
+                const inWishlist = wishlist.some(item => item.id === product.id);
+                const inComparison = comparison.some(item => item.id === product.id);
+                const inCart = cart.some(item => item.id === product.id);
+                const name = escapeHtml(product.name || 'منتج');
+                const specs = product.specs && typeof product.specs === 'object' ? Object.entries(product.specs).slice(0, 3) : [];
+                const card = document.createElement('article');
+                card.className = 'product-card';
+                card.dataset.productId = String(product.id);
+                card.innerHTML = `
+                    <div class="product-card-image">
+                        <button type="button" class="product-image-button" aria-label="عرض تفاصيل ${name}"><img src="${escapeHtml(imageSource(product.image))}" alt="${name}" loading="lazy" data-product-image></button>
+                        <div class="product-badges">${getTypeBadge(product.type) ? `<span class="badge ${getTypeBadge(product.type)}">${escapeHtml(getTypeLabel(product.type))}</span>` : ''}${product.discount ? `<span class="badge badge-sale">-${escapeHtml(product.discount)}%</span>` : ''}</div>
+                        <div class="product-quick-actions">
+                            <button type="button" class="quick-action-btn ${inWishlist ? 'active' : ''}" data-action="wishlist" aria-label="${inWishlist ? 'إزالة من' : 'إضافة إلى'} المفضلة: ${name}" aria-pressed="${inWishlist}"><i class="${inWishlist ? 'fa-solid' : 'fa-regular'} fa-heart" aria-hidden="true"></i></button>
+                            <button type="button" class="quick-action-btn ${inComparison ? 'active' : ''}" data-action="compare" aria-label="${inComparison ? 'إزالة من' : 'إضافة إلى'} المقارنة: ${name}" aria-pressed="${inComparison}"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-card-body">
+                        <div class="brand">${escapeHtml(product.brand || 'Azzam Technology')}</div>
+                        <h3><button type="button" class="product-title-button">${name}</button></h3>
+                        <div class="specs-pills">${specs.map(([key, value]) => `<span class="spec-pill">${escapeHtml(key)}: ${escapeHtml(value)}</span>`).join('')}</div>
+                        <div class="product-price-row"><span class="product-price">${formatPrice(product.price)}</span>${product.oldPrice ? `<span class="product-price-old">${formatPrice(product.oldPrice)}</span>` : ''}${product.discount ? `<span class="product-discount">وفر ${escapeHtml(product.discount)}%</span>` : ''}</div>
+                        <button type="button" class="add-to-cart-btn ${inCart ? 'in-cart' : ''}"><i class="fa-solid ${inCart ? 'fa-check' : 'fa-bag-shopping'}" aria-hidden="true"></i> ${inCart ? 'أضف قطعة أخرى' : 'إضافة للسلة'}</button>
+                    </div>`;
+                attachImageFallbacks(card);
+                card.querySelector('.product-image-button').addEventListener('click', () => openModal(product));
+                card.querySelector('.product-title-button').addEventListener('click', () => openModal(product));
+                card.querySelector('.add-to-cart-btn').addEventListener('click', () => addToCart(product));
+                card.querySelector('[data-action="wishlist"]').addEventListener('click', () => toggleWishlist(product));
+                card.querySelector('[data-action="compare"]').addEventListener('click', () => toggleComparison(product));
+                card.addEventListener('click', event => {
+                    if (!event.target.closest('button')) openModal(product);
+                });
                 return card;
             }
 
-            function renderGrid(id,arr) { const g=document.getElementById(id); if(!g)return; g.innerHTML=''; arr.forEach(p=>g.appendChild(createProductCard(p))); if(arr.length===0) g.innerHTML='<div style="text-align:center;padding:60px;color:var(--text-muted);grid-column:1/-1;">لا توجد منتجات</div>'; }
-            function renderAll() { renderMonitors(currentMonitorFilter); renderGrid('laptops-grid',data.laptops); renderGrid('pc-grid',data.prebuiltPCs); renderBuilder(); updateAllBadges(); }
-            function renderMonitors(filter='all') { currentMonitorFilter=filter; let arr=[]; if(filter==='all') arr=[...data.monitors,...data.frameless,...data.curved,...data.gaming]; else if(filter==='monitor') arr=data.monitors; else if(filter==='frameless') arr=data.frameless; else if(filter==='curved') arr=data.curved; else if(filter==='gaming') arr=data.gaming; renderGrid('monitors-grid',arr); $$('.monitor-tab').forEach(t=>{t.classList.remove('active');if(t.dataset.filter===filter)t.classList.add('active');}); }
-            function renderBuilder() { const c=$('#pc-builder-components'); if(!c)return; c.innerHTML=''; const hasAny=Object.values(data.pcComponents).some(comp=>comp.options.length>0); if(!hasAny){c.innerHTML='<div style="text-align:center;padding:40px;">لا توجد قطع</div>';updateSummary();return;} Object.entries(data.pcComponents).forEach(([key,comp])=>{if(!comp.options.length)return;const sel=builder[key];const w=document.createElement('div');w.style.marginBottom='8px';w.innerHTML=`<div class="pc-select ${sel?'selected':''}" data-comp="${key}"><div class="circle"><i class="fas ${comp.icon}"></i></div><div style="flex:1"><div style="font-weight:700">${comp.label}</div><div style="font-size:0.8rem;color:var(--text-muted)">${sel?.name||'اختر...'}</div></div><div style="font-weight:700;color:var(--accent)">${sel?formatPrice(sel.price):''}</div></div><div class="pc-options" id="opts-${key}" style="display:none;background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-md);overflow:hidden;max-height:260px;overflow-y:auto"></div>`;c.appendChild(w);const opts=w.querySelector('.pc-options');comp.options.forEach(o=>{const d=document.createElement('div');d.style.cssText='padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;border-bottom:1px solid var(--border-light);font-size:0.85rem';d.innerHTML=`<span>${o.name}</span><span style="color:var(--accent);font-weight:700">${formatPrice(o.price)}</span>`;d.addEventListener('click',e=>{e.stopPropagation();builder[key]=o;renderBuilder();updateSummary();});opts.appendChild(d);});w.querySelector('.pc-select').addEventListener('click',e=>{e.stopPropagation();$$('.pc-options').forEach(x=>{if(x!==opts)x.style.display='none';});opts.style.display=opts.style.display==='block'?'none':'block';});});updateSummary();}
-            function updateSummary() { const l=$('#pc-summary-list'),t=$('#pc-total-price'); if(!l||!t)return; let total=0; l.innerHTML=''; Object.entries(data.pcComponents).forEach(([key,comp])=>{const sel=builder[key]; const li=document.createElement('li'); li.style.cssText='display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-light);font-size:0.85rem'; li.innerHTML=sel?`<span>${comp.label}: <strong>${sel.name}</strong></span><span style="color:var(--accent)">${formatPrice(sel.price)}</span>`:`<span style="color:var(--text-muted)">${comp.label}: اختر...</span><span>-</span>`; if(sel)total+=sel.price; l.appendChild(li);}); t.textContent=`المجموع: ${formatPrice(total)}`; }
-            function addToCart(p) { const ex=cart.find(i=>i.id===p.id); ex?ex.quantity++:cart.push({...p,quantity:1}); saveCart(); renderAll(); showToast('✓ تمت الإضافة'); }
-            function saveCart() { localStorage.setItem('azzam_cart_v3',JSON.stringify(cart)); updateCartUI(); }
-            function updateCartUI() { const total=cart.reduce((s,i)=>s+i.quantity,0); $('#cart-badge').style.display=total?'flex':'none';$('#cart-badge').textContent=total; }
-            function toggleWishlist(p,btn) { const i=wishlist.findIndex(w=>w.id===p.id); i===-1?(wishlist.push(p),btn?.classList.add('active'),showToast('❤️ أضيف')):(wishlist.splice(i,1),btn?.classList.remove('active'),showToast('تمت إزالة')); localStorage.setItem('azzam_wishlist_v1',JSON.stringify(wishlist)); updateAllBadges(); }
-            function toggleComparison(p,btn) { comparison.some(c=>c.id===p.id)?(comparison=comparison.filter(c=>c.id!==p.id),btn?.classList.remove('active')):comparison.length<4&&(comparison.push(p),btn?.classList.add('active')); localStorage.setItem('azzam_comparison_v1',JSON.stringify(comparison)); updateAllBadges(); }
-            function updateAllBadges() { $('#wishlist-badge').style.display=wishlist.length?'flex':'none';$('#wishlist-badge').textContent=wishlist.length; }
+            function emptyStateMarkup(searching, context) {
+                const messages = {
+                    monitors: ['لا توجد شاشات معروضة حالياً', 'تواصل معنا لمعرفة أحدث الشاشات المتاحة.'],
+                    laptops: ['لا توجد لابتوبات معروضة حالياً', 'تواصل معنا لمعرفة أحدث الأجهزة المتاحة.'],
+                    pc: ['لا توجد أجهزة مجمّعة معروضة حالياً', 'يسعدنا مساعدتك في اختيار جهاز مناسب.'],
+                    builder: ['القطع غير متاحة للعرض حالياً', 'تواصل معنا وسنساعدك في تجهيز تجميعتك.']
+                };
+                const [title, description] = searching
+                    ? ['لا توجد نتائج مطابقة هنا', 'جرّب كلمة أخرى أو امسح البحث لاستعراض كل المنتجات.']
+                    : messages[context];
+                const action = searching
+                    ? '<button type="button" class="empty-state-action" data-clear-search>مسح البحث</button>'
+                    : '<a class="empty-state-action" href="https://wa.me/201025555207" target="_blank" rel="noopener noreferrer">اسأل عن المتاح <i class="fa-solid fa-arrow-left" aria-hidden="true"></i></a>';
+                return `<div class="empty-state"><div class="empty-state-main"><span class="empty-state-icon"><i class="fa-solid ${searching ? 'fa-magnifying-glass' : 'fa-box-open'}" aria-hidden="true"></i></span><div><h3>${title}</h3><p>${description}</p></div></div>${action}</div>`;
+            }
+            function renderGrid(id, products, context, countId) {
+                const grid = document.getElementById(id);
+                const filtered = products.filter(matchesSearch);
+                document.getElementById(countId).textContent = `${filtered.length} منتج`;
+                grid.replaceChildren();
+                if (!filtered.length) {
+                    grid.innerHTML = emptyStateMarkup(Boolean(normalizeSearch(searchQuery)), context);
+                    return;
+                }
+                const fragment = document.createDocumentFragment();
+                filtered.forEach(product => fragment.appendChild(createProductCard(product)));
+                grid.appendChild(fragment);
+            }
+            function renderMonitors(filter = 'all') {
+                currentMonitorFilter = filter;
+                renderGrid('monitors-grid', monitorProducts(filter), 'monitors', 'monitors-count');
+                $$('.monitor-tab').forEach(tab => {
+                    const selected = tab.dataset.filter === filter;
+                    tab.classList.toggle('active', selected);
+                    tab.setAttribute('aria-pressed', String(selected));
+                });
+                updateSearchStatus();
+            }
+            function cardFocusRef(element) {
+                const card = element?.closest?.('.product-card');
+                if (!card) return null;
+                let selector = null;
+                if (element.matches('.product-image-button')) selector = '.product-image-button';
+                else if (element.matches('.product-title-button')) selector = '.product-title-button';
+                else if (element.matches('.add-to-cart-btn')) selector = '.add-to-cart-btn';
+                else if (element.matches('[data-action="wishlist"]')) selector = '[data-action="wishlist"]';
+                else if (element.matches('[data-action="compare"]')) selector = '[data-action="compare"]';
+                return selector ? { productId: card.dataset.productId, selector } : null;
+            }
+            function restoreCardFocus(reference) {
+                if (!reference) return false;
+                const card = Array.from($$('.product-card')).find(item => item.dataset.productId === reference.productId);
+                const element = card?.querySelector(reference.selector);
+                if (!element) return false;
+                element.focus();
+                return true;
+            }
+            function renderAllPreservingFocus() {
+                const reference = cardFocusRef(document.activeElement);
+                renderAll();
+                restoreCardFocus(reference);
+            }
+            function renderAll() {
+                renderMonitors(currentMonitorFilter);
+                renderGrid('laptops-grid', data.laptops, 'laptops', 'laptops-count');
+                renderGrid('pc-grid', data.prebuiltPCs, 'pc', 'pc-count');
+                renderBuilder();
+                updateAllBadges();
+                updateSearchStatus();
+            }
 
-            // Events
-            document.getElementById('modal-close-btn').addEventListener('click', closeProductModal);
-            document.getElementById('product-modal-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeProductModal(); });
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProductModal(); });
-            $$('.monitor-tab').forEach(t=>t.addEventListener('click',()=>renderMonitors(t.dataset.filter)));
-            $('#theme-toggle').addEventListener('click',()=>{currentTheme=currentTheme==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',currentTheme);localStorage.setItem('azzam_theme',currentTheme);$('#theme-toggle').innerHTML=currentTheme==='dark'?'☀️':'🌙';});
-            $('#add-pc-to-cart').addEventListener('click',()=>{const sel=Object.entries(builder).filter(([,o])=>o); if(sel.length<3)return showToast('اختر 3 مكونات على الأقل'); let total=0; const specs={}; sel.forEach(([k,o])=>{total+=o.price;specs[data.pcComponents[k].label]=o.name;}); addToCart({id:'build_'+Date.now(),name:'🖥️ تجميعة PC',brand:'Azzam Custom',price:total,image:'https://picsum.photos/seed/pcbuild/400/260',specs}); builder={}; renderBuilder(); });
-            $('#reset-builder').addEventListener('click',()=>{builder={};renderBuilder();});
-            document.addEventListener('click',e=>{if(!e.target.closest('.pc-select')&&!e.target.closest('.pc-options'))$$('.pc-options').forEach(o=>o.style.display='none');});
-            window.addEventListener('storage',()=>{data=loadProducts();renderAll();updateSummary();});
+            function renderBuilder() {
+                const container = $('#pc-builder-components');
+                const available = Object.entries(data.pcComponents).filter(([, component]) => component.options.length);
+                const empty = available.length === 0;
+                container.replaceChildren();
+                $('#pc-summary').hidden = empty;
+                $('.pc-builder-grid').classList.toggle('is-empty', empty);
+                if (empty) {
+                    container.innerHTML = emptyStateMarkup(false, 'builder');
+                    return;
+                }
+                available.forEach(([key, component]) => {
+                    const selected = builder[key];
+                    const wrapper = document.createElement('div');
+                    wrapper.innerHTML = `
+                        <button type="button" class="pc-select ${selected ? 'selected' : ''}" id="select-${key}" aria-expanded="false" aria-controls="opts-${key}">
+                            <span class="circle"><i class="fa-solid ${component.icon}" aria-hidden="true"></i></span>
+                            <span class="pc-select-copy"><strong>${escapeHtml(component.label)}</strong><small>${escapeHtml(selected?.name || 'اختر القطعة المناسبة')}</small></span>
+                            <span class="pc-select-price">${selected ? formatPrice(selected.price) : ''}</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div class="pc-options" id="opts-${key}" hidden></div>`;
+                    const select = wrapper.querySelector('.pc-select');
+                    const options = wrapper.querySelector('.pc-options');
+                    component.options.forEach(option => {
+                        const button = document.createElement('button');
+                        button.type = 'button';
+                        button.className = 'pc-option';
+                        button.innerHTML = `<span>${escapeHtml(option.name)}</span><span>${formatPrice(option.price)}</span>`;
+                        button.addEventListener('click', () => {
+                            builder[key] = option;
+                            renderBuilder();
+                            document.getElementById('select-' + key)?.focus();
+                        });
+                        options.appendChild(button);
+                    });
+                    select.addEventListener('click', () => {
+                        const willOpen = options.hidden;
+                        $$('.pc-options').forEach(other => { other.hidden = true; });
+                        $$('.pc-select').forEach(other => other.setAttribute('aria-expanded', 'false'));
+                        options.hidden = !willOpen;
+                        select.setAttribute('aria-expanded', String(willOpen));
+                    });
+                    container.appendChild(wrapper);
+                });
+                updateSummary();
+            }
+            function updateSummary() {
+                const list = $('#pc-summary-list');
+                const available = Object.entries(data.pcComponents).filter(([, component]) => component.options.length);
+                const selected = available.filter(([key]) => builder[key]);
+                const total = selected.reduce((sum, [key]) => sum + (Number(builder[key].price) || 0), 0);
+                list.innerHTML = available.map(([key, component]) => {
+                    const item = builder[key];
+                    return item
+                        ? `<li class="summary-item"><span>${escapeHtml(component.label)}: <strong>${escapeHtml(item.name)}</strong></span><span>${formatPrice(item.price)}</span></li>`
+                        : `<li class="summary-item is-empty"><span>${escapeHtml(component.label)}</span><span>لم يُختر بعد</span></li>`;
+                }).join('');
+                $('#pc-total-price').innerHTML = `<span>الإجمالي</span><strong>${formatPrice(total)}</strong>`;
+                $('#add-pc-to-cart').disabled = selected.length < 3;
+                $('#builder-hint').textContent = selected.length < 3
+                    ? `اختر ٣ قطع على الأقل لإضافة التجميعة للسلة (تم اختيار ${selected.length}).`
+                    : `تم اختيار ${selected.length} قطع. يمكنك إضافة التجميعة للسلة.`;
+            }
 
-            document.documentElement.setAttribute('data-theme',currentTheme);
-            $('#theme-toggle').innerHTML=currentTheme==='dark'?'☀️':'🌙';
+            function setBodyDialogState() {
+                document.body.classList.toggle('has-dialog', !drawerOverlay.hidden || $('#product-modal-overlay').classList.contains('open'));
+            }
+            function openModal(product) {
+                const overlay = $('#product-modal-overlay');
+                const inWishlist = wishlist.some(item => item.id === product.id);
+                const inCart = cart.some(item => item.id === product.id);
+                const inComparison = comparison.some(item => item.id === product.id);
+                const specs = product.specs && typeof product.specs === 'object' ? Object.entries(product.specs) : [];
+                productModalTrigger = document.activeElement;
+                productModalFocusRef = cardFocusRef(productModalTrigger);
+                $('#modal-product-image').innerHTML = `<img src="${escapeHtml(imageSource(product.image))}" alt="${escapeHtml(product.name || 'منتج')}" data-product-image>`;
+                $('#modal-product-details').innerHTML = `
+                    <div class="modal-brand">${escapeHtml(product.brand || 'Azzam Technology')}</div>
+                    <h2 id="modal-product-title">${escapeHtml(product.name || 'منتج')}</h2>
+                    <div class="modal-price">${formatPrice(product.price)}</div>
+                    ${product.oldPrice ? `<div class="product-price-old">${formatPrice(product.oldPrice)}</div>` : ''}
+                    ${product.description ? `<p style="color:var(--text-secondary)">${escapeHtml(product.description)}</p>` : ''}
+                    ${specs.length ? `<div class="modal-specs-grid">${specs.map(([key, value]) => `<span class="modal-spec-tag">${escapeHtml(key)}: ${escapeHtml(value)}</span>`).join('')}</div>` : ''}
+                    <div class="modal-actions"><div class="modal-actions-row"><button type="button" class="btn btn-primary" id="modal-add-cart"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> ${inCart ? 'أضف قطعة أخرى' : 'إضافة للسلة'}</button><button type="button" class="btn btn-whatsapp" id="modal-buy-now"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> شراء مباشر</button></div><div class="modal-actions-row"><button type="button" class="btn btn-outline" id="modal-wishlist"><i class="${inWishlist ? 'fa-solid' : 'fa-regular'} fa-heart" aria-hidden="true"></i> ${inWishlist ? 'إزالة من المفضلة' : 'المفضلة'}</button><button type="button" class="btn btn-outline" id="modal-compare"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> ${inComparison ? 'إزالة من المقارنة' : 'مقارنة'}</button></div></div>`;
+                attachImageFallbacks(overlay);
+                $('#modal-add-cart').addEventListener('click', () => { addToCart(product); closeProductModal(); });
+                $('#modal-buy-now').addEventListener('click', () => buyNow(product));
+                $('#modal-wishlist').addEventListener('click', () => { toggleWishlist(product); closeProductModal(); });
+                $('#modal-compare').addEventListener('click', () => { toggleComparison(product); closeProductModal(); });
+                overlay.classList.add('open');
+                setBodyDialogState();
+                $('#modal-close-btn').focus();
+            }
+            function closeProductModal() {
+                const overlay = $('#product-modal-overlay');
+                if (!overlay.classList.contains('open')) return;
+                overlay.classList.remove('open');
+                setBodyDialogState();
+                if (productModalTrigger?.isConnected) productModalTrigger.focus();
+                else if (!restoreCardFocus(productModalFocusRef)) $('#cart-nav-btn').focus();
+            }
+            function buyNow(product) {
+                const message = `مرحباً، أريد الاستفسار عن شراء:\n${product.name}\nالسعر: ${formatPrice(product.price)}`;
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+            }
+
+            function saveCart() {
+                localStorage.setItem('azzam_cart_v3', JSON.stringify(cart));
+                updateAllBadges();
+            }
+            function addToCart(product) {
+                const existing = cart.find(item => item.id === product.id);
+                if (existing) existing.quantity = (Number(existing.quantity) || 1) + 1;
+                else cart.push({ ...product, quantity: 1 });
+                const focusedDrawerButton = document.activeElement.closest?.('#drawer-content button[data-action]');
+                const drawerAction = focusedDrawerButton?.dataset.action;
+                const drawerIndex = focusedDrawerButton?.dataset.index;
+                saveCart();
+                renderAllPreservingFocus();
+                if (openDrawerType) {
+                    renderDrawer();
+                    if (drawerAction && drawerIndex !== undefined) {
+                        drawerContent.querySelector(`[data-action="${drawerAction}"][data-index="${drawerIndex}"]`)?.focus();
+                    }
+                }
+                showToast('تمت إضافة المنتج إلى السلة');
+            }
+            function toggleWishlist(product) {
+                const index = wishlist.findIndex(item => item.id === product.id);
+                if (index === -1) { wishlist.push(product); showToast('تمت الإضافة إلى المفضلة'); }
+                else { wishlist.splice(index, 1); showToast('تمت الإزالة من المفضلة'); }
+                localStorage.setItem('azzam_wishlist_v1', JSON.stringify(wishlist));
+                renderAllPreservingFocus();
+                if (openDrawerType) renderDrawer();
+            }
+            function toggleComparison(product) {
+                const index = comparison.findIndex(item => item.id === product.id);
+                if (index !== -1) { comparison.splice(index, 1); showToast('تمت الإزالة من المقارنة'); }
+                else if (comparison.length >= 4) { showToast('يمكنك مقارنة ٤ منتجات كحد أقصى'); return; }
+                else { comparison.push(product); showToast('تمت الإضافة إلى المقارنة'); }
+                localStorage.setItem('azzam_comparison_v1', JSON.stringify(comparison));
+                renderAllPreservingFocus();
+                if (openDrawerType) renderDrawer();
+            }
+            function updateAllBadges() {
+                const quantity = cart.reduce((sum, item) => sum + Math.max(1, Number(item.quantity) || 1), 0);
+                [
+                    ['cart', quantity, 'السلة'],
+                    ['wishlist', wishlist.length, 'المفضلة'],
+                    ['compare', comparison.length, 'المقارنة']
+                ].forEach(([name, count, label]) => {
+                    const badge = document.getElementById(name + '-badge');
+                    const button = document.getElementById(name === 'cart' ? 'cart-nav-btn' : name + '-btn');
+                    badge.style.display = count ? 'flex' : 'none';
+                    badge.textContent = count;
+                    button.setAttribute('aria-label', count ? `${label}، ${count} منتج` : label);
+                });
+            }
+
+            function drawerItemMarkup(item, index, type) {
+                const name = escapeHtml(item.name || 'منتج');
+                const quantity = Math.max(1, Number(item.quantity) || 1);
+                const specs = item.specs && typeof item.specs === 'object' ? Object.entries(item.specs).slice(0, 4) : [];
+                const controls = type === 'cart'
+                    ? `<div class="quantity-controls"><button type="button" data-action="decrease" data-index="${index}" aria-label="تقليل كمية ${name}">−</button><span aria-label="الكمية">${quantity}</span><button type="button" data-action="increase" data-index="${index}" aria-label="زيادة كمية ${name}">+</button></div>`
+                    : type === 'wishlist'
+                        ? `<div class="drawer-item-actions"><button type="button" data-action="add-cart" data-index="${index}"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> إضافة للسلة</button></div>`
+                        : `<div class="drawer-specs">${specs.length ? specs.map(([key, value]) => `${escapeHtml(key)}: ${escapeHtml(value)}`).join(' · ') : 'لا توجد مواصفات إضافية'}</div>`;
+                return `<article class="drawer-item"><img class="drawer-item-image" src="${escapeHtml(imageSource(item.image))}" alt="" data-product-image><div><div class="drawer-item-top"><div><div class="drawer-item-brand">${escapeHtml(item.brand || 'Azzam Technology')}</div><h3>${name}</h3></div><button type="button" class="drawer-remove" data-action="remove" data-index="${index}" aria-label="إزالة ${name}"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button></div><div class="drawer-item-price">${formatPrice(item.price)}</div>${controls}</div></article>`;
+            }
+            function renderDrawer() {
+                const type = openDrawerType;
+                if (!type) return;
+                const config = {
+                    cart: { title: 'سلة التسوق', empty: 'سلتك فاضية لسه', description: 'اكتشف المنتجات وأضف اختياراتك هنا.', icon: 'fa-bag-shopping', items: cart },
+                    wishlist: { title: 'المفضلة', empty: 'مفضلتك فاضية لسه', description: 'احفظ المنتجات اللي عجبتك عشان ترجع لها بسهولة.', icon: 'fa-heart', items: wishlist },
+                    compare: { title: 'مقارنة المنتجات', empty: 'مافيش منتجات للمقارنة', description: 'أضف حتى ٤ منتجات وشوف أهم مواصفاتها هنا.', icon: 'fa-scale-balanced', items: comparison }
+                }[type];
+                $('#drawer-title').textContent = config.title;
+                drawerFooter.innerHTML = '';
+                if (!config.items.length) {
+                    drawerContent.innerHTML = `<div class="drawer-empty"><span class="empty-state-icon"><i class="fa-solid ${config.icon}" aria-hidden="true"></i></span><h3>${config.empty}</h3><p>${config.description}</p><a href="#browse" class="btn btn-primary" data-close-drawer>تصفح الأقسام <i class="fa-solid fa-arrow-left" aria-hidden="true"></i></a></div>`;
+                    return;
+                }
+                drawerContent.innerHTML = `<div class="drawer-list">${config.items.map((item, index) => drawerItemMarkup(item, index, type)).join('')}</div>`;
+                attachImageFallbacks(drawerContent);
+                if (type === 'cart') {
+                    const total = cart.reduce((sum, item) => sum + (Number(item.price) || 0) * Math.max(1, Number(item.quantity) || 1), 0);
+                    drawerFooter.innerHTML = `<div class="drawer-total"><span>الإجمالي</span><strong>${formatPrice(total)}</strong></div><button type="button" class="btn btn-primary" id="checkout-whatsapp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> طلب عبر واتساب</button><p>تُراجع تفاصيل الطلب مع الفريق قبل التأكيد.</p>`;
+                } else if (type === 'compare') {
+                    drawerFooter.innerHTML = '<p>يمكنك إضافة حتى ٤ منتجات للمقارنة.</p>';
+                }
+            }
+            function openDrawer(type) {
+                closeMenu();
+                drawerTrigger = document.activeElement;
+                openDrawerType = type;
+                drawerOverlay.hidden = false;
+                renderDrawer();
+                setBodyDialogState();
+                $('#drawer-close').focus();
+            }
+            function closeDrawer() {
+                if (drawerOverlay.hidden) return;
+                drawerOverlay.hidden = true;
+                openDrawerType = null;
+                setBodyDialogState();
+                if (drawerTrigger?.isConnected) drawerTrigger.focus();
+            }
+            function checkoutCart() {
+                if (!cart.length) return;
+                const lines = cart.map((item, index) => {
+                    const quantity = Math.max(1, Number(item.quantity) || 1);
+                    const specs = item.specs && item.id?.toString().startsWith('build_')
+                        ? '\n' + Object.entries(item.specs).map(([key, value]) => `   ${key}: ${value}`).join('\n') : '';
+                    return `${index + 1}. ${item.name} × ${quantity} — ${formatPrice((Number(item.price) || 0) * quantity)}${specs}`;
+                });
+                const total = cart.reduce((sum, item) => sum + (Number(item.price) || 0) * Math.max(1, Number(item.quantity) || 1), 0);
+                const message = `مرحباً، أود طلب المنتجات التالية:\n\n${lines.join('\n')}\n\nالإجمالي: ${formatPrice(total)}`;
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+            }
+            drawerContent.addEventListener('click', event => {
+                const closeLink = event.target.closest('[data-close-drawer]');
+                if (closeLink) { closeDrawer(); return; }
+                const button = event.target.closest('button[data-action]');
+                if (!button || !openDrawerType) return;
+                const index = Number(button.dataset.index);
+                const list = openDrawerType === 'cart' ? cart : openDrawerType === 'wishlist' ? wishlist : comparison;
+                const item = list[index];
+                if (!item) return;
+                if (button.dataset.action === 'add-cart') { addToCart(item); return; }
+                if (button.dataset.action === 'increase') item.quantity = Math.max(1, Number(item.quantity) || 1) + 1;
+                if (button.dataset.action === 'decrease') {
+                    const quantity = Math.max(1, Number(item.quantity) || 1);
+                    if (quantity === 1) list.splice(index, 1);
+                    else item.quantity = quantity - 1;
+                }
+                if (button.dataset.action === 'remove') list.splice(index, 1);
+                if (openDrawerType === 'cart') saveCart();
+                else localStorage.setItem(openDrawerType === 'wishlist' ? 'azzam_wishlist_v1' : 'azzam_comparison_v1', JSON.stringify(list));
+                renderAll();
+                renderDrawer();
+                const replacement = drawerContent.querySelector(`[data-action="${button.dataset.action}"][data-index="${index}"]`);
+                (replacement || $('#drawer-close')).focus();
+            });
+            drawerFooter.addEventListener('click', event => { if (event.target.closest('#checkout-whatsapp')) checkoutCart(); });
+
+            function closeMenu() {
+                $('#main-navigation').classList.remove('is-open');
+                $('#hamburger-btn').setAttribute('aria-expanded', 'false');
+                $('#hamburger-btn').setAttribute('aria-label', 'فتح القائمة');
+            }
+            function updateTheme() {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                const toggle = $('#theme-toggle');
+                toggle.innerHTML = `<i class="fa-${currentTheme === 'dark' ? 'regular fa-sun' : 'solid fa-moon'}" aria-hidden="true"></i>`;
+                toggle.setAttribute('aria-label', currentTheme === 'dark' ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الداكن');
+            }
+            function trapFocus(event, container) {
+                const focusable = Array.from(container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+                    .filter(element => element.getClientRects().length && !element.closest('[hidden]'));
+                if (!focusable.length) { event.preventDefault(); container.focus(); return; }
+                const first = focusable[0], last = focusable[focusable.length - 1];
+                if (event.shiftKey && (document.activeElement === first || !container.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
+                else if (!event.shiftKey && (document.activeElement === last || !container.contains(document.activeElement))) { event.preventDefault(); first.focus(); }
+            }
+
+            // Accessible menu, search, theme and overlays.
+            $('#hamburger-btn').addEventListener('click', () => {
+                const isOpen = $('#main-navigation').classList.toggle('is-open');
+                $('#hamburger-btn').setAttribute('aria-expanded', String(isOpen));
+                $('#hamburger-btn').setAttribute('aria-label', isOpen ? 'إغلاق القائمة' : 'فتح القائمة');
+            });
+            $('#main-navigation').addEventListener('click', event => {
+                const link = event.target.closest('a');
+                if (!link) return;
+                $$('#main-navigation a').forEach(item => item.classList.toggle('active', item === link));
+                closeMenu();
+            });
+            document.addEventListener('click', event => {
+                if (!event.target.closest('.navbar')) closeMenu();
+                if (!event.target.closest('.pc-select') && !event.target.closest('.pc-options')) {
+                    $$('.pc-options').forEach(options => { options.hidden = true; });
+                    $$('.pc-select').forEach(select => select.setAttribute('aria-expanded', 'false'));
+                }
+                if (event.target.closest('[data-clear-search]')) clearSearch();
+            });
+            searchInput.addEventListener('input', () => {
+                searchQuery = searchInput.value;
+                $('#clear-search').hidden = !searchQuery;
+                renderAll();
+            });
+            $('#clear-search').addEventListener('click', clearSearch);
+            $$('.monitor-tab').forEach(tab => tab.addEventListener('click', () => renderMonitors(tab.dataset.filter)));
+            $('#theme-toggle').addEventListener('click', () => {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                localStorage.setItem('azzam_theme', currentTheme);
+                updateTheme();
+            });
+            $('#cart-nav-btn').addEventListener('click', () => openDrawer('cart'));
+            $('#wishlist-btn').addEventListener('click', () => openDrawer('wishlist'));
+            $('#compare-btn').addEventListener('click', () => openDrawer('compare'));
+            $('#drawer-close').addEventListener('click', closeDrawer);
+            drawerOverlay.addEventListener('click', event => { if (event.target === drawerOverlay) closeDrawer(); });
+            $('#modal-close-btn').addEventListener('click', closeProductModal);
+            $('#product-modal-overlay').addEventListener('click', event => { if (event.target === event.currentTarget) closeProductModal(); });
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') {
+                    if (!drawerOverlay.hidden) closeDrawer();
+                    else if ($('#product-modal-overlay').classList.contains('open')) closeProductModal();
+                    else if ($('#admin-login-overlay').classList.contains('open')) closeAdminLogin();
+                    else closeMenu();
+                } else if (event.key === 'Tab') {
+                    if (!drawerOverlay.hidden) trapFocus(event, $('.store-drawer'));
+                    else if ($('#product-modal-overlay').classList.contains('open')) trapFocus(event, $('#product-modal-overlay'));
+                }
+            });
+            $('#add-pc-to-cart').addEventListener('click', () => {
+                const selections = Object.entries(builder).filter(([key, option]) => option && data.pcComponents[key]?.options.length);
+                if (selections.length < 3) return;
+                const specs = {};
+                let total = 0;
+                selections.forEach(([key, option]) => { total += Number(option.price) || 0; specs[data.pcComponents[key].label] = option.name; });
+                addToCart({ id: 'build_' + Date.now(), name: 'تجميعة PC مخصصة', brand: 'Azzam Custom', price: total, image: PLACEHOLDER_IMAGE, specs });
+                builder = {};
+                renderBuilder();
+            });
+            $('#reset-builder').addEventListener('click', () => { builder = {}; renderBuilder(); showToast('تمت إعادة تعيين التجميعة'); });
+            window.addEventListener('storage', event => {
+                const key = event.key;
+                const relevant = !key || [STORAGE_KEY, 'azzam_cart_v3', 'azzam_wishlist_v1', 'azzam_comparison_v1'].includes(key);
+                if (!relevant) return;
+                if (!key || key === STORAGE_KEY) {
+                    data = loadProducts();
+                    // Do not keep an outdated or removed component in a build after an admin update.
+                    Object.entries(builder).forEach(([componentKey, selected]) => {
+                        const updated = data.pcComponents[componentKey]?.options.find(option => option.id === selected.id);
+                        if (updated) builder[componentKey] = updated;
+                        else delete builder[componentKey];
+                    });
+                }
+                if (!key || key === 'azzam_cart_v3') cart = readList('azzam_cart_v3');
+                if (!key || key === 'azzam_wishlist_v1') wishlist = readList('azzam_wishlist_v1');
+                if (!key || key === 'azzam_comparison_v1') comparison = readList('azzam_comparison_v1');
+                renderAllPreservingFocus();
+                if (openDrawerType) renderDrawer();
+            });
+
+            if (!['dark', 'light'].includes(currentTheme)) currentTheme = 'dark';
+            updateTheme();
             renderAll();
-            updateCartUI();
-            updateAllBadges();
-            console.log('🔐 Azzam Technology - دخول سري مخفي للوحة التحكم');
         })();
     </script>
 </body>

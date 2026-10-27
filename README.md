@@ -1,46 +1,42 @@
 <p align="center">
-  <img src="images/Azzam_Cover.jpg"/>
+  <img src="images/Azzam_Cover.jpg" alt="Azzam Technology" />
 </p>
 
-## 🧠 About The Project
-AZZAM TECHNOLOGY is a modern, scalable **digital store platform** designed to deliver high-performance e-commerce experiences.
+# Azzam Technology
 
-Built with a focus on:
-- ⚡ Speed & Performance
-- 🔐 Security & Reliability
-- 🎯 Conversion Optimization
-- 📈 Business Scalability
+واجهة عربية لمتجر أجهزة الكمبيوتر والشاشات واللابتوبات، مبنية باستخدام HTML وCSS وJavaScript دون إطار عمل. تتضمن تصفح الأقسام والبحث والفلترة، والمفضلة والمقارنة والسلة، وتجميع PC، وإرسال تفاصيل الطلب عبر واتساب.
 
-This project represents a **production-ready digital solution** tailored for businesses looking to dominate the online market.
+> **الحالة الحالية: نموذج واجهة، وليس متجراً جاهزاً للإنتاج.** المنتجات والسلة والمفضلة تُحفظ في `localStorage` على المتصفح نفسه، ولا توجد قاعدة بيانات أو خدمة دفع أو إدارة طلبات على الخادم. لذا لا تنتقل المنتجات المضافة من جهاز الإدارة إلى أجهزة العملاء تلقائياً.
+>
+> **أولوية أمنية:** يوجد رمز بوت Telegram مكشوف في ملفات الواجهة، والتحقق الحالي يتم على جهة العميل ولا يوفر حماية حقيقية. يجب إلغاء الرمز المكشوف وإصدار رمز جديد، ونقل الأسرار والتحقق والصلاحيات إلى خادم آمن قبل النشر أو استخدام لوحة الإدارة لبيانات حقيقية.
 
+## التشغيل محلياً
 
-## 🚀 Features
-
-### 🛒 Core E-Commerce
-- Advanced product management system
-- Smart categorization & filtering
-- Dynamic pricing & offers
-- Cart & checkout optimization
-
-### 🔐 Security First
-- Secure authentication system
-- Protection against common vulnerabilities
-- Safe payment integrations (ready)
-
-### 📊 Business Intelligence
-- Analytics-ready structure
-- Customer behavior tracking support
-- Sales performance monitoring
-
-### ⚙️ Admin Dashboard
-- Full control over products & orders
-- User management system
-- Real-time updates
-
-## 🧱 Tech Stack
+من مجلد المشروع:
 
 ```bash
-Frontend   → HTML5 / CSS3 / JavaScript
-Backend    → (Expandable Architecture)
-Database   → Scalable DB Ready
-Hosting    → Cloud Ready ☁️
+python3 -m http.server 8000
+```
+
+ثم افتح `http://localhost:8000`. عند عدم وجود منتجات محفوظة يعرض المتجر حالات فارغة وروابط للاستفسار بدلاً من عرض منتجات أو أسعار وهمية. الخطوط والأيقونات المستخدمة مستضافة محلياً داخل `assets/vendor` مع تراخيصها.
+
+## اختبار الواجهة
+
+يتطلب تشغيل الاختبارات Node.js 20 أو أحدث وPython 3:
+
+```bash
+npm ci
+npx playwright install chromium
+npm test
+```
+
+تغطي الاختبارات البحث والفلترة، والمفضلة والمقارنة والسلة، وطلب واتساب، والتجميع، والمظهر، والقائمة على الهاتف والمساعد. بيانات الاختبار تُنشأ داخل متصفح الاختبار فقط.
+
+## أفكار التطوير التالية
+
+1. **الأمان أولاً:** استبدال التحقق الموجود بمصادقة وصلاحيات على الخادم، وحفظ الرموز في متغيرات بيئة، وإضافة تحديد محاولات الدخول وسجل أمني.
+2. **المنتجات والمخزون:** إنشاء API وقاعدة بيانات مشتركة مع إدارة التوفر والأسعار والصور، حتى يرى جميع الزوار البيانات نفسها.
+3. **اكتشاف المنتجات:** إضافة الترتيب حسب السعر والأحدث، وفلاتر الماركة والمواصفات والسعر، مع صفحات تفاصيل وروابط قابلة للمشاركة.
+4. **رحلة الطلب:** بناء خطوات واضحة للعنوان والشحن والتأكيد، ثم ربط بوابة دفع موثوقة وتتبع حالة الطلب عندما تتوفر البنية الخلفية.
+5. **تجميع أكثر ذكاءً:** التحقق من توافق القطع، واقتراح بدائل مناسبة للميزانية، وإظهار تنبيهات للمكونات الناقصة.
+6. **الثقة والقياس:** عرض معلومات ضمان وشحن موثقة، وإضافة تقييمات العملاء وتحليلات للبحث والتخلي عن السلة بعد توفير سياسة خصوصية وموافقة مناسبة.

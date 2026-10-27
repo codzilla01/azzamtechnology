@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Azzam Technology | المساعد الذكي</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="assets/vendor/tajawal/tajawal.css">
     <style>
         :root { --primary: #e63946; --dark: #1a1a2e; --bg: #f8fafc; --card: #fff; --text: #1e293b; --muted: #64748b; --border: #e2e8f0; --radius: 20px; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -44,7 +44,10 @@
         .chat-input-area input { flex: 1; padding: 10px 16px; border: 1.5px solid var(--border); border-radius: 25px; font-size: 0.9rem; font-family: inherit; outline: none; }
         .chat-input-area button { width: 44px; height: 44px; border-radius: 50%; background: var(--primary); border: none; color: #fff; cursor: pointer; font-size: 1rem; }
         .chat-footer { text-align: center; padding: 8px; font-size: 0.75rem; color: var(--muted); background: #f1f5f9; border-top: 1px solid var(--border); }
-        @media (max-width: 600px) { .chat-page { height: 100vh; max-height: 100vh; border-radius: 0; } }
+        .msg { white-space: pre-line; overflow-wrap: anywhere; }
+        .chat-input-area input:focus-visible, .chat-input-area button:focus-visible, .quick-chip:focus-visible, a:focus-visible { outline: 3px solid #ed6973; outline-offset: 3px; }
+        @media (max-width: 600px) { body { padding: 0; } .chat-page { height: 100vh; height: 100dvh; max-height: none; border-radius: 0; } }
+        @media (prefers-reduced-motion: reduce) { .msg { animation: none; } }
     </style>
 </head>
 <body>
@@ -54,9 +57,9 @@
                 <div class="brand-icon"><i class="fas fa-microchip"></i></div>
                 <div><h3 style="font-size:1rem;">Azzam Technology</h3><p style="font-size:0.7rem;opacity:0.7;">المساعد الذكي</p></div>
             </a>
-            <a href="index.html" style="color:#fff;font-size:1.2rem;"><i class="fas fa-home"></i></a>
+            <a href="index.html" aria-label="العودة إلى المتجر" style="color:#fff;font-size:1.2rem;"><i class="fas fa-home" aria-hidden="true"></i></a>
         </div>
-        <div class="chat-body" id="chatBody">
+        <div class="chat-body" id="chatBody" role="log" aria-live="polite" aria-label="محادثة المساعد">
             <div class="msg bot">👋 مرحباً! أنا مساعد <span class="hl">Azzam Technology</span>. اسألني عن الأسعار، المواصفات، التجميع، أو أي استفسار!</div>
             <div class="quick-chips">
                 <button class="quick-chip" data-q="أسعار اللابتوبات">💻 اللابتوبات</button>
@@ -66,8 +69,8 @@
             </div>
         </div>
         <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="اكتب سؤالك هنا...">
-            <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+            <input type="text" id="chatInput" aria-label="اكتب سؤالك للمساعد" placeholder="اكتب سؤالك هنا...">
+            <button type="button" id="sendBtn" aria-label="إرسال السؤال"><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
         </div>
         <div class="chat-footer">📞 01025555207 | 📍 مول البستان - القاهرة</div>
     </div>
@@ -87,7 +90,7 @@
             if (/رقم|هاتف|عنوان/.test(m)) return '📞 01025555207 | 📍 مول البستان - القاهرة';
             const laps = products.filter(p => p.type === 'laptop');
             if (/لابتوب|لاب/.test(m)) return laps.length ? '💻 اللابتوبات:\n' + laps.slice(0,5).map((l,i) => `${i+1}. ${l.name}: ${l.price.toLocaleString()} ج.م`).join('\n') : '⚠️ لا توجد لابتوبات';
-            const mons = products.filter(p => p.type === 'monitor');
+            const mons = products.filter(p => ['monitor', 'frameless', 'curved', 'gaming'].includes(p.type));
             if (/شاشة|شاشات/.test(m)) return mons.length ? '🖥️ الشاشات:\n' + mons.slice(0,5).map((mo,i) => `${i+1}. ${mo.name}: ${mo.price.toLocaleString()} ج.م`).join('\n') : '⚠️ لا توجد شاشات';
             if (/تجميع|build/.test(m)) return '🔧 توجه لقسم تجميع PC في موقعنا!';
             if (/سعر|بكام/.test(m) && products.length) {
@@ -107,7 +110,7 @@
             const u = document.createElement('div'); u.className = 'msg user'; u.textContent = text; body.appendChild(u);
             $('#chatInput').value = '';
             await new Promise(r => setTimeout(r, 500 + Math.random() * 500));
-            const b = document.createElement('div'); b.className = 'msg bot'; b.innerHTML = getResponse(text).replace(/\n/g, '<br>');
+            const b = document.createElement('div'); b.className = 'msg bot'; b.textContent = getResponse(text);
             body.appendChild(b);
             body.scrollTop = body.scrollHeight;
         }
