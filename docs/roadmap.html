@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خطة تطوير Azzam Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e17; --bg2:#111827; --card:#151b29; --card2:#1a2332;
+    --line:rgba(255,255,255,.07); --txt:#f1f5f9; --muted:#94a3b8; --dim:#64748b;
+    --accent:#e63946; --accent2:#ff6b6b; --green:#22c55e; --amber:#f59e0b; --blue:#38bdf8; --violet:#a78bfa;
+    --r:16px; --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{
+    font-family:'Tajawal',-apple-system,'Segoe UI',Tahoma,sans-serif;
+    background:var(--bg);color:var(--txt);line-height:1.85;
+    background-image:radial-gradient(900px 420px at 85% -8%,rgba(230,57,70,.16),transparent 60%),
+                     radial-gradient(800px 400px at 5% 8%,rgba(56,189,248,.09),transparent 60%);
+    background-repeat:no-repeat;
+  }
+  ::selection{background:rgba(230,57,70,.35)}
+  .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 22px}
+
+  /* ===== Header ===== */
+  header.hero{padding:70px 0 46px;border-bottom:1px solid var(--line)}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:700;letter-spacing:.5px;
+    color:var(--accent2);background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.28);
+    padding:6px 14px;border-radius:999px;margin-bottom:18px}
+  h1{font-size:clamp(1.9rem,4.2vw,3rem);line-height:1.35;font-weight:900;letter-spacing:-.5px}
+  h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);font-size:1.02rem;max-width:720px;margin-top:16px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .chip{font-size:.78rem;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line);
+    padding:5px 12px;border-radius:999px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:34px}
+  .kpi{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:var(--r);padding:18px 20px}
+  .kpi b{display:block;font-size:1.65rem;font-weight:900;line-height:1.2}
+  .kpi span{font-size:.8rem;color:var(--muted)}
+
+  /* ===== Nav ===== */
+  nav.toc{position:sticky;top:0;z-index:50;background:rgba(10,14,23,.9);backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+  nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:12px;padding-bottom:12px;scrollbar-width:none}
+  nav.toc .wrap::-webkit-scrollbar{display:none}
+  nav.toc a{flex:0 0 auto;font-size:.82rem;font-weight:700;color:var(--muted);text-decoration:none;
+    padding:7px 14px;border-radius:999px;transition:.2s;white-space:nowrap}
+  nav.toc a:hover{color:#fff;background:rgba(255,255,255,.07)}
+
+  /* ===== Sections ===== */
+  section{padding:58px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+  .sec-num{font-size:.8rem;font-weight:900;color:var(--accent2);border:1px solid rgba(230,57,70,.3);
+    background:rgba(230,57,70,.08);padding:2px 10px;border-radius:8px}
+  h2{font-size:clamp(1.35rem,2.6vw,1.85rem);font-weight:900;letter-spacing:-.3px}
+  .sec-note{color:var(--muted);font-size:.95rem;max-width:820px;margin-bottom:26px}
+
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+
+  .card{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);
+    border-radius:var(--r);padding:22px;transition:.25s;position:relative;overflow:hidden}
+  .card:hover{border-color:rgba(255,255,255,.16);transform:translateY(-2px);box-shadow:var(--shadow)}
+  .card h3{font-size:1.02rem;font-weight:800;margin-bottom:8px;display:flex;gap:8px;align-items:flex-start}
+  .card p{font-size:.9rem;color:var(--muted)}
+  .card p + p{margin-top:9px}
+
+  /* problem cards */
+  .prob{border-right:3px solid var(--accent)}
+  .prob.sev-1{border-right-color:#ef4444}
+  .prob.sev-2{border-right-color:var(--amber)}
+  .prob.sev-3{border-right-color:var(--blue)}
+  .sev{font-size:.68rem;font-weight:900;padding:2px 9px;border-radius:999px;white-space:nowrap;align-self:center}
+  .sev-1 .sev{background:rgba(239,68,68,.14);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+  .sev-2 .sev{background:rgba(245,158,11,.13);color:#fcd34d;border:1px solid rgba(245,158,11,.3)}
+  .sev-3 .sev{background:rgba(56,189,248,.12);color:#7dd3fc;border:1px solid rgba(56,189,248,.3)}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82em;background:rgba(255,255,255,.07);
+    padding:1px 6px;border-radius:6px;color:#e2e8f0;direction:ltr;display:inline-block}
+  .ev{display:block;font-size:.78rem;color:var(--dim);margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
+
+  /* callout */
+  .callout{border-radius:var(--r);padding:20px 22px;border:1px solid;margin-top:20px;font-size:.92rem}
+  .callout.danger{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.3);color:#fecaca}
+  .callout.info{background:rgba(56,189,248,.06);border-color:rgba(56,189,248,.25);color:#bae6fd}
+  .callout.warn{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.3);color:#fde68a}
+  .callout strong{color:#fff}
+
+  /* ===== Phase blocks ===== */
+  .phase{margin-bottom:34px;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:rgba(255,255,255,.015)}
+  .phase-head{display:flex;align-items:center;gap:14px;padding:18px 22px;background:linear-gradient(90deg,rgba(230,57,70,.14),rgba(230,57,70,.02));
+    border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .phase-head .pill{font-size:.7rem;font-weight:900;color:#0a0e17;background:linear-gradient(135deg,var(--accent),var(--accent2));
+    padding:3px 11px;border-radius:999px}
+  .phase-head h3{font-size:1.1rem;font-weight:900}
+  .phase-head .when{margin-inline-start:auto;font-size:.78rem;color:var(--muted);background:rgba(255,255,255,.05);
+    border:1px solid var(--line);padding:4px 12px;border-radius:999px}
+  .phase-body{padding:20px 22px;display:grid;gap:14px}
+
+  .idea{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:16px 0;border-bottom:1px dashed var(--line)}
+  .idea:last-child{border-bottom:0;padding-bottom:0}
+  .idea .n{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:.8rem;font-weight:900;
+    background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--muted)}
+  .idea h4{font-size:.97rem;font-weight:800;margin-bottom:5px}
+  .idea p{font-size:.88rem;color:var(--muted)}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .tag{font-size:.7rem;font-weight:700;padding:2px 9px;border-radius:6px;border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.03)}
+  .tag.eff{color:#93c5fd;border-color:rgba(56,189,248,.25);background:rgba(56,189,248,.07)}
+  .tag.imp{color:#86efac;border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.07)}
+  .tag.hot{color:#fca5a5;border-color:rgba(230,57,70,.3);background:rgba(230,57,70,.08)}
+
+  /* ===== Table ===== */
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--card)}
+  table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:640px}
+  th,td{padding:12px 16px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:rgba(255,255,255,.04);font-size:.78rem;font-weight:800;color:#cbd5e1;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:rgba(255,255,255,.025)}
+  td:first-child{font-weight:700;color:#e2e8f0}
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:6px}
+  .d-red{background:#ef4444}.d-amber{background:var(--amber)}.d-green{background:var(--green)}.d-blue{background:var(--blue)}
+
+  /* ===== Steps ===== */
+  .steps{display:grid;gap:14px;counter-reset:s}
+  .step{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--r);padding:18px 20px}
+  .step .num{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:900;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.9rem}
+  .step h4{font-size:.95rem;font-weight:800;margin-bottom:4px}
+  .step p{font-size:.86rem;color:var(--muted)}
+
+  footer{padding:44px 0 60px;color:var(--dim);font-size:.85rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+  .back{color:var(--muted);text-decoration:none;font-weight:700}
+  .back:hover{color:#fff}
+
+  @media (max-width:600px){
+    .idea{grid-template-columns:1fr;gap:8px}
+    .idea .n{width:28px;height:28px;font-size:.72rem}
+    section{padding:44px 0}
+    header.hero{padding:48px 0 36px}
+  }
+  @media print{
+    body{background:#fff;color:#111;background-image:none}
+    nav.toc{display:none}
+    .card,.phase,.table-wrap{border-color:#ddd;background:#fff;box-shadow:none}
+    .card p,.sec-note,.idea p{color:#333}
+    h1 em{color:#c1121f;-webkit-text-fill-color:#c1121f}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">🚀 خطة تطوير مقترحة — أكتوبر 2026</span>
+    <h1>من صفحة عرض إلى <em>متجر إلكتروني حقيقي</em><br>يبني ثقة ويبيع فعلًا</h1>
+    <p class="sub">
+      أفكار مرتّبة بالأولوية مبنية على قراءة فعلية لكود المشروع الحالي
+      (<span dir="ltr">index.html</span> — <span dir="ltr">admin.html</span> — <span dir="ltr">chat-bot.html</span>)،
+      مع تحديد المشكلات التي تمنع البيع الآن، وميزات تميّزك عن أي متجر آخر في نفس المجال.
+    </p>
+    <div class="meta">
+      <span class="chip">📄 3 صفحات HTML</span>
+      <span class="chip">🧩 بيانات في localStorage</span>
+      <span class="chip">💳 لا يوجد Checkout</span>
+      <span class="chip">🔐 مفتاح Telegram مكشوف</span>
+      <span class="chip">🖼️ صور غير مضغوطة</span>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b style="color:#f87171">5</b><span>مشكلات حرجة تمنع البيع</span></div>
+      <div class="kpi"><b style="color:var(--accent2)">30</b><span>فكرة تطوير مرتّبة</span></div>
+      <div class="kpi"><b style="color:var(--amber)">4</b><span>مراحل تنفيذ</span></div>
+      <div class="kpi"><b style="color:var(--green)">90</b><span>يوم خطة مقترحة</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#diagnosis">🔍 التشخيص</a>
+    <a href="#critical">🚨 أول 5 قرارات</a>
+    <a href="#matrix">📊 مصفوفة الأولويات</a>
+    <a href="#phases">🗺️ مراحل التطوير</a>
+    <a href="#plan">📅 خطة 90 يوم</a>
+    <a href="#kpi">🎯 المؤشرات</a>
+    <a href="#stack">🧱 التقنيات</a>
+    <a href="#start">✅ ابدأ من هنا</a>
+  </div>
+</nav>
+
+<!-- ==================== التشخيص ==================== -->
+<section id="diagnosis">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2>التشخيص: إيه اللي موجود فعلًا؟</h2></div>
+    <p class="sec-note">الواجهة متجاوبة وفيها وضع ليلي/نهاري، وتجميع PC، ومقارنة ومفضلة… لكن الأساس التجاري ناقص. هذه أهم الفجوات كما هي في الكود الآن:</p>
+
+    <div class="grid g2">
+      <div class="card prob sev-1">
+        <h3>السلة موجودة… ومفيش سلة <span class="sev">حرِج</span></h3>
+        <p>زر «إضافة للسلة» يشتغل ويحدّث العدّاد ويحفظ في <code>azzam_cart_v3</code>، لكن أزرار السلة / المفضلة / المقارنة في الشريط العلوي <strong>بدون أي حدث</strong> — مفيش Drawer ولا صفحة سلة ولا Checkout.</p>
+        <span class="ev">النتيجة: الزائر يقدر يضيف منتج ومش قادر يكمّل الشراء → تسرّب مباشر في المبيعات.</span>
+      </div>
+
+      <div class="card prob sev-1">
+        <h3>لوحة التحكم لا تغيّر الموقع الحقيقي <span class="sev">حرِج</span></h3>
+        <p>الأدمن بيحفظ المنتجات في <code>localStorage</code> على <em>متصفحه هو فقط</em>. أي زائر جديد أو أي متصفح آخر يرى البيانات الافتراضية، وأي تعديل سعر لا يصل لأحد.</p>
+        <span class="ev">يعني: «نظام إدارة» حقيقي محتاج قاعدة بيانات مشتركة + API.</span>
+      </div>
+
+      <div class="card prob sev-1">
+        <h3>سجل الطلبات فاضي دايمًا <span class="sev">حرِج</span></h3>
+        <p>اللوحة فيها جدول طلبات و<code>ORDERS_KEY</code>، لكن الموقع <strong>لا يكتب أي طلب إطلاقًا</strong>؛ الشراء بيتم بفتح واتساب برسالة نصية.</p>
+        <span class="ev">النتيجة: صفر تحليلات، صفر تتبع، صفر إعادة استهداف للسلات المتروكة.</span>
+      </div>
+
+      <div class="card prob sev-1">
+        <h3>مفتاح بوت Telegram مكشوف في الفرونت إند <span class="sev">أمني</span></h3>
+        <p>التوكن و chat_id مكتوبين حرفيًا داخل <code>index.html</code> و<code>admin.html</code> المنشورين. والـ OTP بيتولّد ويتخزّن في <code>sessionStorage</code> عند العميل.</p>
+        <span class="ev">أي شخص يفتح «View Source» يقدر يقرأ الكود ويستخدم البوت. لازم إبطال التوكن فورًا + نقل الإرسال لسيرفر.</span>
+      </div>
+
+      <div class="card prob sev-2">
+        <h3>أكواد الخصم إعلان مش نظام <span class="sev">مهم</span></h3>
+        <p><code>WELCOME10</code> مكتوب في شريط ثابت، مفيش حقل لإدخال كود في السلة، والكوبونات المحفوظة في الأدمن لا تُستخدم في الحساب.</p>
+      </div>
+
+      <div class="card prob sev-2">
+        <h3>مفيش مخزون حقيقي <span class="sev">مهم</span></h3>
+        <p>نموذج المنتج فيه: اسم، سعر، ماركة، وصف، مواصفات — <strong>بدون كمية أو حالة توفّر</strong>. فممكن تبيع حاجة غير موجودة.</p>
+      </div>
+
+      <div class="card prob sev-2">
+        <h3>صور ثقيلة جدًا <span class="sev">أداء</span></h3>
+        <p><code>whatsapp_logo.png</code> ≈ 3.9MB و<code>فاتورة.png</code> ≈ 592KB داخل الريبو. على نت موبايل مصري ده يعني ثواني تحميل إضافية.</p>
+        <span class="ev">الحل: WebP + تصغير + Lazy loading + CDN. توفير متوقع ~4.5MB.</span>
+      </div>
+
+      <div class="card prob sev-2">
+        <h3>ملفات ميتة وتكرار بيانات <span class="sev">تنظيم</span></h3>
+        <p><code>styles.css</code> و<code>script.js</code> غير مرتبطين بأي صفحة، والـ CSS والـ JS كله inline داخل الصفحات. وده معناه تكرار ومنع أي Cache حقيقي.</p>
+        <span class="ev">+ المنتجات الافتراضية معرّفة في مكانين بمفاتيح مختلفة (<code>products_data</code> / <code>store_all_products</code>).</span>
+      </div>
+
+      <div class="card prob sev-3">
+        <h3>مفيش SEO ولا مشاركة اجتماعية <span class="sev">نمو</span></h3>
+        <p>لا <code>description</code> ولا Open Graph ولا JSON-LD ولا Sitemap ولا صفحات منتج برابط مستقل. أي مشاركة على واتساب/فيسبوك تظهر كرابط بلا صورة أو وصف.</p>
+      </div>
+
+      <div class="card prob sev-3">
+        <h3>مفيش قياس <span class="sev">نمو</span></h3>
+        <p>لا GA4 ولا Meta Pixel ولا أحداث <code>add_to_cart</code>/<code>begin_checkout</code>؛ فمستحيل تعرف أي منتج بيتشاف وأي واحد بيبيع.</p>
+      </div>
+    </div>
+
+    <div class="callout danger">
+      <strong>⚠️ ابدأ بأمان:</strong> ادخل على BotFather ← <code>/revoke</code> لمفتاح البوت الحالي، وبعدها انقل إرسال رسائل الأوردرات والـ OTP لسيرفر (Vercel Function / Supabase Edge Function). أي مفتاح يُنشر في فرونت إند يُعتبر مكشوفًا حتى لو حذفته من الكوميت الجديد (بيفضل في تاريخ Git).
+    </div>
+  </div>
+</section>
+
+<!-- ==================== أول 5 ==================== -->
+<section id="critical">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2>أول 5 قرارات (أعلى مردود/مجهود)</h2></div>
+    <p class="sec-note">لو مش هتعمل غير خمس حاجات، اعمل الخمس دول — خلال أسبوع واحد تقريبًا.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div><h4>سلة حقيقية + Checkout بخطوتين</h4>
+          <p>Drawer جانبي: صورة، اسم، كمية ±، حذف، كوبون، الإجمالي. وبعده صفحة/نافذة Checkout: اسم، موبايل، محافظة، طريقة دفع (كاش عند الاستلام / تحويل / انستاباي).</p></div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div><h4>كل طلب يتسجّل + يوصل لك فورًا</h4>
+          <p>عند تأكيد الطلب: حفظه في قاعدة بيانات، إرسال رسالة Telegram منظمة لك، وفتح واتساب للعميل برسالة مُجهّزة (اختياري). رقم طلب ظاهر للعميل.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div><h4>نقل المنتجات لقاعدة بيانات مشتركة</h4>
+          <p>Supabase (مجاني للبداية) أو Firebase: جدول منتجات + طلبات + كوبونات. اللوحة تقرأ وتكتب هناك، والزوار يشوفون نفس البيانات لحظيًا.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div><h4>تأمين الدخول</h4>
+          <p>إبطال مفتاح البوت، والتحقق من الـ OTP على السيرفر (لا يُخزّن عند العميل)، وجلسة Admin بـ JWT/RLS، مع حد أقصى للمحاولات.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">5</div>
+        <div><h4>ضغط الصور + Meta/OG + Favicon</h4>
+          <p>صور المنتجات WebP بعرض 800px، صورة مشاركة 1200×630، وصف عربي للمتجر، وبيانات JSON-LD للمنتجات والأسعار.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== المصفوفة ==================== -->
+<section id="matrix">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2>مصفوفة الأولويات — 30 فكرة</h2></div>
+    <p class="sec-note">الجهد تقديري لأيام عمل، والأثر على المبيعات/الثقة. الأحمر = اعمله الآن، البرتقالي = الشهر القادم، الأخضر = توسّع.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>الفكرة</th><th>الفائدة التجارية</th><th>الجهد</th><th>الأثر</th><th>المرحلة</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>سلة جانبية + Checkout</td><td>تحويل الزائر لمشتري بدل التسرب</td><td>3–5 أيام</td><td><span class="dot d-red"></span>مرتفع جدًا</td><td>الآن</td></tr>
+          <tr><td>2</td><td>تسجيل الطلبات + إشعار Telegram</td><td>متابعة كل طلب وأرشفته</td><td>1–2 يوم</td><td><span class="dot d-red"></span>مرتفع جدًا</td><td>الآن</td></tr>
+          <tr><td>3</td><td>قاعدة بيانات مشتركة (Supabase)</td><td>تعديلات اللوحة تظهر لكل الزوار</td><td>4–7 أيام</td><td><span class="dot d-red"></span>مرتفع جدًا</td><td>الآن</td></tr>
+          <tr><td>4</td><td>تأمين OTP والتوكن</td><td>حماية اللوحة من الاختراق</td><td>1–2 يوم</td><td><span class="dot d-red"></span>مرتفع جدًا</td><td>الآن</td></tr>
+          <tr><td>5</td><td>ضغط الصور وWebP + Lazy</td><td>تحميل أسرع = تحويل أعلى</td><td>نصف يوم</td><td><span class="dot d-red"></span>مرتفع</td><td>الآن</td></tr>
+          <tr><td>6</td><td>كوبونات فعلية في السلة</td><td>حافز شراء + حملات</td><td>1 يوم</td><td><span class="dot d-amber"></span>متوسط+</td><td>الشهر 1</td></tr>
+          <tr><td>7</td><td>حقل مخزون + «آخر قطعة»</td><td>منع البيع الوهمي + إلحاح</td><td>1–2 يوم</td><td><span class="dot d-amber"></span>مرتفع</td><td>الشهر 1</td></tr>
+          <tr><td>8</td><td>حساب شحن حسب المحافظة</td><td>وضوح التكلفة = ثقة</td><td>1 يوم</td><td><span class="dot d-amber"></span>متوسط+</td><td>الشهر 1</td></tr>
+          <tr><td>9</td><td>تتبّع الطلب بكود</td><td>يقلل مكالمات «فين الأوردر؟»</td><td>2 أيام</td><td><span class="dot d-amber"></span>متوسط</td><td>الشهر 1</td></tr>
+          <tr><td>10</td><td>لوحات المفضلة والمقارنة</td><td>استرجاع نوايا الشراء</td><td>2 أيام</td><td><span class="dot d-amber"></span>متوسط+</td><td>الشهر 1</td></tr>
+          <tr><td>11</td><td>مشاركة المقارنة برابط</td><td>انتشار عضوي بين الأصدقاء</td><td>نصف يوم</td><td><span class="dot d-green"></span>متوسط</td><td>الشهر 2</td></tr>
+          <tr><td>12</td><td>فتح واتساب برسالة أوردر مُجهّزة</td><td>يكمّل الأوردر حتى لو حصل خطأ</td><td>نصف يوم</td><td><span class="dot d-amber"></span>مرتفع</td><td>الشهر 1</td></tr>
+          <tr><td>13</td><td>صفحة منتج مستقلة (URL لكل منتج)</td><td>SEO + مشاركة + إعلانات</td><td>4 أيام</td><td><span class="dot d-red"></span>مرتفع جدًا</td><td>الشهر 2</td></tr>
+          <tr><td>14</td><td>JSON-LD + Sitemap + OG</td><td>ظهور في Google Shopping</td><td>1–2 يوم</td><td><span class="dot d-red"></span>مرتفع</td><td>الشهر 1</td></tr>
+          <tr><td>15</td><td>تقييمات ومراجعات العملاء</td><td>الثقة = القرار</td><td>3 أيام</td><td><span class="dot d-amber"></span>مرتفع</td><td>الشهر 2</td></tr>
+          <tr><td>16</td><td>بحث فوري + فلاتر (سعر/ماركة/مقاس)</td><td>الوصول أسرع للمنتج</td><td>2–3 أيام</td><td><span class="dot d-amber"></span>متوسط+</td><td>الشهر 2</td></tr>
+          <tr><td>17</td><td>«الأكثر مبيعًا» و«شوهد مؤخرًا»</td><td>بيع متقاطع (Upsell)</td><td>1–2 يوم</td><td><span class="dot d-amber"></span>متوسط+</td><td>الشهر 2</td></tr>
+          <tr><td>18</td><td>تقسيط (فاليو / أمان / سوق)</td><td>يرفع سلة الشراء للشاشات واللابتوبات</td><td>3–5 أيام</td><td><span class="dot d-red"></span>مرتفع جدًا</td><td>الشهر 2</td></tr>
+          <tr><td>19</td><td>مدفوعات: انستاباي / فودافون كاش / Stripe</td><td>تقليل الاعتماد على الكاش</td><td>4–6 أيام</td><td><span class="dot d-amber"></span>مرتفع</td><td>الشهر 2</td></tr>
+          <tr><td>20</td><td>لوحة إحصائيات مبيعات حقيقية</td><td>قرارات بناءً على أرقام</td><td>3 أيام</td><td><span class="dot d-amber"></span>مرتفع</td><td>الشهر 2</td></tr>
+          <tr><td>21</td><td>تنبيه مخزون منخفض + تصدير Excel</td><td>إدارة مخزن احترافية</td><td>2 أيام</td><td><span class="dot d-green"></span>متوسط</td><td>الشهر 3</td></tr>
+          <tr><td>22</td><td>طباعة فاتورة / بوليصة شحن</td><td>توفير وقت التجهيز</td><td>2 أيام</td><td><span class="dot d-green"></span>متوسط</td><td>الشهر 3</td></tr>
+          <tr><td>23</td><td>سلة متروكة عبر واتساب</td><td>استرجاع 10–20% من السلات</td><td>2 أيام + تكامل</td><td><span class="dot d-red"></span>مرتفع جدًا</td><td>الشهر 3</td></tr>
+          <tr><td>24</td><td>GA4 + Meta Pixel + أحداث</td><td>إعلانات مربوطة بتحويل فعلي</td><td>1 يوم</td><td><span class="dot d-red"></span>مرتفع</td><td>الشهر 1</td></tr>
+          <tr><td>25</td><td>فحص توافق قطع الـ PC</td><td>«تجميع» يثق فيه العميل</td><td>4–6 أيام</td><td><span class="dot d-red"></span>مرتفع جدًا</td><td>الشهر 3</td></tr>
+          <tr><td>26</td><td>مساعد ذكي حقيقي (AI + بيانات المنتجات)</td><td>يرد 24/7 ويقترح ويضيف للسلة</td><td>5–7 أيام</td><td><span class="dot d-amber"></span>مرتفع</td><td>الشهر 3</td></tr>
+          <tr><td>27</td><td>نظام ضمان بالرقم التسلسلي</td><td>خدمة ما بعد البيع = سمعة</td><td>3–4 أيام</td><td><span class="dot d-green"></span>متوسط+</td><td>الشهر 4</td></tr>
+          <tr><td>28</td><td>استبدال جهازك القديم بخصم (Trade-in)</td><td>ميزة تفاضلية قوية</td><td>4 أيام</td><td><span class="dot d-green"></span>مرتفع</td><td>الشهر 4</td></tr>
+          <tr><td>29</td><td>PWA + إشعارات + عمل بدون نت</td><td>رجوع العميل بسرعة</td><td>2 أيام</td><td><span class="dot d-green"></span>متوسط</td><td>الشهر 4</td></tr>
+          <tr><td>30</td><td>برنامج إحالة + نقاط</td><td>نمو بلا تكلفة إعلانات</td><td>5 أيام</td><td><span class="dot d-green"></span>متوسط+</td><td>الشهر 4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== المراحل ==================== -->
+<section id="phases">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2>التفاصيل: 4 مراحل + ميزات التميّز</h2></div>
+    <p class="sec-note">كل فكرة مكتوبة كـ «إيه بالظبط + ليه». الأولوية للترتيب، مش للشكل.</p>
+
+    <div class="phase">
+      <div class="phase-head"><span class="pill">المرحلة 0</span><h3>إصلاحات حرجة وأمان</h3><span class="when">أسبوع 1</span></div>
+      <div class="phase-body">
+        <div class="idea"><div class="n">01</div><div>
+          <h4>تفعيل السلة فعليًا</h4>
+          <p>ربط <code>#cart-nav-btn</code> بلوحة جانبية: عناصر + كمية ± + حذف + كوبون + إجمالي + «إتمام الطلب». نفس الشيء للمفضلة والمقارنة (لوحة أو صفحة). دلوقتي الأزرار التلاتة دي مجرد ديكور.</p>
+          <div class="tags"><span class="tag hot">أعلى أولوية</span><span class="tag eff">3–5 أيام</span><span class="tag imp">يوقف التسرب</span></div>
+        </div></div>
+        <div class="idea"><div class="n">02</div><div>
+          <h4>إبطال مفتاح Telegram + نقل الإرسال للسيرفر</h4>
+          <p>أي مفتاح داخل HTML يُعتبر مكشوفًا. الحل: BotFather → <code>/revoke</code>، ثم Endpoint واحد (Serverless) هو اللي يرسل الرسائل، والمتصفح لا يعرف أي سر. نفس الشيء لحساب الـ OTP.</p>
+          <div class="tags"><span class="tag hot">أمان</span><span class="tag eff">1–2 يوم</span></div>
+        </div></div>
+        <div class="idea"><div class="n">03</div><div>
+          <h4>صور خفيفة</h4>
+          <p>تحويل <code>whatsapp_logo.png</code> (3.9MB) و<code>فاتورة.png</code> لـ WebP بعرض مناسب، إضافة <code>loading="lazy"</code> و<code>width/height</code> لمنع القفز، وإخراج الصور الثقيلة من الريبو إلى Storage/CDN.</p>
+          <div class="tags"><span class="tag eff">نصف يوم</span><span class="tag imp">LCP أسرع 2–4×</span></div>
+        </div></div>
+        <div class="idea"><div class="n">04</div><div>
+          <h4>تنظيف البنية</h4>
+          <p>فصل الـ CSS/JS من الـ inline إلى <code>assets/css</code> و<code>assets/js</code>، حذف <code>script.js</code>/<code>styles.css</code> الميتين، وتوحيد مصدر بيانات المنتجات (مفتاح واحد بدل <code>products_data</code> و<code>store_all_products</code>).</p>
+          <div class="tags"><span class="tag eff">1 يوم</span><span class="tag">قابلية صيانة</span></div>
+        </div></div>
+        <div class="idea"><div class="n">05</div><div>
+          <h4>أساسيات SEO والمشاركة</h4>
+          <p><code>meta description</code> عربي + Open Graph + Twitter Card + favicon + <code>sitemap.xml</code> + <code>robots.txt</code>. حاليًا أي مشاركة على واتساب تظهر بلا صورة ولا وصف.</p>
+          <div class="tags"><span class="tag eff">1–2 يوم</span><span class="tag imp">مشاركة أفضل</span></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="pill">المرحلة 1</span><h3>تجربة شراء كاملة</h3><span class="when">أسبوع 2–4</span></div>
+      <div class="phase-body">
+        <div class="idea"><div class="n">06</div><div>
+          <h4>Checkout بخطوتين</h4>
+          <p>خطوة 1: بيانات (اسم، موبايل، محافظة، عنوان). خطوة 2: مراجعة + طريقة الدفع. مع Validation عربي، وحفظ مسودة الطلب، وزر «اطلب عبر واتساب» كخطة بديلة.</p>
+          <div class="tags"><span class="tag hot">أعلى أثر</span><span class="tag eff">2–3 أيام</span></div>
+        </div></div>
+        <div class="idea"><div class="n">07</div><div>
+          <h4>حفظ الطلب + إشعار فوري</h4>
+          <p>عند التأكيد: <code>POST /orders</code> ← صف في قاعدة البيانات + رسالة Telegram منسّقة (اسم المنتجات، الإجمالي، المحافظة، الموبايل) + شاشة نجاح برقم طلب. حاليًا <code>ordersLog</code> لا يُكتب أبدًا.</p>
+          <div class="tags"><span class="tag imp">أساس التحليلات</span><span class="tag eff">1–2 يوم</span></div>
+        </div></div>
+        <div class="idea"><div class="n">08</div><div>
+          <h4>كوبونات شغّالة</h4>
+          <p>حقل كود في السلة يتحقق من جدول الكوبونات (نسبة/ثابت/حد أدنى/تاريخ انتهاء/حد استخدام)، ويظهر الخصم في الملخص. الكوبون الحالي «WELCOME10» مجرد نص إعلاني.</p>
+          <div class="tags"><span class="tag eff">1 يوم</span><span class="tag">تحفيز</span></div>
+        </div></div>
+        <div class="idea"><div class="n">09</div><div>
+          <h4>شحن حسب المحافظة + استلام من الفرع</h4>
+          <p>جدول محافظات وأسعار (مجاني فوق حد معيّن)، وخيار «استلم من مول البستان» بدون شحن. شفافية التكلفة قبل الدفع تقلل التخلي عن الطلب.</p>
+          <div class="tags"><span class="tag eff">1 يوم</span><span class="tag imp">ثقة</span></div>
+        </div></div>
+        <div class="idea"><div class="n">10</div><div>
+          <h4>مخزون و«آخر قطعة»</h4>
+          <p>حقل <code>stock</code> لكل منتج + تعطيل زر الشراء عند الصفر + شارة «باقي X فقط» لتحفيز القرار. ويظهر تنبيه في اللوحة عند أي منتج أقل من 3.</p>
+          <div class="tags"><span class="tag eff">1–2 يوم</span><span class="tag">دقة</span></div>
+        </div></div>
+        <div class="idea"><div class="n">11</div><div>
+          <h4>تتبّع الطلب</h4>
+          <p>صفحة «حالة طلبي» بكود قصير (مثال <code>AZ-1042</code>) تعرض الحالة: تم الاستلام → جاري التجهيز → تم الشحن → تم التسليم. يقلل اتصالات المتابعة بشكل كبير.</p>
+          <div class="tags"><span class="tag eff">2 أيام</span><span class="tag imp">رضا</span></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="pill">المرحلة 2</span><h3>باك إند حقيقي ولوحة تحكم</h3><span class="when">أسبوع 4–8</span></div>
+      <div class="phase-body">
+        <div class="idea"><div class="n">12</div><div>
+          <h4>Supabase: منتجات + طلبات + كوبونات</h4>
+          <p>جداول <code>products</code>, <code>orders</code>, <code>order_items</code>, <code>coupons</code>, <code>settings</code>. القراءة عامة للزوار، والكتابة للأدمن فقط عبر RLS. أهم تغيير في المشروع: لوحة التحكم تبقى حقيقية.</p>
+          <div class="tags"><span class="tag hot">نقطة التحول</span><span class="tag eff">4–7 أيام</span><span class="tag">مجاني للبداية</span></div>
+        </div></div>
+        <div class="idea"><div class="n">13</div><div>
+          <h4>تخزين الصور في Storage</h4>
+          <p>رفع صورة المنتج من اللوحة إلى Bucket + ضغط تلقائي، بدل Base64 داخل localStorage (اللي بيملأ الذاكرة ويبطّأ الصفحة).</p>
+          <div class="tags"><span class="tag eff">1–2 يوم</span></div>
+        </div></div>
+        <div class="idea"><div class="n">14</div><div>
+          <h4>دخول آمن بلا أسرار في الفرونت</h4>
+          <p>Supabase Auth (إيميل/باسورد مع 2FA) أو OTP من السيرفر، وجلسة بصلاحية محددة، وسجل عمليات (مين عدّل السعر ومتى).</p>
+          <div class="tags"><span class="tag hot">أمان</span><span class="tag eff">2–3 أيام</span></div>
+        </div></div>
+        <div class="idea"><div class="n">15</div><div>
+          <h4>لوحة معلومات بالأرقام</h4>
+          <p>مبيعات اليوم/الشهر، عدد الطلبات، متوسط قيمة الطلب، أفضل 5 منتجات، الأكثر رجوعًا، مخزون منخفض، وتصدير Excel/CSV. بدل شاشات ثابتة بقيم صفرية.</p>
+          <div class="tags"><span class="tag eff">3 أيام</span><span class="tag imp">قرارات</span></div>
+        </div></div>
+        <div class="idea"><div class="n">16</div><div>
+          <h4>الفاتورة وبوليصة الشحن</h4>
+          <p>زر طباعة A4/A5 للفاتورة ببيانات المتجر والضمان، وملصق شحن بالمحافظة والموبايل — تسريع تجهيز الأوردرات اليومية.</p>
+          <div class="tags"><span class="tag eff">2 أيام</span></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="pill">المرحلة 3</span><h3>النمو والتسويق</h3><span class="when">شهر 2–3</span></div>
+      <div class="phase-body">
+        <div class="idea"><div class="n">17</div><div>
+          <h4>صفحة مستقلة لكل منتج</h4>
+          <p>رابط مثل <code>/product/samsung-odyssey-g5</code> مع صورة ومواصفات وJSON-LD وسعر ومخزون — ده اللي يخلي إعلانات جوجل ومشاركات فيسبوك تعمل، ويسمح بمقارنة الأسعار.</p>
+          <div class="tags"><span class="tag hot">SEO</span><span class="tag eff">4 أيام</span></div>
+        </div></div>
+        <div class="idea"><div class="n">18</div><div>
+          <h4>مراجعات وتقييمات</h4>
+          <p>نجوم + صور من العملاء + «شراء موثّق». حتى 5 مراجعات حقيقية ترفع التحويل أكثر من أي بانر تخفيض.</p>
+          <div class="tags"><span class="tag eff">3 أيام</span><span class="tag imp">ثقة</span></div>
+        </div></div>
+        <div class="idea"><div class="n">19</div><div>
+          <h4>سلة متروكة + تنبيه انخفاض سعر</h4>
+          <p>رسالة واتساب تلقائية بعد ساعة من سلة غير مكتملة، وإشعار «السعر نزل» لمن أضاف منتجًا للمفضلة. أعلى مردود تسويقي بأقل تكلفة.</p>
+          <div class="tags"><span class="tag hot">مبيعات</span><span class="tag eff">2 أيام</span></div>
+        </div></div>
+        <div class="idea"><div class="n">20</div><div>
+          <h4>تقسيط ومدفوعات</h4>
+          <p>آية/فاليو/أمان للشاشات واللابتوبات + انستاباي وفودافون كاش. التقسيط يفتح شريحة كاملة من المشترين ويقلل حاجز السعر.</p>
+          <div class="tags"><span class="tag imp">سلة أعلى</span><span class="tag eff">4–6 أيام</span></div>
+        </div></div>
+        <div class="idea"><div class="n">21</div><div>
+          <h4>قياس حقيقي</h4>
+          <p>GA4 + Meta Pixel + أحداث: مشاهدة منتج، إضافة للسلة، بدء الدفع، شراء. من غيرها التسويق كله تخمين.</p>
+          <div class="tags"><span class="tag eff">1 يوم</span><span class="tag imp">ضروري</span></div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head"><span class="pill">المرحلة 4</span><h3>ميزات التميّز (اللي تخليك مختلف)</h3><span class="when">شهر 3–5</span></div>
+      <div class="phase-body">
+        <div class="idea"><div class="n">22</div><div>
+          <h4>«ابنِ تجميعة» بذكاء حقيقي</h4>
+          <p>فحص توافق تلقائي: السوكيت بين المعالج واللوحة، نوع الرام (DDR4/DDR5)، طول الكارت مقابل الصندوق، وقدرة الـ PSU الموصى بها. + شريط «الأداء المتوقع» ومشاركة التجميعة برابط. تجميع PC عندك موجود لكنه جمع أسعار فقط.</p>
+          <div class="tags"><span class="tag hot">ميزة قاتلة</span><span class="tag eff">4–6 أيام</span></div>
+        </div></div>
+        <div class="idea"><div class="n">23</div><div>
+          <h4>مساعد ذكي مربوط بالمنتجات</h4>
+          <p>بدل ردود <code>if/else</code> الحالية: مساعد يفهم «عايز لابتوب للجامعة تحت 25 ألف» ويقترح 3 خيارات من مخزونك ويضيفها للسلة. مع زر تحويل لواتساب وإخفاء بيانات حساسة.</p>
+          <div class="tags"><span class="tag hot">تجربة</span><span class="tag eff">5–7 أيام</span></div>
+        </div></div>
+        <div class="idea"><div class="n">24</div><div>
+          <h4>نظام ضمان بالرقم التسلسلي</h4>
+          <p>تسجيل الضمان أونلاين، معرفة المدة المتبقية، وفتح طلب صيانة من نفس الصفحة. ده يبني سمعة «محل بيفهم» ويقلل النزاعات.</p>
+          <div class="tags"><span class="tag imp">ما بعد البيع</span><span class="tag eff">3–4 أيام</span></div>
+        </div></div>
+        <div class="idea"><div class="n">25</div><div>
+          <h4>استبدال جهازك القديم (Trade-in)</h4>
+          <p>العميل يختار المكونات القديمة ويشوف خصم تقديري فوري على التجميعة الجديدة. ميزة مش موجودة في معظم المتاجر المصرية.</p>
+          <div class="tags"><span class="tag eff">4 أيام</span><span class="tag imp">تفاضل</span></div>
+        </div></div>
+        <div class="idea"><div class="n">26</div><div>
+          <h4>PWA + إشعارات</h4>
+          <p>تثبيت الموقع كتطبيق على الموبايل، تحميل فوري في الزيارة الثانية، وإشعار بعروض محددة. تكلفة صغيرة وأثر كبير على الرجوع.</p>
+          <div class="tags"><span class="tag eff">2 أيام</span></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== خطة 90 يوم ==================== -->
+<section id="plan">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><h2>خطة تنفيذ 90 يوم</h2></div>
+    <p class="sec-note">ترتيب عملي: كل أسبوع له مخرج ملموس تقدر تجربه بنفسك.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>الفترة</th><th>التركيز</th><th>المخرج الملموس</th><th>معيار النجاح</th></tr></thead>
+        <tbody>
+          <tr><td>أسبوع 1</td><td>أمان + أداء + أساسيات</td><td>توكن مُبطل، صور WebP، Meta/OG، تنظيف الملفات</td><td>تحميل الصفحة &lt; 2.5s على 4G</td></tr>
+          <tr><td>أسبوع 2</td><td>سلة + Checkout</td><td>تجربة شراء كاملة من المنتج للطلب</td><td>تقدر تعمل أوردر تجريبي كامل</td></tr>
+          <tr><td>أسبوع 3–4</td><td>قاعدة البيانات + نقل المنتجات</td><td>لوحة تعدّل والزائر يشوف فورًا</td><td>تعديل سعر يظهر في متصفح آخر</td></tr>
+          <tr><td>أسبوع 5–6</td><td>الطلبات + المخزون + الكوبونات + الشحن</td><td>سجل طلبات حقيقي وتنبيه Telegram</td><td>كل أوردر مسجّل وله رقم</td></tr>
+          <tr><td>أسبوع 7–8</td><td>لوحة المعلومات + الفواتير + تتبع الطلب</td><td>أرقام مبيعات ومعالجة أوردرات أسرع</td><td>تقرير أسبوعي جاهز بضغطة</td></tr>
+          <tr><td>أسبوع 9–10</td><td>SEO + صفحات منتج + تقييمات</td><td>روابط منتجات مفهرسة</td><td>ظهور المنتجات في نتائج البحث</td></tr>
+          <tr><td>أسبوع 11–12</td><td>تسويق + قياس + تقسيط</td><td>GA4، سلة متروكة، خيارات دفع</td><td>معدل تحويل أعلى + مصادر طلبات واضحة</td></tr>
+          <tr><td>الشهر 4+</td><td>التميّز</td><td>فحص توافق التجميع، مساعد ذكي، ضمان، Trade-in</td><td>ميزات لا يقدّمها المنافس</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== KPIs ==================== -->
+<section id="kpi">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><h2>المؤشرات اللي تتابعها</h2></div>
+    <p class="sec-note">بدون أرقام، أي «تطوير» يبقى رأي. هذه الأرقام تكفي للبداية:</p>
+    <div class="grid g3">
+      <div class="card"><h3>🎯 معدل التحويل</h3><p>نسبة الزوار اللي عملوا طلب. المستهدف واقعيًا 1–3% بعد إتمام Checkout وبناء الثقة.</p></div>
+      <div class="card"><h3>🛒 نسبة السلات المتروكة</h3><p>طبيعي 60–75%؛ أي رقم أعلى معناه مشكلة في الشحن أو الشفافية أو الثقة.</p></div>
+      <div class="card"><h3>💰 متوسط قيمة الطلب (AOV)</h3><p>يترفع بالـ Upsell (كيبورد/ماوس/ضمان ممتد) وبتقسيط يوسّع الميزانية.</p></div>
+      <div class="card"><h3>⚡ سرعة الصفحة</h3><p>LCP أقل من 2.5 ثانية وCLS صغير. كل ثانية تأخير بتكلف تسريب زوار.</p></div>
+      <div class="card"><h3>🔁 نسبة العملاء العائدين</h3><p>المفضلة + تنبيه انخفاض السعر + برنامج نقاط = زيارات متكررة بلا إعلانات.</p></div>
+      <div class="card"><h3>📦 وقت تجهيز الطلب</h3><p>من الطلب للتسليم. الفاتورة الآلية وبوليصة الشحن تقلل الوقت لنصف.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Stack ==================== -->
+<section id="stack">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><h2>اقتراح تقني بسيط وبدون تكلفة كبيرة</h2></div>
+    <p class="sec-note">مش لازم تعيد بناء المشروع من الصفر. خلي الواجهة الحالية وابني تحتها أساس صح.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>🧱 البنية</h3>
+        <p><strong>الواجهة:</strong> نفس HTML/CSS الحالي مقسّم إلى <code>assets/</code> + مكونات JS صغيرة، أو تحويل تدريجي لـ Astro/Vite لو الأقسام كترت.</p>
+        <p><strong>البيانات:</strong> Supabase (Postgres + Auth + Storage + RLS) — الخطة المجانية كافية جدًا للبداية.</p>
+        <p><strong>الاستضافة:</strong> Vercel/Netlify (الصفحات) + Functions للأسرار (OTP، إشعارات).</p>
+      </div>
+      <div class="card">
+        <h3>🧩 لماذا هذا الاختيار؟</h3>
+        <p>يحل أكبر مشكلتين مرة واحدة: البيانات المشتركة (اللوحة تؤثر على الموقع) والأمان (لا أسرار في المتصفح).</p>
+        <p>ولا يحتاج سيرفر تديره أو فاتورة شهرية في البداية. وكمان يعطيك Auth و Storage جاهزين بدل بناء نظام مستخدمين من الصفر.</p>
+      </div>
+      <div class="card">
+        <h3>🗂️ الصور</h3>
+        <p>Bucket + تحويل تلقائي لـ WebP + مقاسات (thumb 400 / card 800 / detail 1600) + <code>srcset</code>. الهواتف تحمّل الأصغر فقط.</p>
+      </div>
+      <div class="card">
+        <h3>🧪 الجودة</h3>
+        <p>تجربة كل صفحة على موبايل حقيقي قبل النشر، وفحص Lighthouse قبل/بعد، ونسخة احتياطية أسبوعية (اللوحة فيها تصدير/استيراد — استخدمه فعلًا).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ابدأ ==================== -->
+<section id="start">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">08</span><h2>لو مش عارف تبدأ منين</h2></div>
+    <p class="sec-note">أقترح أول 3 خطوات بالترتيب ده تحديدًا:</p>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><div><h4>أبطل مفتاح Telegram</h4><p>خطوة أمان فورية لا تحتمل التأجيل، ومدتها دقيقتان على BotFather.</p></div></div>
+      <div class="step"><div class="num">2</div><div><h4>اعمل السلة والـ Checkout</h4><p>ده أكبر مكسب في أقل وقت: كل المنتجات والصور والمفضلة موجودة بالفعل — الناقص فقط نهاية الطريق للعميل.</p></div></div>
+      <div class="step"><div class="num">3</div><div><h4>اربط الطلبات بـ Supabase</h4><p>بعدها اللوحة تبقى أداة إدارة حقيقية، وتقدر تعرف كل يوم كام طلب وكام جنيه.</p></div></div>
+    </div>
+    <div class="callout info">
+      <strong>💡 فكرة سريعة قبل أي تطوير:</strong> اعمل تجربة شراء كاملة بنفسك على الموبايل كأنك عميل جديد، من أول ما تفتح الموقع لحد «أنا استلمت المنتج». هتلاقي المشكلات الحقيقية بنفسك قبل أي كود.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>خطة تطوير مبنية على مراجعة كود المشروع الحالي — Azzam Technology © 2026</span>
+    <a class="back" href="../index.html">← العودة للمتجر</a>
+  </div>
+</footer>
+
+<script>
+  // إظهار القسم النشط في شريط التنقل
+  const links = [...document.querySelectorAll('nav.toc a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      links.forEach(l => { l.style.color=''; l.style.background=''; });
+      const active = links.find(l => l.getAttribute('href') === '#' + e.target.id);
+      if (active) { active.style.color = '#fff'; active.style.background = 'rgba(230,57,70,.16)'; }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  sections.forEach(s => io.observe(s));
+</script>
+</body>
+</html>
