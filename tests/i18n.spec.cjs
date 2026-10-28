@@ -23,6 +23,13 @@ async function seed(page, products = bilingualProducts) {
     }, products);
 }
 
+async function completeLogin(page) {
+    await page.locator('#login-username').fill('admin');
+    await page.locator('#login-password').fill('browser-test-password-2026');
+    await page.locator('#login-submit').click();
+    await expect(page.locator('#panel-dashboard')).toBeVisible();
+}
+
 async function missingTranslations(page) {
     return page.evaluate(() => {
         const selectors = ['data-i18n', 'data-i18n-message', 'data-i18n-placeholder', 'data-i18n-aria-label', 'data-i18n-title', 'data-i18n-alt', 'data-i18n-data-q', 'data-i18n-content'];
@@ -63,10 +70,11 @@ test('language, direction, labels and preference stay in sync across pages and r
 
     await page.goto('/admin.html');
     await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
-    await page.locator('.login-language-bar [data-language-switch]').click();
-    await expect(page.locator('#skip-login-btn')).toContainText('Skip sign in');
+    await page.locator('.auth-header [data-language-switch]').click();
+    await expect(page.locator('#login-submit')).toContainText('Sign in');
     expect(await missingTranslations(page)).toEqual([]);
-    await page.locator('#skip-login-btn').click();
+    await completeLogin(page);
+    expect(await missingTranslations(page)).toEqual([]);
     await expect(page.locator('#panel-dashboard h2')).toContainText('Dashboard');
     await expect(page.locator('.stat-label').first()).toHaveText('Product');
     await page.goto('/');
@@ -151,8 +159,8 @@ test('admin can add and edit optional English product data without losing in-pro
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto('/admin.html');
-    await page.locator('.login-language-bar [data-language-switch]').click();
-    await page.locator('#skip-login-btn').click();
+    await page.locator('.auth-header [data-language-switch]').click();
+    await completeLogin(page);
     await page.locator('[data-panel="add-product"]').click();
     await page.locator('#prod-name').fill('شاشة جديدة');
     await page.locator('#prod-name-en').fill('New monitor');
@@ -196,7 +204,7 @@ test('editing a legacy product preserves original fields and can leave translati
     const legacy = [{ id: 'legacy', type: 'monitor', name: 'شاشة قديمة', price: 3000, stock: 8, discount: 12, specs: { الدقة: 'FHD' }, translations: { fr: { name: 'Écran' } } }];
     await seed(page, legacy);
     await page.goto('/admin.html');
-    await page.locator('#skip-login-btn').click();
+    await completeLogin(page);
     await page.locator('[data-panel="products"]').click();
     await page.locator('#products-table .edit-btn').click();
     await expect(page.locator('#prod-name-en')).toHaveValue('');
@@ -235,14 +243,14 @@ test('assistant understands common English questions and retains custom answers 
     await expect(page.locator('.msg.bot').last()).toHaveText('رد خاص كما كُتب');
 });
 
-test('both directions fit mobile and desktop viewports on all three pages', async ({ page }) => {
+test('both directions fit mobile and desktop viewports on public, login and dashboard pages', async ({ page }) => {
     for (const width of [320, 390, 768, 1024, 1440]) {
         await page.setViewportSize({ width, height: 844 });
-        for (const path of ['/', '/chat-bot.html', '/admin.html']) {
+        for (const path of ['/', '/chat-bot.html', '/login.html']) {
             await page.goto(path);
             for (const language of ['en', 'ar']) {
                 if (await page.locator('html').getAttribute('lang') !== language) {
-                    const control = path === '/' ? '.topbar [data-language-switch]' : path.includes('chat') ? '.chat-header [data-language-switch]' : '.login-language-bar [data-language-switch]';
+                    const control = path === '/' ? '.topbar [data-language-switch]' : path.includes('chat') ? '.chat-header [data-language-switch]' : '.auth-header [data-language-switch]';
                     await page.locator(control).click();
                 }
                 await expect(page.locator('html')).toHaveAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
@@ -250,6 +258,16 @@ test('both directions fit mobile and desktop viewports on all three pages', asyn
                 expect(sizes[0], `${path} ${language} html overflow at ${width}px`).toBe(width);
                 expect(sizes[1], `${path} ${language} body overflow at ${width}px`).toBe(width);
             }
+        }
+    }
+    await page.goto('/admin.html');
+    await completeLogin(page);
+    for (const width of [320, 390, 768, 1024, 1440]) {
+        await page.setViewportSize({ width, height: 844 });
+        for (const language of ['en', 'ar']) {
+            if (await page.locator('html').getAttribute('lang') !== language) await page.locator('.admin-language-bar [data-language-switch]').click();
+            await expect(page.locator('html')).toHaveAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
+            expect(await page.evaluate(() => document.documentElement.scrollWidth), `admin ${language} overflow at ${width}px`).toBe(width);
         }
     }
 });
@@ -279,30 +297,24 @@ test('wishlist and comparison localize controls while translated product data st
     expect(await page.evaluate(() => window.pwned)).toBeUndefined();
 });
 
-test('transient sign-in errors and button text change language without resending a code', async ({ page }) => {
+test('sign-in errors change language without sending another request', async ({ page }) => {
     let requests = 0;
-    await page.route('https://api.telegram.org/**', async route => {
-        if (route.request().method() !== 'OPTIONS') requests++;
-        await route.fulfill({
-            status: 200,
-            headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': 'content-type' },
-            contentType: 'application/json',
-            body: JSON.stringify({ ok: false })
-        });
-    });
+    page.on('request', request => { if (request.url().endsWith('/api/auth/login')) requests++; });
     await page.goto('/admin.html');
-    await page.locator('#request-code-btn').click();
-    await expect(page.locator('#step1-error')).toContainText('فشل الإرسال');
-    await page.locator('.login-language-bar [data-language-switch]').click();
-    await expect(page.locator('#step1-error')).toContainText('Could not send');
-    await expect(page.locator('#request-code-btn')).toContainText('Request a Telegram verification code');
+    await page.locator('#login-username').fill('admin');
+    await page.locator('#login-password').fill('wrong-password');
+    await page.locator('#login-submit').click();
+    await expect(page.locator('#login-error')).toContainText('غير صحيحة');
+    await page.locator('.auth-header [data-language-switch]').click();
+    await expect(page.locator('#login-error')).toContainText('incorrect');
+    await expect(page.locator('#login-submit')).toContainText('Sign in');
     expect(requests).toBe(1);
 });
 
 test('dashboard mobile navigation mirrors correctly without losing form data', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 844 });
     await page.goto('/admin.html');
-    await page.locator('#skip-login-btn').click();
+    await completeLogin(page);
     await page.locator('#mobile-menu-btn').click();
     await expect(page.locator('#sidebar')).toHaveClass(/open/);
     await expect.poll(async () => Math.round(await page.locator('#sidebar').evaluate(el => el.getBoundingClientRect().right))).toBe(320);

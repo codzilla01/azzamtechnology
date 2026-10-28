@@ -1,0 +1,40 @@
+{
+  "routes": [
+    {
+      "src": "^/(?:private|server|tests)(?:/.*)?$",
+      "status": 404
+    },
+    {
+      "src": "^/(?:server\\.js|playwright\\.config\\.cjs|package(?:-lock)?\\.json)$",
+      "status": 404
+    },
+    {
+      "src": "^/login\\.html$",
+      "headers": {
+        "Cache-Control": "no-store",
+        "X-Frame-Options": "DENY",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Security-Policy": "frame-ancestors 'none'",
+        "Strict-Transport-Security": "max-age=31536000"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/admin/?$",
+      "status": 308,
+      "headers": {
+        "Location": "/admin.html",
+        "Cache-Control": "no-store"
+      }
+    },
+    {
+      "src": "^/admin\\.html$",
+      "dest": "/api/admin"
+    },
+    {
+      "handle": "filesystem"
+    }
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "public"
+}

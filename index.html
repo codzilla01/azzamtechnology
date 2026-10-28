@@ -220,28 +220,6 @@
         .modal-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-light); }
         .modal-actions-row { display: flex; gap: 8px; flex-wrap: wrap; }
 
-        /* ========== 🔐 ADMIN LOGIN MODAL (سري) ========== */
-        .admin-login-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 20000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(12px); padding: 20px; }
-        .admin-login-overlay.open { display: flex; }
-        .admin-login-card { background: var(--bg-card); border-radius: 24px; padding: 32px 24px; text-align: center; max-width: 400px; width: 100%; border: 1px solid var(--glass-border); box-shadow: 0 30px 80px rgba(0,0,0,0.7); position: relative; animation: modalIn 0.3s ease; }
-        .admin-login-card .admin-icon { width: 60px; height: 60px; background: var(--gradient-accent); border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; margin-bottom: 12px; box-shadow: 0 8px 24px rgba(230,57,70,0.4); }
-        .admin-login-card h3 { color: var(--text-primary); font-size: 1.2rem; margin-bottom: 16px; }
-        .admin-login-card .auth-step { display: none; }
-        .admin-login-card .auth-step.active { display: block; }
-        .admin-login-card .telegram-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; border: 2px solid #0088cc; border-radius: 12px; background: linear-gradient(135deg, #0088cc, #0099dd); cursor: pointer; font-weight: 700; font-size: 0.9rem; font-family: var(--font-main); color: #fff; transition: all 0.2s; }
-        .admin-login-card .telegram-btn:hover { background: linear-gradient(135deg, #0099dd, #00aaff); }
-        .admin-login-card .telegram-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .admin-login-card .otp-input-group { display: flex; gap: 8px; justify-content: center; margin: 16px 0; }
-        .admin-login-card .otp-input { width: 46px; height: 50px; text-align: center; font-size: 1.3rem; font-weight: 700; border: 2px solid var(--border-color); border-radius: 10px; background: var(--bg-secondary); color: var(--text-primary); font-family: monospace; }
-        .admin-login-card .otp-input:focus { border-color: #0088cc; outline: none; }
-        .admin-login-card .timer-display { color: #f59e0b; font-size: 0.8rem; margin: 8px 0; }
-        .admin-login-card .resend-link { color: #0088cc; cursor: pointer; font-size: 0.8rem; }
-        .admin-login-card .resend-link.disabled { color: var(--text-muted); cursor: not-allowed; pointer-events: none; }
-        .admin-login-card .error-msg { color: #ef4444; font-size: 0.8rem; margin-top: 8px; display: none; }
-        .admin-login-card .error-msg.show { display: block; }
-        .admin-login-close { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
-        .admin-login-close:hover { background: var(--accent); }
-
         .footer { background: #050a14; color: #94a3b8; padding: 60px 0 24px; margin-top: 80px; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 36px; margin-bottom: 36px; }
         .footer-col h4 { color: #fff; margin-bottom: 18px; font-size: 1.05rem; }
@@ -252,7 +230,7 @@
         @media (max-width: 480px) { .modal-actions-row .btn { flex: 1; justify-content: center; font-size: 0.8rem; padding: 10px; } }
         @media (max-width: 992px) { .pc-builder-grid { grid-template-columns: 1fr; } .pc-summary { position: static; } }
         @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display: flex; } .products-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; } .product-card-image { height: 200px; } .hero h1 { font-size: 1.8rem; } }
-        @media (max-width: 480px) { .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; } .product-card-image { height: 150px; } .product-price { font-size: 1.2rem; } .monitor-tab { padding: 6px 14px; font-size: 0.75rem; } .admin-login-card .otp-input { width: 38px; height: 44px; font-size: 1.1rem; } }
+        @media (max-width: 480px) { .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; } .product-card-image { height: 150px; } .product-price { font-size: 1.2rem; } .monitor-tab { padding: 6px 14px; font-size: 0.75rem; } }
     </style>
     <link rel="stylesheet" href="storefront.css">
 </head>
@@ -298,35 +276,6 @@
             </div>
         </div>
     </nav>
-
-    <!-- 🔐 نافذة دخول المسؤول السري -->
-    <div class="admin-login-overlay" id="admin-login-overlay" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
-        <div class="admin-login-card">
-            <button class="admin-login-close" id="admin-login-close" aria-label="إغلاق نافذة دخول المسؤول" data-i18n-aria-label="إغلاق نافذة دخول المسؤول">&times;</button>
-            <div class="admin-icon"><i class="fas fa-shield-halved"></i></div>
-            <h3 id="admin-login-title"><span data-i18n="🔐 دخول المسؤول">🔐 دخول المسؤول</span></h3>
-            <div class="auth-step active" id="admin-step-request">
-                <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:16px;"><span data-i18n="تحقق سريع عبر Telegram">تحقق سريع عبر Telegram</span></p>
-                <button class="telegram-btn" id="admin-request-code-btn"><i class="fab fa-telegram-plane"></i> <span data-i18n="طلب كود التحقق">طلب كود التحقق</span></button>
-                <div class="error-msg" id="admin-step1-error"></div>
-                <div style="color:#22c55e;font-size:0.8rem;margin-top:8px;display:none;" id="admin-step1-success"></div>
-            </div>
-            <div class="auth-step" id="admin-step-verify">
-                <p style="color:var(--text-muted);font-size:0.8rem;"><span data-i18n="أدخل الكود المكون من 6 أرقام">أدخل الكود المكون من 6 أرقام</span></p>
-                <div class="otp-input-group">
-                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-1" inputmode="numeric">
-                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-2" inputmode="numeric">
-                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-3" inputmode="numeric">
-                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-4" inputmode="numeric">
-                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-5" inputmode="numeric">
-                    <input type="text" class="otp-input" maxlength="1" id="admin-otp-6" inputmode="numeric">
-                </div>
-                <div class="timer-display" id="admin-timer-display"></div>
-                <span class="resend-link disabled" id="admin-resend-link"><span data-i18n="إعادة الإرسال">إعادة الإرسال</span></span>
-                <div class="error-msg" id="admin-step2-error"></div>
-            </div>
-        </div>
-    </div>
 
     <main id="main-content">
         <section class="hero" id="home" aria-labelledby="hero-title">
@@ -429,7 +378,7 @@
             <div class="footer-grid">
                 <div class="footer-col footer-brand"><div class="footer-wordmark" dir="ltr">AZZAM <span>TECHNOLOGY</span></div><p><span data-i18n="مساحتك لكل ما يخص أجهزة الكمبيوتر، الشاشات والتجميع.">مساحتك لكل ما يخص أجهزة الكمبيوتر، الشاشات والتجميع.</span></p><a href="chat-bot.html" class="footer-assist"><i class="fa-solid fa-robot" aria-hidden="true"></i> <span data-i18n="اسأل المساعد">اسأل المساعد</span></a></div>
                 <div class="footer-col"><h4><span data-i18n="تصفّح المتجر">تصفّح المتجر</span></h4><a href="#monitors"><span data-i18n="الشاشات">الشاشات</span></a><a href="#laptops"><span data-i18n="اللابتوبات">اللابتوبات</span></a><a href="#pc-section"><span data-i18n="أجهزة PC">أجهزة PC</span></a><a href="#builder"><span data-i18n="تجميع جهازك">تجميع جهازك</span></a></div>
-                <div class="footer-col"><h4><span data-i18n="نقدر نساعدك؟">نقدر نساعدك؟</span></h4><a href="chat-bot.html"><span data-i18n="المساعد الذكي">المساعد الذكي</span></a><a href="https://wa.me/201025555207" target="_blank" rel="noopener noreferrer"><span data-i18n="تواصل عبر واتساب">تواصل عبر واتساب</span></a></div>
+                <div class="footer-col"><h4><span data-i18n="نقدر نساعدك؟">نقدر نساعدك؟</span></h4><a href="chat-bot.html"><span data-i18n="المساعد الذكي">المساعد الذكي</span></a><a href="https://wa.me/201025555207" target="_blank" rel="noopener noreferrer"><span data-i18n="تواصل عبر واتساب">تواصل عبر واتساب</span></a><a href="/admin.html"><span data-i18n="دخول الإدارة">دخول الإدارة</span></a></div>
                 <div class="footer-col"><h4><span data-i18n="تواصل معنا">تواصل معنا</span></h4><p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span data-i18n="مول البستان - القاهرة">مول البستان - القاهرة</span></p><a href="tel:01025555207"><i class="fa-solid fa-phone" aria-hidden="true"></i> <span dir="ltr">010 2555 5207</span></a></div>
             </div>
             <div class="footer-bottom"><p>&copy; <span data-i18n="2026 Azzam Technology. جميع الحقوق محفوظة.">2026 Azzam Technology. جميع الحقوق محفوظة.</span></p><p>Designed by <a href="https://wa.me/+201010184778" target="_blank" rel="noopener noreferrer">Mr.Developer</a></p></div>
@@ -445,12 +394,7 @@
             const WHATSAPP_NUMBER = '201025555207';
             const ADMIN_URL = 'admin.html';
             
-            // ==================== 🔐 إعدادات الدخول السري ====================
-            const TELEGRAM_BOT_TOKEN = '8723447348:AAGtKoujIGCtbLXuPUWAR-B-oweiOdcDCKk';
-            const TELEGRAM_CHAT_ID = '6776057443';
-            const OTP_KEY = 'telegram_otp_data';
-            const LONG_PRESS_DURATION = 3000; // 3 ثواني
-            let otpTimer = null, otpTimeLeft = 0;
+            const LONG_PRESS_DURATION = 3000;
 
             const $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
             const t = I18n.t;
@@ -539,76 +483,7 @@
                 setTimeout(() => openAdminLogin(), 500);
             }
 
-            // ==================== ADMIN LOGIN ====================
-            function openAdminLogin() {
-                document.getElementById('admin-login-overlay').classList.add('open');
-                showAdminStep('request');
-                document.getElementById('admin-step1-success').style.display = 'none';
-            }
-            function closeAdminLogin() {
-                document.getElementById('admin-login-overlay').classList.remove('open');
-                clearInterval(otpTimer);
-            }
-
-            function showAdminStep(step) {
-                $$('.admin-login-card .auth-step').forEach(s => s.classList.remove('active'));
-                const el = document.getElementById('admin-step-' + step);
-                if (el) el.classList.add('active');
-                $$('.admin-login-card .error-msg').forEach(e => { e.textContent = ''; delete e.dataset.i18nMessage; e.classList.remove('show'); });
-            }
-            function showAdminError(elId, msg, values = {}) { const el = document.getElementById(elId); if (el) { I18n.setMessage(el, msg, values); el.classList.add('show'); } }
-
-            async function adminRequestOTP() {
-                const btn = document.getElementById('admin-request-code-btn');
-                if (btn) { btn.disabled = true; btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span data-i18n="جاري الإرسال...">${t('جاري الإرسال...')}</span>`; }
-                const otp = Math.floor(100000 + Math.random() * 900000).toString();
-                sessionStorage.setItem(OTP_KEY, JSON.stringify({ code: otp, expires: Date.now() + 300000, attempts: 0 }));
-                const msg = `🔐 *رمز تحقق*\n🔢 الرمز: *${otp}*\n⏰ ${new Date().toLocaleString('ar-EG')}\n\n_صالح 5 دقائق_`;
-                try {
-                    const r = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' }) });
-                    const d = await r.json();
-                    if (d.ok) { document.getElementById('admin-step1-success').style.display = 'block'; I18n.setMessage(document.getElementById('admin-step1-success'), '✅ تم الإرسال'); setTimeout(() => { showAdminStep('verify'); startAdminTimer(300); document.getElementById('admin-otp-1')?.focus(); }, 600); }
-                    else showAdminError('admin-step1-error', '❌ فشل الإرسال');
-                } catch(e) { showAdminError('admin-step1-error', '❌ فشل الاتصال'); }
-                finally { if (btn) { btn.disabled = false; btn.innerHTML = `<i class="fab fa-telegram-plane"></i> <span data-i18n="طلب كود التحقق">${t('طلب كود التحقق')}</span>`; } }
-            }
-
-            function adminVerifyOTP() {
-                const digits = []; for (let i = 1; i <= 6; i++) digits.push(document.getElementById('admin-otp-' + i)?.value || '');
-                const entered = digits.join('');
-                if (entered.length !== 6) { showAdminError('admin-step2-error', 'أدخل 6 أرقام'); return; }
-                const otpData = JSON.parse(sessionStorage.getItem(OTP_KEY) || '{}');
-                if (!otpData.code) { showAdminError('admin-step2-error', 'منتهي'); return; }
-                if (Date.now() > otpData.expires) { showAdminError('admin-step2-error', 'منتهي'); return; }
-                if (otpData.attempts >= 5) { showAdminError('admin-step2-error', 'محظور'); return; }
-                otpData.attempts++;
-                if (entered === otpData.code) {
-                    sessionStorage.removeItem(OTP_KEY); clearInterval(otpTimer);
-                    sessionStorage.setItem('admin_verified', 'true');
-                    window.location.href = ADMIN_URL;
-                } else {
-                    showAdminError('admin-step2-error', '❌ خطأ - متبقي {count} محاولات', { count: 5 - otpData.attempts });
-                    for (let i = 1; i <= 6; i++) document.getElementById('admin-otp-' + i).value = '';
-                    document.getElementById('admin-otp-1')?.focus();
-                }
-            }
-
-            function startAdminTimer(s) { otpTimeLeft = s; updateAdminTimerDisplay(); clearInterval(otpTimer); const rl = document.getElementById('admin-resend-link'); if (rl) rl.classList.add('disabled'); otpTimer = setInterval(() => { otpTimeLeft--; updateAdminTimerDisplay(); if (otpTimeLeft <= 0) { clearInterval(otpTimer); if (rl) rl.classList.remove('disabled'); } }, 1000); }
-            function updateAdminTimerDisplay() { const m = Math.floor(otpTimeLeft/60), s = otpTimeLeft%60; const d = document.getElementById('admin-timer-display'); if (d) d.textContent = `⏰ ${m}:${s.toString().padStart(2,'0')}`; }
-
-            // ==================== BIND ADMIN EVENTS ====================
-            document.getElementById('admin-login-close')?.addEventListener('click', closeAdminLogin);
-            document.getElementById('admin-login-overlay')?.addEventListener('click', function(e) { if (e.target === this) closeAdminLogin(); });
-            document.getElementById('admin-request-code-btn')?.addEventListener('click', adminRequestOTP);
-            document.getElementById('admin-resend-link')?.addEventListener('click', () => { if (otpTimeLeft > 0) return; sessionStorage.removeItem(OTP_KEY); clearInterval(otpTimer); for (let i=1;i<=6;i++) document.getElementById('admin-otp-'+i).value=''; showAdminStep('request'); });
-            for (let i=1;i<=6;i++) {
-                const inp = document.getElementById('admin-otp-'+i);
-                if (inp) {
-                    inp.addEventListener('input', function() { this.value=this.value.replace(/[^0-9]/g,''); if(this.value.length===1&&i<6) document.getElementById('admin-otp-'+(i+1))?.focus(); if(i===6&&this.value.length===1) setTimeout(adminVerifyOTP,200); });
-                    inp.addEventListener('keydown', function(e) { if(e.key==='Backspace'&&this.value.length===0&&i>1) document.getElementById('admin-otp-'+(i-1))?.focus(); if(e.key==='Enter') adminVerifyOTP(); });
-                    inp.addEventListener('paste', function(e) { e.preventDefault(); const pasted=(e.clipboardData||window.clipboardData).getData('text').replace(/[^0-9]/g,''); if(pasted.length===6){for(let j=0;j<6;j++)document.getElementById('admin-otp-'+(j+1)).value=pasted[j];setTimeout(adminVerifyOTP,200);} });
-                }
-            }
+            function openAdminLogin() { window.location.assign(ADMIN_URL); }
 
             // ==================== STOREFRONT DATA & INTERACTIONS ====================
             const PLACEHOLDER_IMAGE = 'images/product-placeholder.svg';
@@ -1185,7 +1060,6 @@
                 if (event.key === 'Escape') {
                     if (!drawerOverlay.hidden) closeDrawer();
                     else if ($('#product-modal-overlay').classList.contains('open')) closeProductModal();
-                    else if ($('#admin-login-overlay').classList.contains('open')) closeAdminLogin();
                     else closeMenu();
                 } else if (event.key === 'Tab') {
                     if (!drawerOverlay.hidden) trapFocus(event, $('.store-drawer'));

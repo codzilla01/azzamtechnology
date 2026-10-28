@@ -154,7 +154,7 @@ test('product updates in another tab refresh the builder selections', async ({ p
     await page.locator('#opts-cpu .pc-option').click();
     await expect(page.locator('#pc-total-price')).toContainText('5,000');
     const adminTab = await context.newPage();
-    await adminTab.goto('/admin.html');
+    await adminTab.goto('/');
     await adminTab.evaluate(() => {
         const items = JSON.parse(localStorage.getItem('store_all_products'));
         items.find(item => item.id === 'c1').price = 7500;
