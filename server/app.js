@@ -7,11 +7,23 @@ const { createStoreFromEnv } = require('./store');
 const { validateUsername, validatePassword, hashPassword, verifyPassword, newVersion, newToken, hashToken } = require('./passwords');
 
 const COOKIE = 'azzam_admin_session';
-const SESSION_SECONDS = 8 * 60 * 60;
+const DEFAULT_SESSION_SECONDS = 8 * 60 * 60;
+// Long-lived sessions are opt-in via AZZAM_SESSION_HOURS; never below one minute or above 90 days.
+const MAX_SESSION_SECONDS = 90 * 24 * 60 * 60;
 const ATTEMPT_LIMIT = 6;
 const ATTEMPT_WINDOW = 15 * 60;
 const BODY_LIMIT = 4096;
 const ADMIN_FILE = path.join(__dirname, '..', 'private', 'admin.html');
+
+function resolveSessionSeconds(env) {
+    const raw = env.AZZAM_SESSION_HOURS;
+    if (raw === undefined || String(raw).trim() === '') return DEFAULT_SESSION_SECONDS;
+    const hours = Number(raw);
+    if (!Number.isFinite(hours) || hours <= 0) throw new Error('AZZAM_SESSION_HOURS must be a positive number of hours');
+    const seconds = Math.floor(hours * 3600);
+    if (seconds > MAX_SESSION_SECONDS) throw new Error('AZZAM_SESSION_HOURS must not exceed 2160 (90 days)');
+    return Math.max(60, seconds);
+}
 
 class RequestError extends Error {
     constructor(status, code, retryAfter) { super(code); this.status = status; this.code = code; this.retryAfter = retryAfter; }
@@ -50,7 +62,7 @@ function cookieValue(req) {
     const value = matches[0].slice(COOKIE.length + 1);
     return /^[A-Za-z0-9_-]{43}$/.test(value) ? value : null;
 }
-function setCookie(res, token, env, maxAge = SESSION_SECONDS) {
+function setCookie(res, token, env, maxAge = DEFAULT_SESSION_SECONDS) {
     const secure = isProduction(env) || env.AZZAM_COOKIE_SECURE === '1';
     res.setHeader('Set-Cookie', `${COOKIE}=${token || ''}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${secure ? '; Secure' : ''}`);
 }
@@ -113,14 +125,16 @@ async function currentSession(store, req) {
     if (session.version !== account.version) return null;
     return { tokenHash, account };
 }
-async function issueSession(store, res, account, env) {
+async function issueSession(store, res, account, env, sessionSeconds) {
     const token = newToken();
-    await store.putSession(hashToken(token), { version: account.version }, SESSION_SECONDS);
-    setCookie(res, token, env);
+    await store.putSession(hashToken(token), { version: account.version }, sessionSeconds);
+    setCookie(res, token, env, sessionSeconds);
 }
 
 function createApp(options = {}) {
     const env = options.env || process.env;
+    // Validated once at startup; a misconfigured value fails fast instead of silently weakening sessions.
+    const sessionSeconds = resolveSessionSeconds(env);
     let store = options.store;
     function getStore() {
         if (!store) store = createStoreFromEnv(env);
@@ -164,7 +178,7 @@ function createApp(options = {}) {
                 const account = await authStore.getAccount();
                 const passwordOK = await verifyPassword(body.password, account);
                 if (body.username !== account.username || !passwordOK) throw new RequestError(401, 'INVALID_CREDENTIALS');
-                await issueSession(authStore, res, account, env);
+                await issueSession(authStore, res, account, env, sessionSeconds);
                 await authStore.clearAttempts(key).catch(() => {});
                 return sendJson(res, 200, { authenticated: true, username: account.username, mustChange: account.mustChange });
             }
@@ -192,7 +206,7 @@ function createApp(options = {}) {
             };
             const replacement = { username: body.username, ...passwordHash, version: newVersion(), mustChange: false };
             if (!await authStore.replaceAccount(session.account.version, replacement)) throw new RequestError(409, 'ACCOUNT_CHANGED');
-            await issueSession(authStore, res, replacement, env);
+            await issueSession(authStore, res, replacement, env, sessionSeconds);
             await Promise.allSettled([authStore.deleteSession(session.tokenHash), authStore.clearAttempts(key)]);
             return sendJson(res, 200, { ok: true, username: replacement.username });
         } catch (error) {
@@ -207,4 +221,4 @@ function createApp(options = {}) {
     };
 }
 
-module.exports = { createApp, isHttps, securityHeaders, RequestError };
+module.exports = { createApp, isHttps, securityHeaders, resolveSessionSeconds, RequestError };
