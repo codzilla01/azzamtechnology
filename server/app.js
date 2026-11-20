@@ -135,6 +135,10 @@ function createApp(options = {}) {
     const env = options.env || process.env;
     // Validated once at startup; a misconfigured value fails fast instead of silently weakening sessions.
     const sessionSeconds = resolveSessionSeconds(env);
+    // Explicit, opt-in escape hatch for PRIVATE deployments only: serves /admin.html without a session.
+    // Never enable this on the public internet — anyone who finds the page can manage the store data of their own browser, and the credential panel stays disabled.
+    const adminOpen = env.AZZAM_ADMIN_OPEN === '1';
+    if (adminOpen) console.warn('[auth] WARNING: AZZAM_ADMIN_OPEN=1 — the admin dashboard is served WITHOUT authentication');
     let store = options.store;
     function getStore() {
         if (!store) store = createStoreFromEnv(env);
@@ -148,11 +152,19 @@ function createApp(options = {}) {
             const method = req.method || 'GET';
             // Even when authentication storage is unconfigured, send visitors to
             // the friendly sign-in page rather than exposing the dashboard.
-            if (endpoint === 'admin' && (method === 'GET' || method === 'HEAD') && !cookieValue(req)) return redirect(res, '/login.html');
+            if (!adminOpen && endpoint === 'admin' && (method === 'GET' || method === 'HEAD') && !cookieValue(req)) return redirect(res, '/login.html');
             const authStore = getStore();
 
             if (endpoint === 'admin') {
                 if (method !== 'GET' && method !== 'HEAD') throw new RequestError(405, 'METHOD_NOT_ALLOWED');
+                if (adminOpen) {
+                    // Explicit private-deployment mode: serve the dashboard without any session check.
+                    const document = await fs.readFile(ADMIN_FILE, 'utf8');
+                    const injected = document.replace('<head>', '<head><script>window.AZZAM_ADMIN_OPEN=true;</script>');
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+                    return res.end(method === 'HEAD' ? undefined : injected);
+                }
                 const session = await currentSession(authStore, req);
                 if (!session) return redirect(res, '/login.html');
                 if (session.account.mustChange) return redirect(res, '/login.html?setup=1');
