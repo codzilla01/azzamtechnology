@@ -562,8 +562,9 @@
 
             function formatPrice(p) { return I18n.formatPrice(p); }
 
-            // The document is served only after the server validates the session.
+            // The document is served only after the server validates the session (unless explicitly deployed in private open mode).
             async function logout() {
+                if (window.AZZAM_ADMIN_OPEN) return; // No session exists in open mode; the button is hidden anyway.
                 if (!confirm(t('تسجيل الخروج؟'))) return;
                 try {
                     const response = await fetch('/api/auth/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
@@ -904,6 +905,7 @@
             });
 
             async function recheckSession() {
+                if (window.AZZAM_ADMIN_OPEN) return; // No sessions exist in open mode.
                 if (!currentUser || $('#save-credentials-btn').disabled) return;
                 const generation = credentialsGeneration;
                 try {
@@ -914,6 +916,20 @@
             }
 
             async function init() {
+                if (window.AZZAM_ADMIN_OPEN) {
+                    // Private open deployment: no session is ever issued, so run the dashboard directly.
+                    // Credential management stays disabled because it requires the authenticated API.
+                    currentUser = { username: 'admin' };
+                    const usernameField = $('#security-username'); if (usernameField) usernameField.value = 'admin';
+                    updateUserInfo();
+                    document.querySelectorAll('#security-form input, #security-form button').forEach(el => { el.disabled = true; });
+                    const logoutBtn = document.getElementById('logout-btn'); if (logoutBtn) logoutBtn.style.display = 'none';
+                    const noticeAnchor = document.getElementById('security-title');
+                    if (noticeAnchor) noticeAnchor.insertAdjacentHTML('afterend', '<p class="security-status is-error" role="status">الوضع المفتوح (AZZAM_ADMIN_OPEN): إدارة بيانات الدخول معطلة. فعِّل المصادقة من إعدادات النشر لإدارتها.</p>');
+                    loadData(); loadSettings(); bindEvents(); initImageUpload(); addSpecRow();
+                    refreshAll(); renderChatbotEditor(); renderCoupons();
+                    return;
+                }
                 try {
                     const response = await fetch('/api/auth/session', { cache: 'no-store' });
                     const session = await response.json();
