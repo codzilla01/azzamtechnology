@@ -7,9 +7,8 @@ const { createServer } = require('../server');
 const { FileStore } = require('../server/store');
 
 const dataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'azzam-pw-'));
-const env = { ...process.env, AZZAM_ADMIN_PASSCODE: 'test-passcode-1234' };
-const store = new FileStore(dataDir, env);
-const server = createServer(store, env);
+const store = new FileStore(dataDir, process.env);
+const server = createServer(store, process.env);
 
 store.initialize().then(() => {
     server.listen(8010, '0.0.0.0', () => console.log('Browser test server on 8010'));

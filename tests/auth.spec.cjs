@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('long-pressing the store logo opens passcode login and authenticates into the admin dashboard', async ({ page }) => {
+test('long-pressing the store logo opens the admin dashboard directly without login', async ({ page }) => {
     await page.goto('/');
 
     // No direct admin link should be exposed in the footer.
@@ -15,25 +15,9 @@ test('long-pressing the store logo opens passcode login and authenticates into t
     await trigger.dispatchEvent('mouseup');
     await expect(page).toHaveURL(/\/$/);
 
-    // Holding for 3 seconds navigates to /admin.html, which redirects unauthenticated users to /admin-login.html.
+    // Holding for 3 seconds navigates directly to /admin.html without any login step.
     await trigger.dispatchEvent('mousedown', { button: 0 });
-    await expect(page).toHaveURL(/\/admin-login\.html$/, { timeout: 6000 });
-    await expect(page.locator('#passcode-form')).toBeVisible();
-
-    // Incorrect passcode displays an error message.
-    await page.locator('#admin-passcode').fill('wrong-passcode');
-    await page.locator('#login-submit').click();
-    await expect(page.locator('#login-error')).toBeVisible();
-
-    // Correct passcode logs in and opens the admin dashboard.
-    await page.locator('#admin-passcode').fill('test-passcode-1234');
-    await page.locator('#login-submit').click();
     await expect(page).toHaveURL(/\/admin\.html$/, { timeout: 6000 });
     await expect(page.locator('#panel-dashboard')).toBeVisible();
-
-    // Signing out redirects back to the login page and revokes dashboard access.
-    await page.locator('#admin-signout-btn').click();
-    await expect(page).toHaveURL(/\/admin-login\.html$/, { timeout: 6000 });
-    await page.goto('/admin.html');
-    await expect(page).toHaveURL(/\/admin-login\.html$/);
+    await expect(page.locator('#admin-signout-btn')).toHaveCount(0);
 });
