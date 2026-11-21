@@ -85,16 +85,28 @@
     </div>
     <script>
         const $ = s => document.querySelector(s);
-        const STORAGE_KEY = 'store_all_products', CHATBOT_KEY = 'chatbot_data';
         const t = I18n.t;
+        let cachedProducts = [];
+        let cachedChatbot = null;
+        let cachedSettings = null;
 
-        function getProducts() {
+        async function loadStoreContext() {
             try {
-                const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-                return Array.isArray(value) ? value.filter(product => product && typeof product === 'object') : [];
-            } catch (error) { return []; }
+                const res = await fetch('/api/store', { cache: 'no-store' });
+                if (!res.ok) return;
+                const payload = await res.json();
+                cachedProducts = Array.isArray(payload.products) ? payload.products : [];
+                cachedChatbot = payload.chatbot && typeof payload.chatbot === 'object' ? payload.chatbot : null;
+                cachedSettings = payload.settings && typeof payload.settings === 'object' ? payload.settings : null;
+                if (cachedChatbot?.welcome && cachedChatbot.welcome !== 'مرحباً!' && cachedChatbot.welcome !== '👋 مرحباً! أنا مساعد Azzam Technology. اسألني عن الأسعار، المواصفات، التجميع، أو أي استفسار!') {
+                    const firstBot = document.querySelector('#chatBody .msg.bot');
+                    if (firstBot) firstBot.textContent = cachedChatbot.welcome;
+                }
+            } catch {}
         }
-        function getChatbot() { try { return JSON.parse(localStorage.getItem(CHATBOT_KEY)) || null; } catch (error) { return null; } }
+
+        function getProducts() { return cachedProducts; }
+        function getChatbot() { return cachedChatbot; }
         function productName(product) { return I18n.productText(product, 'name') || t('منتج'); }
         function productList(items) {
             return items.slice(0, 5).map((product, index) => `${index + 1}. ${productName(product)}: ${I18n.formatPrice(product.price)}`).join('\n');
@@ -105,13 +117,20 @@
             const m = msg.toLowerCase().trim();
             if (Array.isArray(chatbot?.qa)) {
                 for (const qa of chatbot.qa) {
-                    if (Array.isArray(qa.keywords) && qa.keywords.some(keyword => typeof keyword === 'string' && m.includes(keyword.toLowerCase()))) return qa.response || '';
+                    if (Array.isArray(qa.keywords) && qa.keywords.some(keyword => typeof keyword === 'string' && keyword.trim() && m.includes(keyword.toLowerCase().trim()))) return qa.response || '';
                 }
             }
             if (/مرحبا|السلام|اهلا|أهلا|\b(hi|hello|hey)\b/.test(m)) return t('👋 أهلاً! كيف أساعدك؟');
             if (/ضمان|استبدال|\b(warranty|guarantee|replacement)\b/.test(m)) return t('🛡️ الشاشات وPC: شهر (استبدال) | اللابتوبات: 3 شهور | البطارية: شهر');
             if (/توصيل|شحن|\b(delivery|deliver|shipping|ship)\b/.test(m)) return t('🚚 نوصل لكل مصر! مجاني فوق 5000 ج.م');
-            if (/رقم|هاتف|عنوان|\b(phone|telephone|contact|address|location)\b/.test(m)) return t('📞 01025555207 | 📍 مول البستان - القاهرة');
+            if (/رقم|هاتف|عنوان|\b(phone|telephone|contact|address|location)\b/.test(m)) {
+                if (cachedSettings?.phone || cachedSettings?.address) {
+                    const phone = cachedSettings.phone || '01025555207';
+                    const addr = cachedSettings.address || 'مول البستان - القاهرة';
+                    return `📞 ${phone} | 📍 ${addr}`;
+                }
+                return t('📞 01025555207 | 📍 مول البستان - القاهرة');
+            }
             const laptops = products.filter(product => product.type === 'laptop');
             if (/لابتوب|لاب|\b(laptop|laptops|notebook|notebooks)\b/.test(m)) return laptops.length ? t('💻 اللابتوبات:') + '\n' + productList(laptops) : t('⚠️ لا توجد لابتوبات');
             const monitors = products.filter(product => ['monitor', 'frameless', 'curved', 'gaming'].includes(product.type));
@@ -137,7 +156,7 @@
             body.querySelector('.quick-chips')?.remove();
             const u = document.createElement('div'); u.className = 'msg user'; u.dir = 'auto'; u.textContent = text; body.appendChild(u);
             $('#chatInput').value = '';
-            await new Promise(r => setTimeout(r, 500 + Math.random() * 500));
+            await new Promise(r => setTimeout(r, 350));
             const b = document.createElement('div'); b.className = 'msg bot'; b.dir = 'auto'; b.dataset.question = text; b.textContent = getResponse(text);
             body.appendChild(b);
             body.scrollTop = body.scrollHeight;
@@ -150,7 +169,7 @@
         $('#sendBtn').addEventListener('click', () => sendMessage($('#chatInput').value));
         $('#chatInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage($('#chatInput').value); });
         document.querySelectorAll('.quick-chip').forEach(c => c.addEventListener('click', () => sendMessage(c.dataset.q)));
-        console.log('✅ المساعد الذكي جاهز');
+        loadStoreContext();
     </script>
 </body>
 </html>

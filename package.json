@@ -4,7 +4,7 @@
   "scripts": {
     "test": "playwright test",
     "start": "node server.js",
-    "test:auth": "node --test tests/auth.test.cjs tests/build.test.cjs",
+    "test:auth": "node --test tests/auth.test.cjs tests/supabase.test.cjs tests/build.test.cjs",
     "build": "node scripts/build-public.js"
   },
   "devDependencies": {

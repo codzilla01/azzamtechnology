@@ -9,4 +9,5 @@ public/
 .azzamtechnology/
 .env
 .env.*
+!.env.example
 .vercel/

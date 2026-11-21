@@ -60,6 +60,7 @@
             display: flex; align-items: center; gap: 12px; padding: 12px 16px;
             color: #cbd5e1; text-decoration: none; border-radius: var(--radius-sm);
             transition: var(--transition); font-weight: 500; font-size: 0.9rem; cursor: pointer;
+            position: relative;
         }
         .sidebar-nav a:hover, .sidebar-nav a.active { background: rgba(255,255,255,0.08); color: #fff; }
         .sidebar-nav a.active { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(230,57,70,0.3); }
@@ -72,8 +73,16 @@
             padding: 16px; border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 0.8rem; color: #94a3b8; text-align: center;
         }
-        .sidebar-footer a { color: #94a3b8; text-decoration: none; display: block; margin-bottom: 4px; }
+        .sidebar-footer a { color: #cbd5e1; text-decoration: none; display: block; margin-bottom: 6px; }
         .sidebar-footer a:hover { color: #fff; }
+        .sidebar-signout {
+            width: 100%; margin: 8px 0; padding: 8px 12px;
+            border: 1px solid rgba(255,255,255,0.2); border-radius: var(--radius-sm);
+            background: rgba(255,255,255,0.06); color: #f8fafc;
+            font: inherit; font-weight: 700; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .sidebar-signout:hover { background: rgba(230,57,70,0.35); border-color: rgba(230,57,70,0.6); }
 
         .main-content { flex: 1; margin-right: var(--sidebar-width); padding: 24px; min-height: 100vh; }
         .top-bar {
@@ -135,13 +144,13 @@
 
         .table-container { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        th, td { padding: 12px 14px; text-align: right; border-bottom: 1px solid var(--border); }
+        th, td { padding: 12px 14px; text-align: right; border-bottom: 1px solid var(--border); vertical-align: middle; }
         th { background: #f8fafc; font-weight: 700; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; }
         tr:hover td { background: #fafbfc; }
         .product-thumb { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; }
         .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; display: inline-block; }
         .badge-laptop { background: #dbeafe; color: #1e40af; }
-        .badge-monitor { background: #d1fae5; color: #065f46; }
+        .badge-monitor, .badge-frameless, .badge-curved, .badge-gaming { background: #d1fae5; color: #065f46; }
         .badge-pc { background: #fef3c7; color: #92400e; }
         .badge-component { background: #ede9fe; color: #5b21b6; }
         .badge-active { background: #d1fae5; color: #065f46; }
@@ -150,6 +159,7 @@
         .stock-high { background: #22c55e; }
         .stock-low { background: #f59e0b; }
         .stock-out { background: #ef4444; }
+        .stock-inline-input { width: 76px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; font: inherit; }
 
         .image-upload-area {
             border: 2px dashed var(--border); border-radius: var(--radius);
@@ -164,11 +174,12 @@
         .image-preview-container { display: none; margin-top: 12px; text-align: center; }
         .image-preview-container.show { display: block; }
         .image-preview { max-width: 100%; max-height: 250px; border-radius: var(--radius-sm); border: 1px solid var(--border); object-fit: contain; }
+        .image-meta { margin-top: 6px; font-size: 0.78rem; color: var(--text-muted); }
 
         .coupon-card {
             background: #f8fafc; padding: 16px; border-radius: var(--radius-sm);
             border: 1px solid var(--border); display: flex; justify-content: space-between;
-            align-items: center; margin-bottom: 10px; transition: var(--transition);
+            align-items: center; margin-bottom: 10px; transition: var(--transition); gap: 10px; flex-wrap: wrap;
         }
         .coupon-card:hover { border-color: var(--primary); }
         .coupon-code-display {
@@ -177,9 +188,15 @@
             border: 1px dashed var(--border); letter-spacing: 1px;
         }
 
+        .qa-card {
+            background: #f8fafc; padding: 12px; border-radius: 10px;
+            border: 1px solid var(--border); margin-bottom: 10px; display: grid; gap: 8px;
+        }
+        .qa-card label { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); }
+
         .toast {
             position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-            background: #22c55e; color: #fff; padding: 12px 24px; border-radius: 30px;
+            background: #16743d; color: #fff; padding: 12px 24px; border-radius: 30px;
             z-index: 9999; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
             animation: slideUp 0.4s ease; display: none; white-space: nowrap;
         }
@@ -196,7 +213,7 @@
             .sidebar.open { transform: translateX(0); }
             .main-content { margin-right: 0; }
             .form-row { grid-template-columns: 1fr; }
-            .mobile-menu-btn { display: flex !important; }
+            .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; }
         }
         @media (max-width: 768px) {
             .top-bar { flex-direction: column; align-items: flex-start; }
@@ -219,7 +236,7 @@
             background: rgba(0,0,0,0.5); z-index: 99;
         }
         .sidebar-overlay.show { display: block; }
-        .admin-language-bar { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+        .admin-language-bar { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-bottom: 12px; }
         .admin-language-bar .language-switch { color: #334155; }
         .btn:disabled { opacity: .65; cursor: wait; }
         .translation-help { color: #475569; font-size: 0.85rem; margin: 0 0 14px; }
@@ -251,8 +268,7 @@
                 <div class="logo-icon"><i class="fas fa-microchip"></i></div>
                 <div class="logo-text">Azzam Technology</div>
             </div>
-            
-            <!-- ✅ القائمة الكاملة بجميع الأقسام -->
+
             <nav class="sidebar-nav">
                 <a class="active" data-panel="dashboard"><i class="fas fa-th-large"></i> <span data-i18n="لوحة المعلومات">لوحة المعلومات</span></a>
                 <a data-panel="products"><i class="fas fa-boxes"></i> <span data-i18n="إدارة المنتجات">إدارة المنتجات</span> <span class="badge-nav" id="products-count">0</span></a>
@@ -264,21 +280,25 @@
                 <a data-panel="orders"><i class="fas fa-receipt"></i> <span data-i18n="سجل الطلبات">سجل الطلبات</span></a>
                 <a data-panel="settings"><i class="fas fa-cog"></i> <span data-i18n="الإعدادات">الإعدادات</span></a>
             </nav>
-            
+
             <div class="sidebar-footer">
                 <a href="/index.html"><i class="fas fa-arrow-right"></i> <span data-i18n="العودة للمتجر">العودة للمتجر</span></a>
+                <button type="button" class="sidebar-signout" id="admin-signout-btn"><i class="fas fa-sign-out-alt"></i> <span data-i18n="تسجيل الخروج">تسجيل الخروج</span></button>
                 <p style="margin-top:8px;">&copy; 2026 Azzam Technology</p>
                 <p><a href="https://me-one-blue.vercel.app/about.html" style="color: #ffffff;">Dev.Mohamed Elnil</a></p>
             </div>
         </aside>
 
         <main class="main-content">
-            <div class="admin-language-bar"><button type="button" class="language-switch" data-language-switch aria-label="EN — Switch to English" title="EN — Switch to English"><i class="fa-solid fa-globe" aria-hidden="true"></i><span data-language-label lang="en">EN</span></button></div>
+            <div class="admin-language-bar">
+                <button type="button" class="language-switch" data-language-switch aria-label="EN — Switch to English" title="EN — Switch to English"><i class="fa-solid fa-globe" aria-hidden="true"></i><span data-language-label lang="en">EN</span></button>
+            </div>
+
             <!-- DASHBOARD -->
             <div class="panel active" id="panel-dashboard">
                 <div class="top-bar">
                     <h2><i class="fas fa-th-large"></i> <span data-i18n="لوحة المعلومات">لوحة المعلومات</span></h2>
-                    <button class="btn btn-primary btn-sm" onclick="location.reload()"><i class="fas fa-sync-alt"></i> <span data-i18n="تحديث">تحديث</span></button>
+                    <button class="btn btn-primary btn-sm" id="refresh-data-btn"><i class="fas fa-sync-alt"></i> <span data-i18n="تحديث">تحديث</span></button>
                 </div>
                 <div class="stats-row" id="dashboard-stats"></div>
             </div>
@@ -300,7 +320,7 @@
                 </div>
                 <div class="table-container">
                     <table id="products-table">
-                        <thead><tr><th><span data-i18n="الصورة">الصورة</span></th><th><span data-i18n="الاسم">الاسم</span></th><th><span data-i18n="النوع">النوع</span></th><th><span data-i18n="الماركة">الماركة</span></th><th><span data-i18n="السعر">السعر</span></th><th><span data-i18n="إجراءات">إجراءات</span></th></tr></thead>
+                        <thead><tr><th><span data-i18n="الصورة">الصورة</span></th><th><span data-i18n="الاسم">الاسم</span></th><th><span data-i18n="النوع">النوع</span></th><th><span data-i18n="الماركة">الماركة</span></th><th><span data-i18n="السعر">السعر</span></th><th><span data-i18n="المخزون">المخزون</span></th><th><span data-i18n="إجراءات">إجراءات</span></th></tr></thead>
                         <tbody></tbody>
                     </table>
                 </div>
@@ -314,12 +334,18 @@
                     <input type="hidden" id="edit-id">
                     <div class="form-row">
                         <div class="form-group"><label for="prod-name"><span data-i18n="اسم المنتج *">اسم المنتج *</span></label><input type="text" id="prod-name" class="form-control" dir="auto" required></div>
-                        <div class="form-group"><label for="prod-price"><span data-i18n="السعر (ج.م) *">السعر (ج.م) *</span></label><input type="number" id="prod-price" class="form-control" required min="0"></div>
+                        <div class="form-group"><label for="prod-price"><span data-i18n="السعر (ج.م) *">السعر (ج.م) *</span></label><input type="number" id="prod-price" class="form-control" required min="1" step="any"></div>
+                        <div class="form-group"><label for="prod-old-price"><span data-i18n="السعر قبل الخصم (اختياري)">السعر قبل الخصم (اختياري)</span></label><input type="number" id="prod-old-price" class="form-control" min="0" step="any"></div>
+                        <div class="form-group"><label for="prod-discount"><span data-i18n="نسبة الخصم % (اختياري)">نسبة الخصم % (اختياري)</span></label><input type="number" id="prod-discount" class="form-control" min="0" max="95" step="1"></div>
+                        <div class="form-group"><label for="prod-stock"><span data-i18n="الكمية المتاحة (المخزون) *">الكمية المتاحة (المخزون) *</span></label><input type="number" id="prod-stock" class="form-control" min="0" step="1" value="10" required></div>
                         <div class="form-group">
                             <label for="prod-type"><span data-i18n="نوع المنتج *">نوع المنتج *</span></label>
                             <select id="prod-type" class="form-control" required>
                                 <option value="laptop" data-i18n="💻 لابتوب">💻 لابتوب</option>
                                 <option value="monitor" data-i18n="🖥️ شاشة">🖥️ شاشة</option>
+                                <option value="frameless" data-i18n="🖥️ شاشة فريمليس (Frameless)">🖥️ شاشة فريمليس (Frameless)</option>
+                                <option value="curved" data-i18n="🖥️ شاشة كيرف (Curved)">🖥️ شاشة كيرف (Curved)</option>
+                                <option value="gaming" data-i18n="🎮 شاشة ألعاب (Gaming)">🎮 شاشة ألعاب (Gaming)</option>
                                 <option value="pc" data-i18n="🖥️ PC مجمع مسبقاً">🖥️ PC مجمع مسبقاً</option>
                                 <option value="component" data-i18n="🔧 قطعة تجميع PC">🔧 قطعة تجميع PC</option>
                             </select>
@@ -334,7 +360,13 @@
                                 <option value="storage" data-i18n="تخزين (Storage)">تخزين (Storage)</option>
                                 <option value="psu" data-i18n="مزود طاقة (PSU)">مزود طاقة (PSU)</option>
                                 <option value="case" data-i18n="صندوق (Case)">صندوق (Case)</option>
-                                <option value="monitor_component" data-i18n="شاشة (Monitor)">شاشة (Monitor)</option>
+                                <option value="cooling" data-i18n="تبريد (Cooling)">تبريد (Cooling)</option>
+                                <option value="monitor" data-i18n="شاشة (Monitor)">شاشة (Monitor)</option>
+                                <option value="keyboard" data-i18n="لوحة مفاتيح (Keyboard)">لوحة مفاتيح (Keyboard)</option>
+                                <option value="mouse" data-i18n="فأرة (Mouse)">فأرة (Mouse)</option>
+                                <option value="headset" data-i18n="سماعة (Headset)">سماعة (Headset)</option>
+                                <option value="speakers" data-i18n="سماعات (Speakers)">سماعات (Speakers)</option>
+                                <option value="wifi_card" data-i18n="كارت شبكة (Wi-Fi / LAN)">كارت شبكة (Wi-Fi / LAN)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -346,7 +378,8 @@
                                 <option value="asus">Asus</option><option value="samsung">Samsung</option>
                                 <option value="lg">LG</option><option value="intel">Intel</option>
                                 <option value="amd">AMD</option><option value="nvidia">NVIDIA</option>
-                                <option value="corsair">Corsair</option><option value="custom" data-i18n="أخرى">أخرى</option>
+                                <option value="corsair">Corsair</option><option value="msi">MSI</option>
+                                <option value="acer">Acer</option><option value="custom" data-i18n="أخرى">أخرى</option>
                             </select>
                         </div>
                     </div>
@@ -360,12 +393,13 @@
                         </div>
                         <div class="image-preview-container" id="image-preview-container">
                             <img id="image-preview" class="image-preview" src="" alt="معاينة" data-i18n-alt="معاينة">
+                            <div class="image-meta" id="image-meta"></div>
                             <div style="margin-top:8px;">
                                 <button type="button" class="btn btn-outline btn-sm" id="change-image-btn"><span data-i18n="تغيير">تغيير</span></button>
                                 <button type="button" class="btn btn-danger btn-sm" id="remove-image-btn"><span data-i18n="إزالة">إزالة</span></button>
                             </div>
                         </div>
-                        <input type="text" id="prod-image-url" class="form-control" placeholder="أو رابط صورة خارجي" style="margin-top:8px;" data-i18n-placeholder="أو رابط صورة خارجي">
+                        <input type="url" id="prod-image-url" class="form-control" dir="ltr" placeholder="أو رابط صورة خارجي" style="margin-top:8px;" data-i18n-placeholder="أو رابط صورة خارجي">
                     </div>
 
                     <p class="translation-help" data-i18n="الاسم والوصف والمواصفات الإنجليزية اختيارية؛ تُعرض البيانات الأصلية عند تركها فارغة.">الاسم والوصف والمواصفات الإنجليزية اختيارية؛ تُعرض البيانات الأصلية عند تركها فارغة.</p>
@@ -378,7 +412,7 @@
                         <button type="button" class="btn btn-outline btn-sm" id="add-spec-btn" style="margin-top:8px;"><i class="fas fa-plus"></i> <span data-i18n="إضافة مواصفة">إضافة مواصفة</span></button>
                     </div>
                     <div style="display:flex;gap:8px;margin-top:12px;">
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span data-i18n="حفظ">حفظ</span></button>
+                        <button type="submit" id="save-product-submit" class="btn btn-primary"><i class="fas fa-save"></i> <span data-i18n="حفظ">حفظ</span></button>
                         <button type="button" class="btn btn-outline" id="cancel-edit-btn" style="display:none;"><span data-i18n="إلغاء">إلغاء</span></button>
                         <button type="button" class="btn btn-outline" id="reset-form-btn"><span data-i18n="مسح">مسح</span></button>
                     </div>
@@ -391,7 +425,7 @@
                 <p style="color:var(--text-muted);margin:12px 0;"><span data-i18n="تنبيهات تلقائية عند انخفاض المخزون (أقل من 5 قطع)">تنبيهات تلقائية عند انخفاض المخزون (أقل من 5 قطع)</span></p>
                 <div class="table-container" style="margin-top:16px;">
                     <table id="inventory-table">
-                        <thead><tr><th><span data-i18n="المنتج">المنتج</span></th><th><span data-i18n="النوع">النوع</span></th><th><span data-i18n="السعر">السعر</span></th><th><span data-i18n="المخزون">المخزون</span></th><th><span data-i18n="الحالة">الحالة</span></th></tr></thead>
+                        <thead><tr><th><span data-i18n="المنتج">المنتج</span></th><th><span data-i18n="النوع">النوع</span></th><th><span data-i18n="السعر">السعر</span></th><th><span data-i18n="المخزون">المخزون</span></th><th><span data-i18n="الحالة">الحالة</span></th><th><span data-i18n="إجراءات">إجراءات</span></th></tr></thead>
                         <tbody></tbody>
                     </table>
                 </div>
@@ -407,7 +441,7 @@
                 <div id="coupon-form" style="display:none;background:#f8fafc;padding:20px;border-radius:12px;margin-top:16px;border:1px solid var(--border);">
                     <h3 style="margin-bottom:14px;"><span data-i18n="كوبون جديد">كوبون جديد</span></h3>
                     <div class="form-row">
-                        <div class="form-group"><label for="coupon-code"><span data-i18n="الكود *">الكود *</span></label><input type="text" id="coupon-code" class="form-control" placeholder="مثال: WELCOME10" required data-i18n-placeholder="مثال: WELCOME10"></div>
+                        <div class="form-group"><label for="coupon-code"><span data-i18n="الكود *">الكود *</span></label><input type="text" id="coupon-code" class="form-control" dir="ltr" placeholder="مثال: WELCOME10" required data-i18n-placeholder="مثال: WELCOME10"></div>
                         <div class="form-group"><label for="coupon-type"><span data-i18n="النوع *">النوع *</span></label><select id="coupon-type" class="form-control" required><option value="percent" data-i18n="نسبة مئوية (%)">نسبة مئوية (%)</option><option value="fixed" data-i18n="مبلغ ثابت (ج.م)">مبلغ ثابت (ج.م)</option></select></div>
                         <div class="form-group"><label for="coupon-value"><span data-i18n="القيمة *">القيمة *</span></label><input type="number" id="coupon-value" class="form-control" min="1" required></div>
                         <div class="form-group"><label for="coupon-min"><span data-i18n="الحد الأدنى للطلب">الحد الأدنى للطلب</span></label><input type="number" id="coupon-min" class="form-control" min="0" value="0"></div>
@@ -424,7 +458,7 @@
                 <h2><i class="fas fa-microchip"></i> <span data-i18n="قطع تجميع PC">قطع تجميع PC</span></h2>
                 <div class="table-container" style="margin-top:16px;">
                     <table id="components-table">
-                        <thead><tr><th><span data-i18n="النوع">النوع</span></th><th><span data-i18n="الاسم">الاسم</span></th><th><span data-i18n="السعر">السعر</span></th><th><span data-i18n="إجراءات">إجراءات</span></th></tr></thead>
+                        <thead><tr><th><span data-i18n="النوع">النوع</span></th><th><span data-i18n="الاسم">الاسم</span></th><th><span data-i18n="السعر">السعر</span></th><th><span data-i18n="المخزون">المخزون</span></th><th><span data-i18n="إجراءات">إجراءات</span></th></tr></thead>
                         <tbody></tbody>
                     </table>
                 </div>
@@ -434,10 +468,12 @@
             <div class="panel" id="panel-chatbot">
                 <h2><i class="fas fa-robot"></i> <span data-i18n="إدارة Chatbot">إدارة Chatbot</span></h2>
                 <div style="margin-top:16px;">
-                    <div class="form-group"><label for="chatbot-welcome"><span data-i18n="رسالة الترحيب">رسالة الترحيب</span></label><input type="text" id="chatbot-welcome" class="form-control"></div>
-                    <div id="qa-list" style="max-height:350px;overflow-y:auto;"></div>
-                    <button class="btn btn-outline btn-sm" id="add-qa-btn" style="margin-top:8px;"><i class="fas fa-plus"></i> <span data-i18n="سؤال وجواب">سؤال وجواب</span></button>
-                    <button class="btn btn-primary btn-sm" id="save-chatbot-btn" style="margin-top:8px;"><i class="fas fa-save"></i> <span data-i18n="حفظ">حفظ</span></button>
+                    <div class="form-group"><label for="chatbot-welcome"><span data-i18n="رسالة الترحيب">رسالة الترحيب</span></label><input type="text" id="chatbot-welcome" class="form-control" dir="auto"></div>
+                    <div id="qa-list" style="max-height:420px;overflow-y:auto;"></div>
+                    <div style="display:flex;gap:8px;margin-top:12px;">
+                        <button class="btn btn-outline btn-sm" id="add-qa-btn"><i class="fas fa-plus"></i> <span data-i18n="إضافة قاعدة">إضافة قاعدة</span></button>
+                        <button class="btn btn-primary btn-sm" id="save-chatbot-btn"><i class="fas fa-save"></i> <span data-i18n="حفظ">حفظ</span></button>
+                    </div>
                 </div>
             </div>
 
@@ -449,7 +485,19 @@
                 </div>
                 <div class="table-container" style="margin-top:16px;">
                     <table id="orders-table">
-                        <thead><tr><th><span data-i18n="التاريخ">التاريخ</span></th><th><span data-i18n="عدد المنتجات">عدد المنتجات</span></th><th><span data-i18n="الإجمالي">الإجمالي</span></th><th><span data-i18n="الكوبون">الكوبون</span></th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th><span data-i18n="رقم الطلب">رقم الطلب</span></th>
+                                <th><span data-i18n="التاريخ">التاريخ</span></th>
+                                <th><span data-i18n="العميل">العميل</span></th>
+                                <th><span data-i18n="الهاتف">الهاتف</span></th>
+                                <th><span data-i18n="المحافظة">المحافظة</span></th>
+                                <th><span data-i18n="عدد المنتجات">عدد المنتجات</span></th>
+                                <th><span data-i18n="الإجمالي">الإجمالي</span></th>
+                                <th><span data-i18n="الكوبون">الكوبون</span></th>
+                                <th><span data-i18n="الحالة">الحالة</span></th>
+                            </tr>
+                        </thead>
                         <tbody></tbody>
                     </table>
                 </div>
@@ -460,17 +508,19 @@
             <div class="panel" id="panel-settings">
                 <h2><i class="fas fa-cog"></i> <span data-i18n="الإعدادات">الإعدادات</span></h2>
                 <div class="form-row" style="margin-top:16px;">
-                    <div class="form-group"><label for="store-name"><span data-i18n="اسم المتجر">اسم المتجر</span></label><input type="text" id="store-name" class="form-control" value="Azzam Technology"></div>
-                    <div class="form-group"><label for="store-phone"><span data-i18n="رقم الواتساب">رقم الواتساب</span></label><input type="text" id="store-phone" class="form-control" value="201025555207"></div>
-                    <div class="form-group"><label for="store-address"><span data-i18n="العنوان">العنوان</span></label><input type="text" id="store-address" class="form-control" value="القاهرة, مصر"></div>
-                    <div class="form-group"><label for="store-email"><span data-i18n="البريد الإلكتروني">البريد الإلكتروني</span></label><input type="email" id="store-email" class="form-control" value="info@azzamtechnology.com"></div>
-                    <div class="form-group"><label for="store-website"><span data-i18n="الموقع الإلكتروني">الموقع الإلكتروني</span></label><input type="url" id="store-website" class="form-control" value="azzamtechnology.vercel.app"></div>
+                    <div class="form-group"><label for="store-name"><span data-i18n="اسم المتجر">اسم المتجر</span></label><input type="text" id="store-name" class="form-control" dir="auto" value="Azzam Technology"></div>
+                    <div class="form-group"><label for="store-phone"><span data-i18n="رقم الواتساب">رقم الواتساب</span></label><input type="text" id="store-phone" class="form-control" dir="ltr" value="201025555207"></div>
+                    <div class="form-group"><label for="store-address"><span data-i18n="العنوان">العنوان</span></label><input type="text" id="store-address" class="form-control" dir="auto" value="القاهرة, مصر"></div>
+                    <div class="form-group"><label for="store-email"><span data-i18n="البريد الإلكتروني">البريد الإلكتروني</span></label><input type="email" id="store-email" class="form-control" dir="ltr" value="info@azzamtechnology.com"></div>
+                    <div class="form-group"><label for="store-website"><span data-i18n="الموقع الإلكتروني">الموقع الإلكتروني</span></label><input type="text" id="store-website" class="form-control" dir="ltr" value="azzamtechnology.vercel.app"></div>
                 </div>
                 <button class="btn btn-primary" id="save-settings-btn"><i class="fas fa-save"></i> <span data-i18n="حفظ">حفظ</span></button>
                 <hr style="margin:20px 0;">
-                <button class="btn btn-primary" id="export-data-btn"><i class="fas fa-download"></i> <span data-i18n="تصدير">تصدير</span></button>
-                <button class="btn btn-outline" id="import-data-btn"><i class="fas fa-upload"></i> <span data-i18n="استيراد">استيراد</span></button>
-                <button class="btn btn-danger" id="reset-data-btn"><i class="fas fa-trash-alt"></i> <span data-i18n="إعادة تعيين">إعادة تعيين</span></button>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <button class="btn btn-primary" id="export-data-btn"><i class="fas fa-download"></i> <span data-i18n="تصدير JSON">تصدير JSON</span></button>
+                    <button class="btn btn-outline" id="import-data-btn"><i class="fas fa-upload"></i> <span data-i18n="استيراد JSON">استيراد JSON</span></button>
+                    <button class="btn btn-danger" id="reset-data-btn"><i class="fas fa-trash-alt"></i> <span data-i18n="إعادة تعيين">إعادة تعيين</span></button>
+                </div>
             </div>
         </main>
     </div>
@@ -479,18 +529,14 @@
 
     <script>
         (function() {
-            const STORAGE_KEY = 'store_all_products';
-            const COUPONS_KEY = 'store_coupons';
-            const SETTINGS_KEY = 'store_settings';
-            const CHATBOT_KEY = 'chatbot_data';
-            const ORDERS_KEY = 'store_orders_log';
+            'use strict';
 
             let products = [];
             let coupons = [];
             let chatbotData = { welcome: 'مرحباً!', tone: 'friendly', qa: [] };
             let ordersLog = [];
+            let settingsData = {};
             let editingId = null;
-            let editingCouponId = null;
             let uploadedImageData = null;
 
             const $ = (s) => document.querySelector(s);
@@ -499,6 +545,7 @@
             const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
             const productName = product => I18n.productText(product, 'name') || t('منتج');
             const typeLabel = type => t(({ laptop: 'لابتوب', monitor: 'شاشة', pc: 'جهاز PC', component: 'قطعة تجميع', frameless: 'بدون إطار', curved: 'منحنية', gaming: 'للألعاب' })[type] || type || 'منتج');
+            const MONITOR_TYPES = new Set(['monitor', 'frameless', 'curved', 'gaming']);
 
             function showToast(msg, isError = false, values = {}) {
                 const toast = $('#toast');
@@ -510,32 +557,77 @@
                 toast.offsetHeight;
                 toast.style.animation = 'slideUp 0.4s ease';
                 clearTimeout(toast._t);
-                toast._t = setTimeout(() => toast.style.display = 'none', 3000);
+                toast._t = setTimeout(() => toast.style.display = 'none', 3200);
             }
 
             function formatPrice(p) { return I18n.formatPrice(p); }
 
-            // ==================== DATA ====================
-            function loadData() {
-                products = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-                coupons = JSON.parse(localStorage.getItem(COUPONS_KEY) || '[]');
-                chatbotData = JSON.parse(localStorage.getItem(CHATBOT_KEY) || '{"welcome":"مرحباً!","qa":[]}');
-                ordersLog = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
-                if (!localStorage.getItem(COUPONS_KEY)) { coupons = [{ code: 'WELCOME10', discount: 10, type: 'percent', active: true, minOrder: 1000 }]; saveCoupons(); }
+            async function apiRequest(url, options = {}) {
+                const headers = { ...(options.headers || {}) };
+                if (options.body !== undefined && !headers['Content-Type']) {
+                    headers['Content-Type'] = 'application/json';
+                }
+                const response = await fetch(url, {
+                    method: options.method || 'GET',
+                    cache: 'no-store',
+                    headers,
+                    body: options.body !== undefined ? JSON.stringify(options.body) : undefined
+                });
+                if (response.status === 401) {
+                    showToast('انتهت الجلسة، يرجى تسجيل الدخول مجدداً', true);
+                    setTimeout(() => window.location.replace('/admin-login.html'), 700);
+                    throw new Error('NOT_AUTHENTICATED');
+                }
+                const payload = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    const err = new Error(payload.code || 'REQUEST_FAILED');
+                    err.code = payload.code;
+                    err.status = response.status;
+                    throw err;
+                }
+                return payload;
             }
 
-            function saveProducts() { localStorage.setItem(STORAGE_KEY, JSON.stringify(products)); localStorage.setItem('store_last_update', new Date().toISOString()); window.dispatchEvent(new Event('storage')); refreshAll(); }
-            function saveCoupons() { localStorage.setItem(COUPONS_KEY, JSON.stringify(coupons)); renderCoupons(); }
-            function saveChatbot() { localStorage.setItem(CHATBOT_KEY, JSON.stringify(chatbotData)); }
-            function saveOrders() { localStorage.setItem(ORDERS_KEY, JSON.stringify(ordersLog)); }
+            // ==================== DATA ====================
+            async function loadData() {
+                try {
+                    const data = await apiRequest('/api/admin/data');
+                    applyAdminData(data);
+                } catch (err) {
+                    if (err.message !== 'NOT_AUTHENTICATED') showToast('فشل الاتصال بالخادم', true);
+                }
+            }
 
-            function refreshAll() { refreshDashboard(); renderProductsTable($('#filter-type')?.value || 'all'); renderComponentsTable(); renderInventoryTable(); renderOrdersTable(); updateCounts(); }
-            function updateCounts() { const badge = document.getElementById('products-count'); if (badge) badge.textContent = products.length; }
+            function applyAdminData(data) {
+                products = Array.isArray(data.products) ? data.products : [];
+                coupons = Array.isArray(data.coupons) ? data.coupons : [];
+                chatbotData = data.chatbot && typeof data.chatbot === 'object' ? data.chatbot : { welcome: 'مرحباً!', qa: [] };
+                ordersLog = Array.isArray(data.orders) ? data.orders : [];
+                settingsData = data.settings && typeof data.settings === 'object' ? data.settings : {};
+                applySettingsToForm();
+                refreshAll();
+                renderCoupons();
+                renderChatbotEditor();
+            }
+
+            function refreshAll() {
+                refreshDashboard();
+                renderProductsTable($('#filter-type')?.value || 'all');
+                renderComponentsTable();
+                renderInventoryTable();
+                renderOrdersTable();
+                updateCounts();
+            }
+
+            function updateCounts() {
+                const badge = document.getElementById('products-count');
+                if (badge) badge.textContent = products.length;
+            }
 
             function refreshDashboard() {
                 const tp = products.filter(p => p.type !== 'component').length;
                 const tc = products.filter(p => p.type === 'component').length;
-                const totalStock = products.reduce((s,p) => s + (p.stock || 0), 0);
+                const totalStock = products.reduce((s, p) => s + (Number(p.stock) || 0), 0);
                 const ds = document.getElementById('dashboard-stats');
                 if (ds) ds.innerHTML = `
                     <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-number">${tp}</div><div class="stat-label">${t('منتج')}</div></div>
@@ -561,20 +653,35 @@
                 if (window.innerWidth < 992) closeSidebar();
             }
 
-            function closeSidebar() { $('#sidebar').classList.remove('open'); const overlay = $('#sidebar-overlay'); if (overlay) overlay.classList.remove('show'); }
+            function closeSidebar() {
+                $('#sidebar').classList.remove('open');
+                const overlay = $('#sidebar-overlay');
+                if (overlay) overlay.classList.remove('show');
+            }
 
             function renderProductsTable(filter = 'all') {
-                const filtered = filter === 'all' ? products.filter(p => p.type !== 'component') : products.filter(p => p.type === filter);
+                const filtered = filter === 'all'
+                    ? products.filter(p => p.type !== 'component')
+                    : filter === 'monitor'
+                        ? products.filter(p => MONITOR_TYPES.has(p.type))
+                        : products.filter(p => p.type === filter);
                 const tbody = document.querySelector('#products-table tbody');
                 if (!tbody) return;
                 const noMsg = $('#no-products-msg');
                 if (noMsg) noMsg.style.display = filtered.length ? 'none' : 'block';
                 tbody.innerHTML = filtered.map(p => {
                     const name = escapeHtml(productName(p)), id = escapeHtml(p.id);
-                    return `<tr><td>${p.image ? `<img src="${escapeHtml(p.image)}" class="product-thumb" alt="" onerror="this.style.display='none'">` : '📷'}</td>
-                    <td><strong>${name}</strong></td><td><span class="badge badge-${escapeHtml(p.type)}">${escapeHtml(typeLabel(p.type))}</span></td>
-                    <td>${escapeHtml(p.brand || '-')}</td><td style="font-weight:700;color:var(--primary);">${formatPrice(p.price)}</td>
-                    <td><button class="btn btn-primary btn-xs edit-btn" data-id="${id}" aria-label="${t('تعديل {name}', { name })}">✏️</button> <button class="btn btn-danger btn-xs delete-btn" data-id="${id}" aria-label="${t('حذف {name}', { name })}">🗑️</button></td></tr>`;
+                    const stock = Number(p.stock) || 0;
+                    const cls = stock > 10 ? 'stock-high' : stock > 0 ? 'stock-low' : 'stock-out';
+                    return `<tr>
+                        <td>${p.image ? `<img src="${escapeHtml(p.image)}" class="product-thumb" alt="" onerror="this.style.display='none'">` : '📷'}</td>
+                        <td><strong>${name}</strong></td>
+                        <td><span class="badge badge-${escapeHtml(p.type)}">${escapeHtml(typeLabel(p.type))}</span></td>
+                        <td>${escapeHtml(p.brand || '-')}</td>
+                        <td style="font-weight:700;color:var(--primary);">${formatPrice(p.price)}</td>
+                        <td><span class="stock-indicator ${cls}"></span>${stock}</td>
+                        <td><button class="btn btn-primary btn-xs edit-btn" data-id="${id}" aria-label="${t('تعديل {name}', { name })}">✏️</button> <button class="btn btn-danger btn-xs delete-btn" data-id="${id}" aria-label="${t('حذف {name}', { name })}">🗑️</button></td>
+                    </tr>`;
                 }).join('');
                 tbody.querySelectorAll('.edit-btn').forEach(button => button.addEventListener('click', () => editProduct(button.dataset.id)));
                 tbody.querySelectorAll('.delete-btn').forEach(button => button.addEventListener('click', () => deleteProduct(button.dataset.id)));
@@ -583,20 +690,65 @@
             function renderInventoryTable() {
                 const tbody = document.querySelector('#inventory-table tbody'); if (!tbody) return;
                 tbody.innerHTML = products.map(p => {
-                    const cls = (p.stock || 0) > 10 ? 'stock-high' : (p.stock || 0) > 0 ? 'stock-low' : 'stock-out';
-                    const status = (p.stock || 0) > 10 ? 'متوفر' : (p.stock || 0) > 0 ? 'منخفض' : 'نفذ';
-                    return `<tr><td>${escapeHtml(productName(p))}</td><td><span class="badge badge-${escapeHtml(p.type)}">${escapeHtml(typeLabel(p.type))}</span></td><td>${formatPrice(p.price)}</td><td><span class="stock-indicator ${cls}"></span>${escapeHtml(p.stock || 0)}</td><td>${t(status)}</td></tr>`;
+                    const stock = Number(p.stock) || 0;
+                    const cls = stock > 10 ? 'stock-high' : stock > 0 ? 'stock-low' : 'stock-out';
+                    const status = stock > 10 ? 'متوفر' : stock > 0 ? 'منخفض' : 'نفذ';
+                    const id = escapeHtml(p.id);
+                    return `<tr>
+                        <td>${escapeHtml(productName(p))}</td>
+                        <td><span class="badge badge-${escapeHtml(p.type)}">${escapeHtml(typeLabel(p.type))}</span></td>
+                        <td>${formatPrice(p.price)}</td>
+                        <td><span class="stock-indicator ${cls}"></span><input type="number" class="stock-inline-input" min="0" step="1" value="${stock}" data-stock-id="${id}" aria-label="${t('المخزون')}"></td>
+                        <td>${t(status)}</td>
+                        <td><button class="btn btn-primary btn-xs save-stock-btn" data-id="${id}"><i class="fas fa-save"></i></button></td>
+                    </tr>`;
                 }).join('');
+                tbody.querySelectorAll('.save-stock-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const id = btn.dataset.id;
+                        const input = tbody.querySelector(`.stock-inline-input[data-stock-id="${CSS.escape(id)}"]`);
+                        const product = products.find(p => String(p.id) === String(id));
+                        if (!product || !input) return;
+                        const nextStock = Math.max(0, Math.floor(Number(input.value) || 0));
+                        btn.disabled = true;
+                        try {
+                            const { product: updated } = await apiRequest('/api/admin/products', {
+                                method: 'POST',
+                                body: { ...product, stock: nextStock }
+                            });
+                            const idx = products.findIndex(p => String(p.id) === String(updated.id));
+                            if (idx >= 0) products[idx] = updated;
+                            refreshAll();
+                            showToast('تم التحديث!');
+                        } catch {
+                            showToast('فشل الاتصال بالخادم', true);
+                        } finally {
+                            btn.disabled = false;
+                        }
+                    });
+                });
             }
 
             function renderComponentsTable() {
                 const components = products.filter(p => p.type === 'component');
                 const tbody = document.querySelector('#components-table tbody'); if (!tbody) return;
-                const labels = { cpu: '🧠 معالج', motherboard: '📟 لوحة أم', gpu: '🎮 كرت شاشة', ram: '🧮 ذاكرة', storage: '💾 تخزين', psu: '⚡ مزود طاقة', case: '📦 صندوق', monitor_component: '🖥️ شاشة' };
+                const labels = {
+                    cpu: '🧠 معالج', motherboard: '📟 لوحة أم', gpu: '🎮 كرت شاشة', ram: '🧮 ذاكرة',
+                    storage: '💾 تخزين', psu: '⚡ مزود طاقة', case: '📦 صندوق', cooling: '❄️ تبريد',
+                    monitor: '🖥️ شاشة', keyboard: '⌨️ لوحة مفاتيح', mouse: '🖱️ فأرة',
+                    headset: '🎧 سماعة', speakers: '🔊 سماعات', wifi_card: '📡 كارت شبكة'
+                };
                 tbody.innerHTML = components.length ? components.map(p => {
                     const name = escapeHtml(productName(p)), id = escapeHtml(p.id);
-                    return `<tr><td><span class="badge badge-component">${escapeHtml(t(labels[p.componentType] || p.componentType || 'قطعة تجميع'))}</span></td><td><strong>${name}</strong></td><td style="font-weight:700;color:var(--primary);">${formatPrice(p.price)}</td><td><button class="btn btn-primary btn-xs edit-btn" data-id="${id}" aria-label="${t('تعديل {name}', { name })}">✏️</button> <button class="btn btn-danger btn-xs delete-btn" data-id="${id}" aria-label="${t('حذف {name}', { name })}">🗑️</button></td></tr>`;
-                }).join('') : `<tr><td colspan="4"><div class="empty-state"><i class="fas fa-microchip"></i><p>${t('لا توجد قطع')}</p></div></td></tr>`;
+                    const stock = Number(p.stock) || 0;
+                    return `<tr>
+                        <td><span class="badge badge-component">${escapeHtml(t(labels[p.componentType] || p.componentType || 'قطعة تجميع'))}</span></td>
+                        <td><strong>${name}</strong></td>
+                        <td style="font-weight:700;color:var(--primary);">${formatPrice(p.price)}</td>
+                        <td>${stock}</td>
+                        <td><button class="btn btn-primary btn-xs edit-btn" data-id="${id}" aria-label="${t('تعديل {name}', { name })}">✏️</button> <button class="btn btn-danger btn-xs delete-btn" data-id="${id}" aria-label="${t('حذف {name}', { name })}">🗑️</button></td>
+                    </tr>`;
+                }).join('') : `<tr><td colspan="5"><div class="empty-state"><i class="fas fa-microchip"></i><p>${t('لا توجد قطع')}</p></div></td></tr>`;
                 tbody.querySelectorAll('.edit-btn').forEach(button => button.addEventListener('click', () => editProduct(button.dataset.id)));
                 tbody.querySelectorAll('.delete-btn').forEach(button => button.addEventListener('click', () => deleteProduct(button.dataset.id)));
             }
@@ -606,20 +758,87 @@
                 list.innerHTML = coupons.length ? coupons.map((c, i) => {
                     const code = escapeHtml(c.code);
                     const amount = c.type === 'percent' ? `${escapeHtml(c.discount)}%` : formatPrice(c.discount);
-                    return `<div class="coupon-card"><div><span class="coupon-code-display">${code}</span> <span class="badge ${c.active ? 'badge-active' : 'badge-inactive'}">${t(c.active ? 'نشط' : 'غير نشط')}</span></div><div>${amount}</div><div><button class="btn btn-primary btn-xs edit-coupon-btn" data-index="${i}" aria-label="${t('تعديل {name}', { name: code })}">✏️</button> <button class="btn btn-danger btn-xs delete-coupon-btn" data-index="${i}" aria-label="${t('حذف {name}', { name: code })}">🗑️</button></div></div>`;
+                    const minLabel = c.minOrder > 0 ? `<small style="color:var(--text-muted);">${t('الحد الأدنى للطلب')}: ${formatPrice(c.minOrder)}</small>` : '';
+                    return `<div class="coupon-card">
+                        <div><span class="coupon-code-display">${code}</span> <span class="badge ${c.active ? 'badge-active' : 'badge-inactive'}">${t(c.active ? 'نشط' : 'غير نشط')}</span> ${minLabel}</div>
+                        <div><strong>${amount}</strong></div>
+                        <div>
+                            <button class="btn btn-outline btn-xs toggle-coupon-btn" data-index="${i}">${t(c.active ? 'معطل' : 'نشط')}</button>
+                            <button class="btn btn-primary btn-xs edit-coupon-btn" data-index="${i}" aria-label="${t('تعديل {name}', { name: code })}">✏️</button>
+                            <button class="btn btn-danger btn-xs delete-coupon-btn" data-index="${i}" aria-label="${t('حذف {name}', { name: code })}">🗑️</button>
+                        </div>
+                    </div>`;
                 }).join('') : `<p style="text-align:center;padding:30px;">${t('لا توجد كوبونات')}</p>`;
-                list.querySelectorAll('.edit-coupon-btn').forEach(button => button.addEventListener('click', () => editCoupon(parseInt(button.dataset.index))));
-                list.querySelectorAll('.delete-coupon-btn').forEach(button => button.addEventListener('click', () => deleteCoupon(parseInt(button.dataset.index))));
+                list.querySelectorAll('.edit-coupon-btn').forEach(button => button.addEventListener('click', () => editCoupon(parseInt(button.dataset.index, 10))));
+                list.querySelectorAll('.delete-coupon-btn').forEach(button => button.addEventListener('click', () => deleteCoupon(parseInt(button.dataset.index, 10))));
+                list.querySelectorAll('.toggle-coupon-btn').forEach(button => button.addEventListener('click', () => toggleCoupon(parseInt(button.dataset.index, 10))));
             }
 
-            function editCoupon(index) { const c = coupons[index]; editingCouponId = index; document.getElementById('coupon-code').value = c.code; document.getElementById('coupon-type').value = c.type; document.getElementById('coupon-value').value = c.discount; document.getElementById('coupon-min').value = c.minOrder||0; document.getElementById('coupon-form').style.display = 'block'; }
-            function deleteCoupon(index) { if (confirm(t('حذف الكوبون؟'))) { coupons.splice(index,1); saveCoupons(); showToast('تم الحذف'); } }
-            function saveCouponForm() {
-                const code = document.getElementById('coupon-code').value.trim(), type = document.getElementById('coupon-type').value, discount = parseFloat(document.getElementById('coupon-value').value), minOrder = parseFloat(document.getElementById('coupon-min').value)||0;
-                if (!code||!discount) { showToast('املأ الحقول',true); return; }
-                const coupon = { code, type, discount, minOrder, active: true };
-                if (editingCouponId !== null) { coupons[editingCouponId] = coupon; editingCouponId = null; } else { coupons.push(coupon); }
-                saveCoupons(); document.getElementById('coupon-form').style.display = 'none'; showToast('تم الحفظ!');
+            function editCoupon(index) {
+                const c = coupons[index];
+                if (!c) return;
+                document.getElementById('coupon-code').value = c.code;
+                document.getElementById('coupon-type').value = c.type;
+                document.getElementById('coupon-value').value = c.discount;
+                document.getElementById('coupon-min').value = c.minOrder || 0;
+                document.getElementById('coupon-form').style.display = 'block';
+            }
+
+            async function toggleCoupon(index) {
+                const c = coupons[index];
+                if (!c) return;
+                try {
+                    const { coupon } = await apiRequest('/api/admin/coupons', {
+                        method: 'POST',
+                        body: { ...c, active: !c.active }
+                    });
+                    coupons[index] = coupon;
+                    renderCoupons();
+                    showToast('تم التحديث!');
+                } catch {
+                    showToast('فشل الاتصال بالخادم', true);
+                }
+            }
+
+            async function deleteCoupon(index) {
+                const c = coupons[index];
+                if (!c || !confirm(t('حذف الكوبون؟'))) return;
+                try {
+                    await apiRequest('/api/admin/coupons?code=' + encodeURIComponent(c.code), { method: 'DELETE' });
+                    coupons.splice(index, 1);
+                    renderCoupons();
+                    refreshDashboard();
+                    showToast('تم الحذف');
+                } catch {
+                    showToast('فشل الاتصال بالخادم', true);
+                }
+            }
+
+            async function saveCouponForm() {
+                const code = document.getElementById('coupon-code').value.trim().toUpperCase();
+                const type = document.getElementById('coupon-type').value;
+                const discount = parseFloat(document.getElementById('coupon-value').value);
+                const minOrder = parseFloat(document.getElementById('coupon-min').value) || 0;
+                if (!code || !Number.isFinite(discount) || discount <= 0) { showToast('املأ الحقول', true); return; }
+                const btn = document.getElementById('save-coupon-btn');
+                btn.disabled = true;
+                try {
+                    const { coupon } = await apiRequest('/api/admin/coupons', {
+                        method: 'POST',
+                        body: { code, type, discount, minOrder, active: true }
+                    });
+                    const idx = coupons.findIndex(c => c.code === coupon.code);
+                    if (idx >= 0) coupons[idx] = coupon;
+                    else coupons.push(coupon);
+                    renderCoupons();
+                    refreshDashboard();
+                    document.getElementById('coupon-form').style.display = 'none';
+                    showToast('تم الحفظ!');
+                } catch {
+                    showToast('فشل الاتصال بالخادم', true);
+                } finally {
+                    btn.disabled = false;
+                }
             }
 
             function renderOrdersTable() {
@@ -627,7 +846,55 @@
                 const noMsg = document.getElementById('no-orders-msg');
                 if (ordersLog.length === 0) { tbody.innerHTML = ''; if (noMsg) noMsg.style.display = 'block'; return; }
                 if (noMsg) noMsg.style.display = 'none';
-                tbody.innerHTML = ordersLog.map(o => `<tr><td>${new Date(o.date).toLocaleString(I18n.language === 'en' ? 'en-EG' : 'ar-EG')}</td><td>${o.items.length}</td><td style="color:var(--primary);font-weight:700;">${formatPrice(o.finalTotal)}</td><td>${o.coupon||'-'}</td></tr>`).join('');
+                const statuses = [
+                    ['new', 'جديد'],
+                    ['confirmed', 'مؤكد'],
+                    ['shipped', 'تم الشحن'],
+                    ['delivered', 'تم التسليم'],
+                    ['cancelled', 'ملغي']
+                ];
+                tbody.innerHTML = ordersLog.map(o => {
+                    const itemsCount = Array.isArray(o.items) ? o.items.reduce((s, item) => s + (Number(item.quantity) || 1), 0) : 0;
+                    const customer = o.customer || {};
+                    const custName = o.customerName || customer.name || '-';
+                    const custPhone = o.customerPhone || customer.phone || '-';
+                    const custGov = o.governorate || customer.governorate || '-';
+                    const id = escapeHtml(o.id);
+                    const dateStr = escapeHtml(new Date(o.createdAt || o.date || Date.now()).toLocaleString(I18n.language === 'en' ? 'en-EG' : 'ar-EG'));
+                    const options = statuses.map(([val, label]) => `<option value="${val}" ${o.status === val ? 'selected' : ''}>${escapeHtml(t(label))}</option>`).join('');
+                    return `<tr>
+                        <td><code dir="ltr">${id}</code></td>
+                        <td>${dateStr}</td>
+                        <td><strong>${escapeHtml(custName)}</strong></td>
+                        <td dir="ltr">${escapeHtml(custPhone)}</td>
+                        <td>${escapeHtml(custGov)}</td>
+                        <td>${itemsCount}</td>
+                        <td style="color:var(--primary);font-weight:700;">${formatPrice(o.finalTotal)}</td>
+                        <td>${escapeHtml(o.couponCode || o.coupon || '-')}</td>
+                        <td><select class="form-control order-status-select" data-order-id="${id}" style="min-width:130px;padding:6px 8px;">${options}</select></td>
+                    </tr>`;
+                }).join('');
+                tbody.querySelectorAll('.order-status-select').forEach(sel => {
+                    sel.addEventListener('change', async () => {
+                        const id = sel.dataset.orderId;
+                        const status = sel.value;
+                        sel.disabled = true;
+                        try {
+                            const { order } = await apiRequest('/api/admin/orders', {
+                                method: 'PATCH',
+                                body: { id, status }
+                            });
+                            const idx = ordersLog.findIndex(o => o.id === order.id);
+                            if (idx >= 0) ordersLog[idx] = order;
+                            showToast('تم التحديث!');
+                        } catch {
+                            showToast('فشل الاتصال بالخادم', true);
+                            renderOrdersTable();
+                        } finally {
+                            sel.disabled = false;
+                        }
+                    });
+                });
             }
 
             // ==================== PRODUCT CRUD ====================
@@ -635,9 +902,11 @@
                 const editing = editingId !== null;
                 $('#form-title').innerHTML = `<i class="fas ${editing ? 'fa-edit' : 'fa-plus-circle'}"></i> ${t(editing ? 'تعديل المنتج' : 'إضافة منتج جديد')}`;
             }
+
             function resetForm() {
                 $('#product-form')?.reset();
                 $('#edit-id').value = '';
+                $('#prod-stock').value = '10';
                 $('#specs-container').innerHTML = '';
                 $('#comp-type-group').style.display = 'none';
                 $('#cancel-edit-btn').style.display = 'none';
@@ -646,6 +915,7 @@
                 resetImageUpload();
                 addSpecRow();
             }
+
             function editProduct(id) {
                 const p = products.find(product => String(product.id) === String(id));
                 if (!p) return;
@@ -655,6 +925,9 @@
                 $('#prod-name').value = p.name || '';
                 $('#prod-name-en').value = p.translations?.en?.name || '';
                 $('#prod-price').value = p.price;
+                $('#prod-old-price').value = p.oldPrice || '';
+                $('#prod-discount').value = p.discount || '';
+                $('#prod-stock').value = Number.isFinite(Number(p.stock)) ? p.stock : 0;
                 $('#prod-type').value = p.type;
                 $('#prod-brand').value = p.brand || '';
                 $('#prod-desc').value = p.description || '';
@@ -664,9 +937,12 @@
                     $('#image-preview-container').classList.add('show');
                     $('#image-preview').src = p.image;
                     $('#image-upload-area').classList.add('has-image');
-                } else if (p.image) $('#prod-image-url').value = p.image;
+                    $('#image-meta').textContent = `${Math.round(p.image.length / 1024)} KB`;
+                } else if (p.image) {
+                    $('#prod-image-url').value = p.image;
+                }
                 $('#comp-type-group').style.display = p.type === 'component' ? 'block' : 'none';
-                if (p.type === 'component') $('#comp-type').value = p.componentType || '';
+                if (p.type === 'component') $('#comp-type').value = p.componentType || 'cpu';
                 const container = $('#specs-container');
                 container.innerHTML = '';
                 if (p.specs && Object.keys(p.specs).length) {
@@ -679,13 +955,19 @@
                 updateFormTitle();
                 switchPanel('add-product');
             }
-            function deleteProduct(id) {
-                if (confirm(t('حذف المنتج؟'))) {
+
+            async function deleteProduct(id) {
+                if (!confirm(t('حذف المنتج؟'))) return;
+                try {
+                    await apiRequest('/api/admin/products?id=' + encodeURIComponent(id), { method: 'DELETE' });
                     products = products.filter(product => String(product.id) !== String(id));
-                    saveProducts();
+                    refreshAll();
                     showToast('تم الحذف!');
+                } catch {
+                    showToast('فشل الاتصال بالخادم', true);
                 }
             }
+
             function addSpecRow(key = '', value = '', englishName = '', englishValue = '') {
                 const container = $('#specs-container');
                 if (!container) return;
@@ -709,10 +991,17 @@
                 translations.append(makeInput('spec-key-en', 'اسم المواصفة بالإنجليزية (اختياري)', englishName), makeInput('spec-value-en', 'القيمة بالإنجليزية (اختياري)', englishValue));
                 row.append(defaults, translations); container.appendChild(row);
             }
-            function saveProduct(event) {
+
+            async function saveProduct(event) {
                 event.preventDefault();
-                const name = $('#prod-name')?.value?.trim(), price = parseFloat($('#prod-price')?.value), type = $('#prod-type')?.value;
+                const name = $('#prod-name')?.value?.trim();
+                const price = parseFloat($('#prod-price')?.value);
+                const oldPriceVal = parseFloat($('#prod-old-price')?.value);
+                const discountVal = parseInt($('#prod-discount')?.value, 10);
+                const stock = Math.max(0, parseInt($('#prod-stock')?.value || '0', 10) || 0);
+                const type = $('#prod-type')?.value;
                 if (!name || isNaN(price) || price <= 0) { showToast('الاسم والسعر مطلوبان', true); return; }
+
                 const specs = {}, englishSpecs = {};
                 $$('#specs-container > .spec-entry').forEach(row => {
                     const key = row.querySelector('.spec-key').value.trim(), value = row.querySelector('.spec-value').value.trim();
@@ -721,6 +1010,7 @@
                     specs[key] = value;
                     if (enName || enValue) englishSpecs[key] = { ...(enName ? { name: enName } : {}), ...(enValue ? { value: enValue } : {}) };
                 });
+
                 const existing = editingId !== null ? products.find(product => String(product.id) === String(editingId)) : null;
                 const translations = { ...(existing?.translations || {}) };
                 const en = { ...(translations.en || {}) };
@@ -729,71 +1019,354 @@
                 if (enDescription) en.description = enDescription; else delete en.description;
                 if (Object.keys(englishSpecs).length) en.specs = englishSpecs; else delete en.specs;
                 if (Object.keys(en).length) translations.en = en; else delete translations.en;
-                const product = {
-                    ...(existing || {}), id: editingId !== null ? editingId : 'prod_' + Date.now(), type, name, price,
-                    brand: $('#prod-brand')?.value || '', image: getProductImage(), description: $('#prod-desc')?.value?.trim() || '',
-                    specs, createdAt: existing?.createdAt || new Date().toISOString()
+
+                const payload = {
+                    ...(existing || {}),
+                    id: editingId !== null ? editingId : 'prod_' + Date.now(),
+                    type,
+                    name,
+                    price,
+                    oldPrice: Number.isFinite(oldPriceVal) && oldPriceVal > price ? oldPriceVal : undefined,
+                    discount: Number.isFinite(discountVal) && discountVal > 0 ? Math.min(95, discountVal) : undefined,
+                    stock,
+                    brand: $('#prod-brand')?.value || '',
+                    image: getProductImage(),
+                    description: $('#prod-desc')?.value?.trim() || '',
+                    specs,
+                    createdAt: existing?.createdAt || new Date().toISOString()
                 };
-                if (Object.keys(translations).length) product.translations = translations; else delete product.translations;
-                if (type === 'component') product.componentType = $('#comp-type')?.value || 'cpu'; else delete product.componentType;
-                if (existing) {
-                    const index = products.indexOf(existing); products[index] = product; showToast('تم التحديث!');
-                } else { products.push(product); showToast('تمت الإضافة!'); }
-                saveProducts(); resetForm(); switchPanel('products');
+                if (Object.keys(translations).length) payload.translations = translations; else delete payload.translations;
+                if (type === 'component') payload.componentType = $('#comp-type')?.value || 'cpu'; else delete payload.componentType;
+
+                const btn = $('#save-product-submit');
+                btn.disabled = true;
+                try {
+                    const { product: saved } = await apiRequest('/api/admin/products', { method: 'POST', body: payload });
+                    const idx = products.findIndex(p => String(p.id) === String(saved.id));
+                    if (idx >= 0) { products[idx] = saved; showToast('تم التحديث!'); }
+                    else { products.unshift(saved); showToast('تمت الإضافة!'); }
+                    refreshAll();
+                    resetForm();
+                    switchPanel('products');
+                } catch (err) {
+                    showToast(err.code === 'INVALID_IMAGE' ? 'ملف صورة فقط' : 'فشل الاتصال بالخادم', true);
+                } finally {
+                    btn.disabled = false;
+                }
             }
-            function getProductImage() { if (uploadedImageData) return uploadedImageData; return document.getElementById('prod-image-url')?.value?.trim()||''; }
-            function resetImageUpload() { uploadedImageData = null; document.getElementById('image-preview-container').classList.remove('show'); document.getElementById('image-preview').src = ''; document.getElementById('image-upload-area').classList.remove('has-image'); document.getElementById('prod-image-file').value = ''; document.getElementById('prod-image-url').value = ''; }
+
+            function getProductImage() {
+                if (uploadedImageData) return uploadedImageData;
+                return document.getElementById('prod-image-url')?.value?.trim() || '';
+            }
+
+            function resetImageUpload() {
+                uploadedImageData = null;
+                document.getElementById('image-preview-container').classList.remove('show');
+                document.getElementById('image-preview').src = '';
+                document.getElementById('image-meta').textContent = '';
+                document.getElementById('image-upload-area').classList.remove('has-image');
+                document.getElementById('prod-image-file').value = '';
+                document.getElementById('prod-image-url').value = '';
+            }
+
+            // ==================== IMAGE COMPRESSION ====================
+            function compressImageFile(file) {
+                return new Promise((resolve, reject) => {
+                    const url = URL.createObjectURL(file);
+                    const img = new Image();
+                    img.onload = () => {
+                        URL.revokeObjectURL(url);
+                        const maxDim = 1200;
+                        let width = img.naturalWidth || img.width;
+                        let height = img.naturalHeight || img.height;
+                        if (width > maxDim || height > maxDim) {
+                            const ratio = Math.min(maxDim / width, maxDim / height);
+                            width = Math.max(1, Math.round(width * ratio));
+                            height = Math.max(1, Math.round(height * ratio));
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        let dataUrl = canvas.toDataURL('image/webp', 0.82);
+                        if (!dataUrl.startsWith('data:image/webp')) {
+                            dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+                        }
+                        if (dataUrl.length > 650_000) {
+                            dataUrl = canvas.toDataURL('image/jpeg', 0.65);
+                        }
+                        if (dataUrl.length > 650_000) {
+                            const scale = 0.7;
+                            canvas.width = Math.max(1, Math.round(width * scale));
+                            canvas.height = Math.max(1, Math.round(height * scale));
+                            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                            dataUrl = canvas.toDataURL('image/jpeg', 0.6);
+                            width = canvas.width;
+                            height = canvas.height;
+                        }
+                        resolve({ dataUrl, width, height });
+                    };
+                    img.onerror = () => {
+                        URL.revokeObjectURL(url);
+                        reject(new Error('INVALID_IMAGE'));
+                    };
+                    img.src = url;
+                });
+            }
+
+            function initImageUpload() {
+                const ua = $('#image-upload-area'), fi = $('#prod-image-file'), pc = $('#image-preview-container'),
+                    pi = $('#image-preview'), cb = $('#change-image-btn'), rb = $('#remove-image-btn'),
+                    ui = $('#prod-image-url'), meta = $('#image-meta');
+                if (!ua || !fi) return;
+                ua.addEventListener('click', e => { if (e.target !== fi) fi.click(); });
+                fi.addEventListener('change', function () { if (this.files[0]) handleFile(this.files[0]); });
+                ua.addEventListener('dragover', e => { e.preventDefault(); ua.style.borderColor = 'var(--primary)'; });
+                ua.addEventListener('dragleave', () => { ua.style.borderColor = ''; });
+                ua.addEventListener('drop', e => { e.preventDefault(); ua.style.borderColor = ''; if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+                ui?.addEventListener('input', () => {
+                    if (ui.value.trim()) {
+                        uploadedImageData = null;
+                        pc.classList.remove('show');
+                        ua.classList.remove('has-image');
+                        meta.textContent = '';
+                    }
+                });
+
+                async function handleFile(file) {
+                    if (!file.type.startsWith('image/')) { showToast('ملف صورة فقط', true); return; }
+                    if (file.size > 10 * 1024 * 1024) { showToast('حجم كبير', true); return; }
+                    try {
+                        showToast('جاري ضغط الصورة...');
+                        const { dataUrl, width, height } = await compressImageFile(file);
+                        if (dataUrl.length > 700_000) { showToast('حجم كبير', true); return; }
+                        uploadedImageData = dataUrl;
+                        pi.src = uploadedImageData;
+                        meta.textContent = `${width}×${height} · ${Math.round(dataUrl.length / 1024)} KB`;
+                        pc.classList.add('show');
+                        ua.classList.add('has-image');
+                        ui.value = '';
+                        showToast('تم ضغط الصورة بنجاح');
+                    } catch {
+                        showToast('ملف صورة فقط', true);
+                    }
+                }
+                cb?.addEventListener('click', () => fi.click());
+                rb?.addEventListener('click', () => resetImageUpload());
+            }
 
             // ==================== CHATBOT ====================
-            function renderChatbotEditor() { const wc = $('#chatbot-welcome'); if (wc) wc.value = chatbotData.welcome||''; const ql = $('#qa-list'); if (!ql) return; ql.innerHTML = (chatbotData.qa||[]).map((qa,i)=>`<div style="background:#f8fafc;padding:10px;border-radius:8px;margin-bottom:6px;"><div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:4px;">${qa.keywords.map(k=>`<span style="background:#e0e7ff;color:#3730a3;padding:2px 8px;border-radius:12px;font-size:0.7rem;">${k}</span>`).join('')}</div><input type="text" class="form-control" value="${qa.response}" onchange="window._updateQA(${i},this.value)" style="font-size:0.8rem;"><button class="btn btn-danger btn-xs" style="margin-top:4px;" onclick="window._removeQA(${i})">🗑️</button></div>`).join(''); }
-            window._updateQA = function(i,r) { chatbotData.qa[i].response = r; };
-            window._removeQA = function(i) { chatbotData.qa.splice(i,1); renderChatbotEditor(); };
-            function saveChatbotData() { chatbotData.welcome = $('#chatbot-welcome')?.value||''; saveChatbot(); showToast('تم الحفظ!'); }
+            function renderChatbotEditor() {
+                const wc = $('#chatbot-welcome');
+                if (wc) wc.value = chatbotData.welcome || '';
+                const ql = $('#qa-list');
+                if (!ql) return;
+                const list = Array.isArray(chatbotData.qa) ? chatbotData.qa : [];
+                ql.innerHTML = '';
+                list.forEach((qa, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'qa-card';
 
-            // ==================== IMAGE UPLOAD ====================
-            function initImageUpload() { const ua=$('#image-upload-area'), fi=$('#prod-image-file'), pc=$('#image-preview-container'), pi=$('#image-preview'), cb=$('#change-image-btn'), rb=$('#remove-image-btn'), ui=$('#prod-image-url'); if(!ua||!fi)return; ua.addEventListener('click',e=>{if(e.target!==fi)fi.click();}); fi.addEventListener('change',function(){if(this.files[0])handleFile(this.files[0]);}); ua.addEventListener('dragover',e=>{e.preventDefault();ua.style.borderColor='var(--primary)';}); ua.addEventListener('dragleave',()=>{ua.style.borderColor='';}); ua.addEventListener('drop',e=>{e.preventDefault();ua.style.borderColor='';if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0]);}); function handleFile(file) { if(!file.type.startsWith('image/')){showToast('ملف صورة فقط',true);return;} if(file.size>2*1024*1024){showToast('حجم كبير',true);return;} const r=new FileReader(); r.onload=function(e){uploadedImageData=e.target.result; pi.src=uploadedImageData; pc.classList.add('show'); ua.classList.add('has-image'); ui.value='';}; r.readAsDataURL(file); } cb?.addEventListener('click',()=>fi.click()); rb?.addEventListener('click',()=>{uploadedImageData=null;pi.src='';pc.classList.remove('show');ua.classList.remove('has-image');fi.value='';}); }
+                    const kwLabel = document.createElement('label');
+                    kwLabel.textContent = t('الكلمات المفتاحية (مفصولة بفاصلة)');
+                    const kwInput = document.createElement('input');
+                    kwInput.type = 'text';
+                    kwInput.className = 'form-control';
+                    kwInput.dir = 'auto';
+                    kwInput.value = Array.isArray(qa.keywords) ? qa.keywords.join(', ') : '';
+                    kwInput.addEventListener('input', () => {
+                        chatbotData.qa[i].keywords = kwInput.value.split(/[,،]/).map(s => s.trim()).filter(Boolean);
+                    });
+
+                    const resLabel = document.createElement('label');
+                    resLabel.textContent = t('الإجابة');
+                    const resInput = document.createElement('input');
+                    resInput.type = 'text';
+                    resInput.className = 'form-control';
+                    resInput.dir = 'auto';
+                    resInput.value = qa.response || '';
+                    resInput.addEventListener('input', () => {
+                        chatbotData.qa[i].response = resInput.value;
+                    });
+
+                    const actions = document.createElement('div');
+                    const delBtn = document.createElement('button');
+                    delBtn.type = 'button';
+                    delBtn.className = 'btn btn-danger btn-xs';
+                    delBtn.textContent = '🗑️';
+                    delBtn.addEventListener('click', () => {
+                        chatbotData.qa.splice(i, 1);
+                        renderChatbotEditor();
+                    });
+                    actions.appendChild(delBtn);
+                    card.append(kwLabel, kwInput, resLabel, resInput, actions);
+                    ql.appendChild(card);
+                });
+            }
+
+            async function saveChatbotData() {
+                chatbotData.welcome = $('#chatbot-welcome')?.value || '';
+                const btn = $('#save-chatbot-btn');
+                btn.disabled = true;
+                try {
+                    const { chatbot } = await apiRequest('/api/admin/chatbot', { method: 'PUT', body: chatbotData });
+                    chatbotData = chatbot;
+                    renderChatbotEditor();
+                    showToast('تم الحفظ!');
+                } catch {
+                    showToast('فشل الاتصال بالخادم', true);
+                } finally {
+                    btn.disabled = false;
+                }
+            }
 
             // ==================== SETTINGS ====================
-            function saveSettings() { const s = { name: $('#store-name')?.value?.trim()||'', phone: $('#store-phone')?.value?.trim()||'' }; localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); showToast('تم الحفظ!'); }
-            function loadSettings() { const stored = localStorage.getItem(SETTINGS_KEY); if (stored) { try { const s = JSON.parse(stored); if (s.name&&$('#store-name')) $('#store-name').value = s.name; if (s.phone&&$('#store-phone')) $('#store-phone').value = s.phone; } catch(e) {} } }
-            function exportData() { const data = { products, coupons, chatbot: chatbotData, ordersLog }; const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'azzam_backup_'+new Date().toISOString().slice(0,10)+'.json'; a.click(); URL.revokeObjectURL(a.href); showToast('تم التصدير!'); }
-            function importData() { const input = document.createElement('input'); input.type='file'; input.accept='.json'; input.onchange=function(e){const file=e.target.files[0]; if(!file)return; const reader=new FileReader(); reader.onload=function(ev){try{const data=JSON.parse(ev.target.result); if(data.products)products=confirm(t('دمج؟'))?[...products,...data.products]:data.products; if(data.coupons)coupons=data.coupons; if(data.chatbot)chatbotData=data.chatbot; if(data.ordersLog)ordersLog=data.ordersLog; saveProducts();saveCoupons();saveChatbot();saveOrders();refreshAll();renderChatbotEditor();showToast('تم الاستيراد!');}catch(ex){showToast('ملف غير صالح',true);}}; reader.readAsText(file);}; input.click(); }
-            function resetData() { if (confirm(t('إعادة تعيين؟'))) { products=[];coupons=[];chatbotData={welcome:'مرحباً!',qa:[]};ordersLog=[]; saveProducts();saveCoupons();saveChatbot();saveOrders(); refreshAll();renderChatbotEditor(); showToast('تم إعادة التعيين!'); } }
+            function applySettingsToForm() {
+                if (settingsData.name && $('#store-name')) $('#store-name').value = settingsData.name;
+                if (settingsData.phone && $('#store-phone')) $('#store-phone').value = settingsData.phone;
+                if (settingsData.address && $('#store-address')) $('#store-address').value = settingsData.address;
+                if (settingsData.email && $('#store-email')) $('#store-email').value = settingsData.email;
+                if (settingsData.website && $('#store-website')) $('#store-website').value = settingsData.website;
+            }
+
+            async function saveSettings() {
+                const payload = {
+                    name: $('#store-name')?.value?.trim() || '',
+                    phone: $('#store-phone')?.value?.trim() || '',
+                    address: $('#store-address')?.value?.trim() || '',
+                    email: $('#store-email')?.value?.trim() || '',
+                    website: $('#store-website')?.value?.trim() || ''
+                };
+                const btn = $('#save-settings-btn');
+                btn.disabled = true;
+                try {
+                    const { settings } = await apiRequest('/api/admin/settings', { method: 'PUT', body: payload });
+                    settingsData = settings;
+                    applySettingsToForm();
+                    showToast('تم الحفظ!');
+                } catch {
+                    showToast('فشل الاتصال بالخادم', true);
+                } finally {
+                    btn.disabled = false;
+                }
+            }
+
+            function exportData() {
+                const data = { products, coupons, chatbot: chatbotData, settings: settingsData, orders: ordersLog };
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'azzam_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+                a.click();
+                URL.revokeObjectURL(a.href);
+                showToast('تم التصدير!');
+            }
+
+            function importData() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                input.onchange = function (e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = async function (ev) {
+                        try {
+                            const parsed = JSON.parse(ev.target.result);
+                            const merge = confirm(t('دمج؟'));
+                            const data = await apiRequest('/api/admin/import', {
+                                method: 'POST',
+                                body: { data: parsed, merge }
+                            });
+                            applyAdminData(data);
+                            showToast('تم الاستيراد!');
+                        } catch {
+                            showToast('ملف غير صالح', true);
+                        }
+                    };
+                    reader.readAsText(file);
+                };
+                input.click();
+            }
+
+            async function resetData() {
+                if (!confirm(t('إعادة تعيين؟'))) return;
+                try {
+                    const data = await apiRequest('/api/admin/reset', { method: 'POST', body: {} });
+                    applyAdminData(data);
+                    showToast('تم إعادة التعيين!');
+                } catch {
+                    showToast('فشل الاتصال بالخادم', true);
+                }
+            }
+
+            async function signOut() {
+                try {
+                    await fetch('/api/auth/logout', { method: 'POST', cache: 'no-store' });
+                } finally {
+                    window.location.replace('/admin-login.html');
+                }
+            }
 
             // ==================== EVENTS ====================
             function bindEvents() {
-                $$('.sidebar-nav a').forEach(link=>{link.addEventListener('click',(e)=>{e.preventDefault();switchPanel(link.dataset.panel);});});
-                $('#mobile-menu-btn')?.addEventListener('click',()=>{$('#sidebar').classList.add('open');$('#sidebar-overlay').classList.add('show');});
-                $('#sidebar-overlay')?.addEventListener('click',closeSidebar);
-                $('#prod-type')?.addEventListener('change',function(){$('#comp-type-group').style.display=this.value==='component'?'block':'none';});
-                $('#filter-type')?.addEventListener('change',function(){renderProductsTable(this.value);});
-                $('#product-form')?.addEventListener('submit',saveProduct);
-                $('#reset-form-btn')?.addEventListener('click',resetForm);
-                $('#cancel-edit-btn')?.addEventListener('click',resetForm);
-                $('#add-spec-btn')?.addEventListener('click',()=>addSpecRow());
-                $('#add-product-btn')?.addEventListener('click',()=>{resetForm();switchPanel('add-product');});
-                $('#save-chatbot-btn')?.addEventListener('click',saveChatbotData);
-                $('#add-qa-btn')?.addEventListener('click',()=>{chatbotData.qa.push({keywords:[],response:''});renderChatbotEditor();});
-                $('#save-settings-btn')?.addEventListener('click',saveSettings);
-                $('#export-data-btn')?.addEventListener('click',exportData);
-                $('#import-data-btn')?.addEventListener('click',importData);
-                $('#reset-data-btn')?.addEventListener('click',resetData);
-                $('#clear-orders-btn')?.addEventListener('click',()=>{if(confirm(t('مسح سجل الطلبات؟'))){ordersLog=[];saveOrders();renderOrdersTable();showToast('تم المسح');}});
-                $('#add-coupon-btn')?.addEventListener('click',()=>{editingCouponId=null;document.getElementById('coupon-form').style.display='block';});
-                $('#save-coupon-btn')?.addEventListener('click',saveCouponForm);
-                $('#cancel-coupon-btn')?.addEventListener('click',()=>document.getElementById('coupon-form').style.display='none');
+                $$('.sidebar-nav a').forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); switchPanel(link.dataset.panel); }); });
+                $('#mobile-menu-btn')?.addEventListener('click', () => { $('#sidebar').classList.add('open'); $('#sidebar-overlay').classList.add('show'); });
+                $('#sidebar-overlay')?.addEventListener('click', closeSidebar);
+                $('#prod-type')?.addEventListener('change', function () { $('#comp-type-group').style.display = this.value === 'component' ? 'block' : 'none'; });
+                $('#filter-type')?.addEventListener('change', function () { renderProductsTable(this.value); });
+                $('#product-form')?.addEventListener('submit', saveProduct);
+                $('#reset-form-btn')?.addEventListener('click', resetForm);
+                $('#cancel-edit-btn')?.addEventListener('click', resetForm);
+                $('#add-spec-btn')?.addEventListener('click', () => addSpecRow());
+                $('#add-product-btn')?.addEventListener('click', () => { resetForm(); switchPanel('add-product'); });
+                $('#refresh-data-btn')?.addEventListener('click', () => loadData());
+                $('#save-chatbot-btn')?.addEventListener('click', saveChatbotData);
+                $('#add-qa-btn')?.addEventListener('click', () => {
+                    if (!Array.isArray(chatbotData.qa)) chatbotData.qa = [];
+                    chatbotData.qa.push({ keywords: [], response: '' });
+                    renderChatbotEditor();
+                });
+                $('#save-settings-btn')?.addEventListener('click', saveSettings);
+                $('#export-data-btn')?.addEventListener('click', exportData);
+                $('#import-data-btn')?.addEventListener('click', importData);
+                $('#reset-data-btn')?.addEventListener('click', resetData);
+                $('#admin-signout-btn')?.addEventListener('click', signOut);
+                $('#clear-orders-btn')?.addEventListener('click', async () => {
+                    if (!confirm(t('مسح سجل الطلبات؟'))) return;
+                    try {
+                        await apiRequest('/api/admin/orders', { method: 'DELETE' });
+                        ordersLog = [];
+                        renderOrdersTable();
+                        showToast('تم المسح');
+                    } catch {
+                        showToast('فشل الاتصال بالخادم', true);
+                    }
+                });
+                $('#add-coupon-btn')?.addEventListener('click', () => {
+                    document.getElementById('coupon-code').value = '';
+                    document.getElementById('coupon-value').value = '';
+                    document.getElementById('coupon-min').value = '0';
+                    document.getElementById('coupon-form').style.display = 'block';
+                });
+                $('#save-coupon-btn')?.addEventListener('click', saveCouponForm);
+                $('#cancel-coupon-btn')?.addEventListener('click', () => document.getElementById('coupon-form').style.display = 'none');
             }
 
             document.addEventListener('azzam:languagechange', () => {
-                // Only redraw generated display content; never reset in-progress form or chat inputs.
                 refreshAll();
                 renderCoupons();
+                renderChatbotEditor();
                 updateFormTitle();
             });
 
             function init() {
-                loadData(); loadSettings(); bindEvents(); initImageUpload(); addSpecRow();
-                refreshAll(); renderChatbotEditor(); renderCoupons();
+                bindEvents();
+                initImageUpload();
+                addSpecRow();
+                loadData();
             }
             init();
         })();
