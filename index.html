@@ -82,7 +82,7 @@
         .nav-logo {
             display: flex; align-items: center; gap: 12px; text-decoration: none;
             color: var(--text-primary); font-weight: 900; font-size: 1.35rem;
-            cursor: pointer; user-select: none; -webkit-user-select: none;
+            cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
             position: relative;
         }
         .nav-logo .logo-icon {
@@ -257,7 +257,7 @@
         <div class="container nav-inner">
             <!-- يبقى الضغط المطول على الشعار مدخلاً للوحة التحكم -->
             <div class="nav-logo" id="secret-admin-trigger">
-                <span class="logo-icon"><img src="images/Azaam_Logo.png" alt="" width="40" height="40"></span>
+                <span class="logo-icon"><img src="images/Azaam_Logo.png" alt="" width="40" height="40" draggable="false"></span>
                 <span class="brand-name" dir="ltr"><strong>AZZAM</strong><small>TECHNOLOGY</small></span>
             </div>
             <ul class="nav-links" id="main-navigation">
@@ -378,7 +378,7 @@
             <div class="footer-grid">
                 <div class="footer-col footer-brand"><div class="footer-wordmark" dir="ltr">AZZAM <span>TECHNOLOGY</span></div><p><span data-i18n="مساحتك لكل ما يخص أجهزة الكمبيوتر، الشاشات والتجميع.">مساحتك لكل ما يخص أجهزة الكمبيوتر، الشاشات والتجميع.</span></p><a href="chat-bot.html" class="footer-assist"><i class="fa-solid fa-robot" aria-hidden="true"></i> <span data-i18n="اسأل المساعد">اسأل المساعد</span></a></div>
                 <div class="footer-col"><h4><span data-i18n="تصفّح المتجر">تصفّح المتجر</span></h4><a href="#monitors"><span data-i18n="الشاشات">الشاشات</span></a><a href="#laptops"><span data-i18n="اللابتوبات">اللابتوبات</span></a><a href="#pc-section"><span data-i18n="أجهزة PC">أجهزة PC</span></a><a href="#builder"><span data-i18n="تجميع جهازك">تجميع جهازك</span></a></div>
-                <div class="footer-col"><h4><span data-i18n="نقدر نساعدك؟">نقدر نساعدك؟</span></h4><a href="chat-bot.html"><span data-i18n="المساعد الذكي">المساعد الذكي</span></a><a href="https://wa.me/201025555207" target="_blank" rel="noopener noreferrer"><span data-i18n="تواصل عبر واتساب">تواصل عبر واتساب</span></a><a href="/admin.html"><span data-i18n="دخول الإدارة">دخول الإدارة</span></a></div>
+                <div class="footer-col"><h4><span data-i18n="نقدر نساعدك؟">نقدر نساعدك؟</span></h4><a href="chat-bot.html"><span data-i18n="المساعد الذكي">المساعد الذكي</span></a><a href="https://wa.me/201025555207" target="_blank" rel="noopener noreferrer"><span data-i18n="تواصل عبر واتساب">تواصل عبر واتساب</span></a></div>
                 <div class="footer-col"><h4><span data-i18n="تواصل معنا">تواصل معنا</span></h4><p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span data-i18n="مول البستان - القاهرة">مول البستان - القاهرة</span></p><a href="tel:01025555207"><i class="fa-solid fa-phone" aria-hidden="true"></i> <span dir="ltr">010 2555 5207</span></a></div>
             </div>
             <div class="footer-bottom"><p>&copy; <span data-i18n="2026 Azzam Technology. جميع الحقوق محفوظة.">2026 Azzam Technology. جميع الحقوق محفوظة.</span></p><p>Designed by <a href="https://wa.me/+201010184778" target="_blank" rel="noopener noreferrer">Mr.Developer</a></p></div>
@@ -392,7 +392,7 @@
         (function() {
             const STORAGE_KEY = 'store_all_products';
             const WHATSAPP_NUMBER = '201025555207';
-            const ADMIN_URL = 'admin.html';
+            const ADMIN_URL = '/admin.html';
             
             const LONG_PRESS_DURATION = 3000;
 
@@ -421,10 +421,12 @@
                 secretTrigger.addEventListener('mouseleave', cancelSecretPress);
                 secretTrigger.addEventListener('touchend', cancelSecretPress);
                 secretTrigger.addEventListener('touchcancel', cancelSecretPress);
+                secretTrigger.addEventListener('contextmenu', e => e.preventDefault());
                 secretTrigger.addEventListener('dragstart', e => e.preventDefault());
             }
 
             function startSecretPress(e) {
+                if (e.type === 'mousedown' && e.button !== 0) return;
                 if (isPressing) return;
                 isPressing = true;
                 pressStart = Date.now();
@@ -446,7 +448,7 @@
                         const logoIcon = secretTrigger.querySelector('.logo-icon');
                         if (logoIcon) { logoIcon.style.transform = 'scale(1.3)'; logoIcon.style.boxShadow = '0 0 30px rgba(34,197,94,0.8)'; }
                         setTimeout(() => { if (logoIcon) { logoIcon.style.transform = ''; logoIcon.style.boxShadow = ''; } }, 800);
-                        setTimeout(() => openAdminLogin(), 500);
+                        setTimeout(() => openAdminDashboard(), 500);
                     }
                 }, 30);
             }
@@ -469,21 +471,7 @@
                 if (duration > 0) secretHint._timer = setTimeout(() => secretHint.classList.remove('show'), duration);
             }
 
-            // اختصار لوحة المفاتيح Ctrl+Shift+A
-            document.addEventListener('keydown', e => {
-                if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
-                    e.preventDefault();
-                    showSecretHint(t('⌨️ اختصار الدخول'), 1500);
-                    setTimeout(() => openAdminLogin(), 400);
-                }
-            });
-
-            // Param في الرابط
-            if (new URL(location.href).searchParams.has('admin')) {
-                setTimeout(() => openAdminLogin(), 500);
-            }
-
-            function openAdminLogin() { window.location.assign(ADMIN_URL); }
+            function openAdminDashboard() { window.location.assign(ADMIN_URL); }
 
             // ==================== STOREFRONT DATA & INTERACTIONS ====================
             const PLACEHOLDER_IMAGE = 'images/product-placeholder.svg';

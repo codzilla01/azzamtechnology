@@ -6,7 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'public');
-const files = ['index.html', 'login.html', 'chat-bot.html', 'i18n.js', 'i18n.css', 'auth.js', 'auth.css', 'storefront.css'];
+const files = ['index.html', 'chat-bot.html', 'i18n.js', 'i18n.css', 'storefront.css'];
 const directories = ['assets', 'images'];
 
 fs.rmSync(output, { recursive: true, force: true });
