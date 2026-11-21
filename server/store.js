@@ -141,8 +141,6 @@ class FileStore {
         this.directory = path.resolve(directory);
         this.env = env;
         this.dataPath = path.join(this.directory, 'store-data.json');
-        this.passcodePath = path.join(this.directory, 'admin-passcode.txt');
-        this.sessions = new Map();
         this.attempts = new Map();
         this.initialization = null;
         this.writeQueue = Promise.resolve();
@@ -182,25 +180,6 @@ class FileStore {
                 if (err.code !== 'EEXIST') throw err;
             });
         }
-
-        if (!this.env.AZZAM_ADMIN_PASSCODE) {
-            try {
-                await fs.access(this.passcodePath);
-                await fs.chmod(this.passcodePath, 0o600);
-            } catch (error) {
-                if (error.code !== 'ENOENT') throw error;
-                const generated = crypto.randomBytes(12).toString('base64url');
-                await fs.writeFile(this.passcodePath, generated + '\n', { flag: 'wx', mode: 0o600 }).catch(err => {
-                    if (err.code !== 'EEXIST') throw err;
-                });
-            }
-        }
-    }
-
-    async getPasscode() {
-        await this.initialize();
-        if (this.env.AZZAM_ADMIN_PASSCODE) return this.env.AZZAM_ADMIN_PASSCODE;
-        return (await fs.readFile(this.passcodePath, 'utf8')).trim();
     }
 
     async readData() {
@@ -388,26 +367,6 @@ class FileStore {
         });
     }
 
-    async putSession(tokenHash, ttlSeconds) {
-        if (this.sessions.size >= 1000) {
-            const now = Date.now();
-            for (const [key, value] of this.sessions) if (value.expires <= now) this.sessions.delete(key);
-            if (this.sessions.size >= 1000) this.sessions.delete(this.sessions.keys().next().value);
-        }
-        this.sessions.set(tokenHash, { expires: Date.now() + ttlSeconds * 1000 });
-    }
-
-    async getSession(tokenHash) {
-        const session = this.sessions.get(tokenHash);
-        if (session && session.expires > Date.now()) return session;
-        this.sessions.delete(tokenHash);
-        return null;
-    }
-
-    async deleteSession(tokenHash) {
-        this.sessions.delete(tokenHash);
-    }
-
     async takeAttempt(key, limit, windowSeconds) {
         const now = Date.now();
         let entry = this.attempts.get(key);
@@ -561,14 +520,6 @@ class SupabaseStore {
         if (response.status === 204) return null;
         const text = await response.text();
         return text ? JSON.parse(text) : null;
-    }
-
-    async getPasscode() {
-        const passcode = this.env.AZZAM_ADMIN_PASSCODE;
-        if (!passcode || passcode.length < 6) {
-            throw new StorageError('AZZAM_ADMIN_PASSCODE (min 6 characters) must be configured');
-        }
-        return passcode;
     }
 
     async getConfigMap() {
@@ -803,30 +754,6 @@ class SupabaseStore {
             this.saveChatbot({ ...DEFAULT_CHATBOT, qa: [] })
         ]);
         return this.getAdminData();
-    }
-
-    async putSession(tokenHash, ttlSeconds) {
-        const expiresAt = new Date(Date.now() + ttlSeconds * 1000).toISOString();
-        await this.rest('admin_sessions?on_conflict=token_hash', {
-            method: 'POST',
-            prefer: 'resolution=merge-duplicates',
-            body: { token_hash: tokenHash, expires_at: expiresAt }
-        });
-    }
-
-    async getSession(tokenHash) {
-        const rows = await this.rest(`admin_sessions?token_hash=eq.${encodeURIComponent(tokenHash)}&select=token_hash,expires_at`);
-        const row = rows && rows[0];
-        if (!row) return null;
-        if (new Date(row.expires_at).getTime() <= Date.now()) {
-            await this.deleteSession(tokenHash).catch(() => {});
-            return null;
-        }
-        return { expires: new Date(row.expires_at).getTime() };
-    }
-
-    async deleteSession(tokenHash) {
-        await this.rest(`admin_sessions?token_hash=eq.${encodeURIComponent(tokenHash)}`, { method: 'DELETE' });
     }
 
     async takeAttempt(key, limit, windowSeconds) {

@@ -63,8 +63,6 @@ test('language, direction, labels and preference stay in sync across pages and r
     await expect(page.locator('#chatInput')).toHaveValue('unfinished question');
     await expect(page.locator('.quick-chip').first()).toContainText('اللابتوبات');
 
-    await page.goto('/admin-login.html');
-    expect(await missingTranslations(page)).toEqual([]);
     await openAdmin(page);
     await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
     await page.locator('.admin-language-bar [data-language-switch]').click();
@@ -259,11 +257,11 @@ test('both directions fit mobile and desktop viewports on public and dashboard p
     await resetServerStore();
     for (const width of [320, 390, 768, 1024, 1440]) {
         await page.setViewportSize({ width, height: 844 });
-        for (const path of ['/', '/chat-bot.html', '/admin-login.html']) {
+        for (const path of ['/', '/chat-bot.html']) {
             await page.goto(path);
             for (const language of ['en', 'ar']) {
                 if (await page.locator('html').getAttribute('lang') !== language) {
-                    const control = path === '/' ? '.topbar [data-language-switch]' : path === '/chat-bot.html' ? '.chat-header [data-language-switch]' : '.auth-header [data-language-switch]';
+                    const control = path === '/' ? '.topbar [data-language-switch]' : '.chat-header [data-language-switch]';
                     await page.locator(control).click();
                 }
                 await expect(page.locator('html')).toHaveAttribute('dir', language === 'en' ? 'ltr' : 'rtl');

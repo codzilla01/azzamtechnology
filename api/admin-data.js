@@ -9,7 +9,6 @@ const {
     sendJson,
     checkOrigin,
     readJson,
-    currentSession,
     handleError
 } = require('../server/http');
 
@@ -34,9 +33,6 @@ function createAdminDataHandler(options = {}) {
             if (method !== 'GET' && method !== 'HEAD') checkOrigin(req, env);
 
             const dataStore = getStore();
-            const session = await currentSession(dataStore, req);
-            if (!session) throw new RequestError(401, 'NOT_AUTHENTICATED');
-
             const { resource, query } = resolveResource(req);
 
             if (resource === 'data') {

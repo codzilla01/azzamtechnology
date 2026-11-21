@@ -75,14 +75,6 @@
         }
         .sidebar-footer a { color: #cbd5e1; text-decoration: none; display: block; margin-bottom: 6px; }
         .sidebar-footer a:hover { color: #fff; }
-        .sidebar-signout {
-            width: 100%; margin: 8px 0; padding: 8px 12px;
-            border: 1px solid rgba(255,255,255,0.2); border-radius: var(--radius-sm);
-            background: rgba(255,255,255,0.06); color: #f8fafc;
-            font: inherit; font-weight: 700; cursor: pointer;
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        .sidebar-signout:hover { background: rgba(230,57,70,0.35); border-color: rgba(230,57,70,0.6); }
 
         .main-content { flex: 1; margin-right: var(--sidebar-width); padding: 24px; min-height: 100vh; }
         .top-bar {
@@ -283,7 +275,6 @@
 
             <div class="sidebar-footer">
                 <a href="/index.html"><i class="fas fa-arrow-right"></i> <span data-i18n="العودة للمتجر">العودة للمتجر</span></a>
-                <button type="button" class="sidebar-signout" id="admin-signout-btn"><i class="fas fa-sign-out-alt"></i> <span data-i18n="تسجيل الخروج">تسجيل الخروج</span></button>
                 <p style="margin-top:8px;">&copy; 2026 Azzam Technology</p>
                 <p><a href="https://me-one-blue.vercel.app/about.html" style="color: #ffffff;">Dev.Mohamed Elnil</a></p>
             </div>
@@ -573,11 +564,6 @@
                     headers,
                     body: options.body !== undefined ? JSON.stringify(options.body) : undefined
                 });
-                if (response.status === 401) {
-                    showToast('انتهت الجلسة، يرجى تسجيل الدخول مجدداً', true);
-                    setTimeout(() => window.location.replace('/admin-login.html'), 700);
-                    throw new Error('NOT_AUTHENTICATED');
-                }
                 const payload = await response.json().catch(() => ({}));
                 if (!response.ok) {
                     const err = new Error(payload.code || 'REQUEST_FAILED');
@@ -593,8 +579,8 @@
                 try {
                     const data = await apiRequest('/api/admin/data');
                     applyAdminData(data);
-                } catch (err) {
-                    if (err.message !== 'NOT_AUTHENTICATED') showToast('فشل الاتصال بالخادم', true);
+                } catch {
+                    showToast('فشل الاتصال بالخادم', true);
                 }
             }
 
@@ -1302,14 +1288,6 @@
                 }
             }
 
-            async function signOut() {
-                try {
-                    await fetch('/api/auth/logout', { method: 'POST', cache: 'no-store' });
-                } finally {
-                    window.location.replace('/admin-login.html');
-                }
-            }
-
             // ==================== EVENTS ====================
             function bindEvents() {
                 $$('.sidebar-nav a').forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); switchPanel(link.dataset.panel); }); });
@@ -1333,7 +1311,6 @@
                 $('#export-data-btn')?.addEventListener('click', exportData);
                 $('#import-data-btn')?.addEventListener('click', importData);
                 $('#reset-data-btn')?.addEventListener('click', resetData);
-                $('#admin-signout-btn')?.addEventListener('click', signOut);
                 $('#clear-orders-btn')?.addEventListener('click', async () => {
                     if (!confirm(t('مسح سجل الطلبات؟'))) return;
                     try {
