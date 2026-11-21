@@ -1,12 +1,12 @@
 'use strict';
 
 // Vercel publishes ONLY this generated directory as static files. In particular,
-// the private dashboard template, API source and any auth data are never static.
+// the private dashboard template, API source, database schema and auth data are never static.
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'public');
-const files = ['index.html', 'chat-bot.html', 'i18n.js', 'i18n.css', 'storefront.css'];
+const files = ['index.html', 'admin-login.html', 'chat-bot.html', 'i18n.js', 'i18n.css', 'storefront.css', 'auth.css'];
 const directories = ['assets', 'images'];
 
 fs.rmSync(output, { recursive: true, force: true });

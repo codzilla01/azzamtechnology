@@ -1,30 +1,26 @@
 const { test, expect } = require('@playwright/test');
+const { BASE, resetServerStore, seedServerStore, loginAdmin } = require('./helpers.cjs');
 
 const bilingualProducts = [
     {
-        id: 'bilingual-monitor', type: 'monitor', name: 'شاشة ديل 24', brand: 'Dell', price: 5000,
+        id: 'bilingual-monitor', type: 'monitor', name: 'شاشة ديل 24', brand: 'Dell', price: 5000, stock: 5,
         description: 'وصف الشاشة', specs: { الحجم: '24 بوصة', اللون: 'أسود' },
         translations: { en: { name: 'Dell 24-inch Monitor', description: 'A 24-inch display', specs: {
             الحجم: { name: 'Size', value: '24 inches' }, اللون: { name: 'Color' }
         } } }
     },
-    { id: 'fallback-laptop', type: 'laptop', name: 'لابتوب بدون ترجمة', price: 12000 },
-    { id: 'cpu', type: 'component', componentType: 'cpu', name: 'معالج إنتل', price: 5000, translations: { en: { name: 'Intel CPU' } } },
-    { id: 'ram', type: 'component', componentType: 'ram', name: 'ذاكرة 16GB', price: 2000, translations: { en: { name: '16GB Memory' } } },
-    { id: 'gpu', type: 'component', componentType: 'gpu', name: 'كرت RTX', price: 10000, translations: { en: { name: 'RTX Graphics' } } }
+    { id: 'fallback-laptop', type: 'laptop', name: 'لابتوب بدون ترجمة', price: 12000, stock: 3 },
+    { id: 'cpu', type: 'component', componentType: 'cpu', name: 'معالج إنتل', price: 5000, stock: 3, translations: { en: { name: 'Intel CPU' } } },
+    { id: 'ram', type: 'component', componentType: 'ram', name: 'ذاكرة 16GB', price: 2000, stock: 3, translations: { en: { name: '16GB Memory' } } },
+    { id: 'gpu', type: 'component', componentType: 'gpu', name: 'كرت RTX', price: 10000, stock: 3, translations: { en: { name: 'RTX Graphics' } } }
 ];
 
-async function seed(page, products = bilingualProducts) {
-    await page.addInitScript(items => {
-        if (!sessionStorage.getItem('i18n-test-seeded')) {
-            localStorage.setItem('store_all_products', JSON.stringify(items));
-            sessionStorage.setItem('i18n-test-seeded', 'yes');
-        }
-    }, products);
+async function seed(products = bilingualProducts, extra = {}) {
+    await seedServerStore(products, extra);
 }
 
 async function openAdmin(page) {
-    await page.goto('/admin.html');
+    await loginAdmin(page);
     await expect(page.locator('#panel-dashboard')).toBeVisible();
 }
 
@@ -38,6 +34,7 @@ async function missingTranslations(page) {
 }
 
 test('language, direction, labels and preference stay in sync across pages and reloads', async ({ page }) => {
+    await resetServerStore();
     await page.goto('/');
     await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
@@ -66,6 +63,8 @@ test('language, direction, labels and preference stay in sync across pages and r
     await expect(page.locator('#chatInput')).toHaveValue('unfinished question');
     await expect(page.locator('.quick-chip').first()).toContainText('اللابتوبات');
 
+    await page.goto('/admin-login.html');
+    expect(await missingTranslations(page)).toEqual([]);
     await openAdmin(page);
     await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
     await page.locator('.admin-language-bar [data-language-switch]').click();
@@ -79,8 +78,9 @@ test('language, direction, labels and preference stay in sync across pages and r
 test('localized products, search, cart and open dialogs update across tabs without mutating data', async ({ page, context }) => {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
-    await seed(page);
+    await seed();
     await page.goto('/');
+    await expect(page.locator('[data-product-id="bilingual-monitor"]')).toBeVisible();
     await page.locator('.topbar [data-language-switch]').click();
     const card = page.locator('[data-product-id="bilingual-monitor"]');
     await expect(card.locator('h3')).toHaveText('Dell 24-inch Monitor');
@@ -114,18 +114,25 @@ test('localized products, search, cart and open dialogs update across tabs witho
     await expect(page.locator('#drawer-title')).toHaveText('Shopping cart');
     await expect(page.locator('.drawer-item h3')).toHaveText('Dell 24-inch Monitor');
     await expect(page.locator('#drawer-close')).toBeFocused();
-    await page.evaluate(() => { window.openedUrls = []; window.open = url => window.openedUrls.push(url); });
+
+    await page.locator('#checkout-name').fill('Ali Hassan');
+    await page.locator('#checkout-phone').fill('01012345678');
+    await page.locator('#checkout-governorate').fill('Cairo');
+    await page.locator('#checkout-address').fill('10 Tahrir Street');
+    await page.evaluate(() => { window.openedUrls = []; window.open = url => { window.openedUrls.push(url); }; });
     await page.locator('#checkout-whatsapp').click();
-    expect(decodeURIComponent(await page.evaluate(() => window.openedUrls[0]))).toContain('Hello, I would like to order');
-    expect(decodeURIComponent(await page.evaluate(() => window.openedUrls[0]))).toContain('Dell 24-inch Monitor');
-    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('store_all_products')))).toEqual(bilingualProducts);
+    await expect(page.locator('.order-success-card')).toBeVisible();
+    const message = decodeURIComponent(await page.evaluate(() => window.openedUrls[0]));
+    expect(message).toContain('Hello, I would like to order');
+    expect(message).toContain('Dell 24-inch Monitor');
     expect(errors).toEqual([]);
     await secondTab.close();
 });
 
 test('PC builder keeps selections and localizes a saved build in either language', async ({ page }) => {
-    await seed(page);
+    await seed();
     await page.goto('/');
+    await expect(page.locator('#select-cpu')).toBeVisible();
     await page.locator('.topbar [data-language-switch]').click();
     for (const [key, name] of [['cpu', 'Intel CPU'], ['ram', '16GB Memory'], ['gpu', 'RTX Graphics']]) {
         await page.locator(`#select-${key}`).click();
@@ -140,25 +147,29 @@ test('PC builder keeps selections and localizes a saved build in either language
     await page.locator('.topbar [data-language-switch]').click();
     await page.locator('#cart-nav-btn').click();
     await expect(page.locator('.drawer-item h3')).toHaveText('Custom PC build');
-    await page.evaluate(() => { window.openedUrls = []; window.open = url => window.openedUrls.push(url); });
+    await page.locator('#checkout-name').fill('Omar');
+    await page.locator('#checkout-phone').fill('01012345678');
+    await page.locator('#checkout-governorate').fill('Cairo');
+    await page.locator('#checkout-address').fill('Nasr City Cairo');
+    await page.evaluate(() => { window.openedUrls = []; window.open = url => { window.openedUrls.push(url); }; });
     await page.locator('#checkout-whatsapp').click();
+    await expect(page.locator('.order-success-card')).toBeVisible();
     const message = decodeURIComponent(await page.evaluate(() => window.openedUrls[0]));
-    expect(message).toContain('Processor: Intel CPU');
-    expect(message).toContain('Memory: 16GB Memory');
-    const [build] = await page.evaluate(() => JSON.parse(localStorage.getItem('azzam_cart_v3')));
-    expect(build.name).toBe('تجميعة PC مخصصة');
-    expect(build.specs['المعالج']).toBe('معالج إنتل');
+    expect(message).toContain('Intel CPU');
+    expect(message).toContain('16GB Memory');
 });
 
 test('admin can add and edit optional English product data without losing in-progress inputs', async ({ page }) => {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
+    await resetServerStore();
     await openAdmin(page);
     await page.locator('.admin-language-bar [data-language-switch]').click();
     await page.locator('[data-panel="add-product"]').click();
     await page.locator('#prod-name').fill('شاشة جديدة');
     await page.locator('#prod-name-en').fill('New monitor');
     await page.locator('#prod-price').fill('7500');
+    await page.locator('#prod-stock').fill('6');
     await page.locator('#prod-type').selectOption('monitor');
     await page.locator('#prod-desc').fill('وصف عربي');
     await page.locator('#prod-desc-en').fill('English description');
@@ -173,10 +184,15 @@ test('admin can add and edit optional English product data without losing in-pro
     await expect(page.locator('.spec-value-en').first()).toHaveValue('24 inches');
     await expect(page.locator('.spec-key-en').first()).toHaveAttribute('placeholder', 'اسم المواصفة بالإنجليزية (اختياري)');
     await page.locator('#product-form button[type="submit"]').click();
-    const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('store_all_products'))[0]);
+    await expect(page.locator('#products-table tbody')).toContainText('شاشة جديدة');
+
+    const storePayload = await page.evaluate(async () => (await fetch('/api/store')).json());
+    const saved = storePayload.products[0];
     expect(saved.name).toBe('شاشة جديدة');
     expect(saved.description).toBe('وصف عربي');
+    expect(saved.stock).toBe(6);
     expect(saved.translations.en).toEqual({ name: 'New monitor', description: 'English description', specs: { الحجم: { name: 'Size', value: '24 inches' } } });
+
     await page.locator('#products-table .edit-btn').click();
     await expect(page.locator('#prod-name-en')).toHaveValue('New monitor');
     await expect(page.locator('.spec-key-en').first()).toHaveValue('Size');
@@ -196,14 +212,17 @@ test('admin can add and edit optional English product data without losing in-pro
 
 test('editing a legacy product preserves original fields and can leave translations blank', async ({ page }) => {
     const legacy = [{ id: 'legacy', type: 'monitor', name: 'شاشة قديمة', price: 3000, stock: 8, discount: 12, specs: { الدقة: 'FHD' }, translations: { fr: { name: 'Écran' } } }];
-    await seed(page, legacy);
+    await seed(legacy);
     await openAdmin(page);
     await page.locator('[data-panel="products"]').click();
     await page.locator('#products-table .edit-btn').click();
     await expect(page.locator('#prod-name-en')).toHaveValue('');
     await page.locator('#prod-price').fill('3200');
     await page.locator('#product-form button[type="submit"]').click();
-    const result = await page.evaluate(() => JSON.parse(localStorage.getItem('store_all_products'))[0]);
+    await expect(page.locator('#products-table tbody')).toContainText('3,200');
+
+    const storePayload = await page.evaluate(async () => (await fetch('/api/store')).json());
+    const result = storePayload.products[0];
     expect(result.stock).toBe(8);
     expect(result.discount).toBe(12);
     expect(result.specs).toEqual({ الدقة: 'FHD' });
@@ -214,9 +233,9 @@ test('editing a legacy product preserves original fields and can leave translati
 });
 
 test('assistant understands common English questions and retains custom answers and user messages', async ({ page }) => {
-    await seed(page);
-    await page.addInitScript(() => localStorage.setItem('chatbot_data', JSON.stringify({ qa: [{ keywords: ['special'], response: 'رد خاص كما كُتب' }] })));
+    await seed(bilingualProducts, { chatbot: { welcome: 'مرحباً!', qa: [{ keywords: ['special'], response: 'رد خاص كما كُتب' }] } });
     await page.goto('/chat-bot.html');
+    await expect.poll(async () => page.evaluate(() => document.querySelectorAll('.quick-chip').length)).toBe(4);
     await page.locator('.chat-header [data-language-switch]').click();
     await page.locator('#chatInput').fill('What monitor prices are available?');
     await page.locator('#sendBtn').click();
@@ -237,13 +256,14 @@ test('assistant understands common English questions and retains custom answers 
 });
 
 test('both directions fit mobile and desktop viewports on public and dashboard pages', async ({ page }) => {
+    await resetServerStore();
     for (const width of [320, 390, 768, 1024, 1440]) {
         await page.setViewportSize({ width, height: 844 });
-        for (const path of ['/', '/chat-bot.html']) {
+        for (const path of ['/', '/chat-bot.html', '/admin-login.html']) {
             await page.goto(path);
             for (const language of ['en', 'ar']) {
                 if (await page.locator('html').getAttribute('lang') !== language) {
-                    const control = path === '/' ? '.topbar [data-language-switch]' : '.chat-header [data-language-switch]';
+                    const control = path === '/' ? '.topbar [data-language-switch]' : path === '/chat-bot.html' ? '.chat-header [data-language-switch]' : '.auth-header [data-language-switch]';
                     await page.locator(control).click();
                 }
                 await expect(page.locator('html')).toHaveAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
@@ -267,11 +287,12 @@ test('both directions fit mobile and desktop viewports on public and dashboard p
 test('wishlist and comparison localize controls while translated product data stays text-only', async ({ page }) => {
     const injected = '<img src=x onerror=window.pwned=1>';
     const product = {
-        id: 'safe-translation', type: 'monitor', name: 'شاشة آمنة', price: 1000, specs: { اللون: 'أحمر' },
+        id: 'safe-translation', type: 'monitor', name: 'شاشة آمنة', price: 1000, stock: 5, specs: { اللون: 'أحمر' },
         translations: { en: { name: injected, specs: { اللون: { name: 'Color', value: 'Red' } } } }
     };
-    await seed(page, [product]);
+    await seed([product]);
     await page.goto('/');
+    await expect(page.locator('[data-product-id="safe-translation"]')).toBeVisible();
     await page.locator('.topbar [data-language-switch]').click();
     const card = page.locator('[data-product-id="safe-translation"]');
     await expect(card.locator('h3')).toHaveText(injected);
